@@ -10,7 +10,7 @@ def objective(params):
                               train_batch_size= params['train_batch_size'],
                               epochs= params['epochs'],
                               warmup_steps= params['warmup_steps'], 
-                              test_run_size= 100,
+                              test_run_size = 100,
                               return_valid_loss= True)
 
     return loss

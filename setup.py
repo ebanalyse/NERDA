@@ -24,7 +24,10 @@ setuptools.setup(
         'pandas'
     ],
     setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    tests_require=[
+        'pytest',
+        'pytest-html',
+        'pickle_mixin==1.0.2'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
