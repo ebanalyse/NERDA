@@ -35,8 +35,8 @@ class NERDA():
         self.df_train = df_train
         self.df_validate = df_validate
 
-        self.hyperparameters = {'epochs' : 4,
-                                'warmup_steps' : 500,
+        self.hyperparameters = {'epochs' : 1,
+                                'warmup_steps' : 0,
                                 'train_batch_size': 13,
                                 'learning_rate': 0.0001}
 
@@ -70,11 +70,13 @@ class NERDA():
         return predictions
 
 if __name__ == '__main__':
+    from NERDA.data_generator import get_dane_data_split
     from NERDA.models import NERDA
-    N = NERDA()
-    #N.train()
+    N = NERDA(df_train = get_dane_data_split('train')[1:16],
+              df_validate = get_dane_data_split('validate')[1:16])
+    N.train()
     #torch.save(N.network.state_dict(), "model.bin")
-    N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
+    #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
     # N.predict(rune_dane_inference = True, print_f1_scores = True)
 
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
