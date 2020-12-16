@@ -70,11 +70,12 @@ class NERDA():
         return predictions
 
 if __name__ == '__main__':
+    from NERDA.models import NERDA
     N = NERDA()
     #N.train()
     #torch.save(N.network.state_dict(), "model.bin")
     N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
-    N.predict(rune_dane_inference = True, print_f1_scores = True)
+    # N.predict(rune_dane_inference = True, print_f1_scores = True)
 
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk
@@ -82,6 +83,7 @@ if __name__ == '__main__':
     tags = [8] * len(words)
     import pandas as pd
     df = pd.DataFrame({'words': [words], 'tags': [tags]})
+    N.predict(df = df, run_dane_inference = True, print_f1_scores = True)
     sentences, predictions = N.predict(df = df)
     print(list(zip(sentences, predictions)))
         
