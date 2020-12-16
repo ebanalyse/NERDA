@@ -1,14 +1,13 @@
 import pandas as pd
 import numpy as np
 import torch
-import utils
-from dataset import create_dataloader
-import model_functions
-from data_generator import get_dane_data_split
+from .utils import enforce_reproducibility
+from .dataset import create_dataloader
+from .model_functions import train_, validate_
+from .data_generator import get_dane_data_split
 import torch
-import matplotlib.pyplot as plt
 
-from model import NER_BERT
+from .model import NER_BERT
 from sklearn import preprocessing
 from sklearn import model_selection
 from transformers import AdamW
@@ -49,7 +48,7 @@ def train_model(network,
         learning_rate ([type]): [description]. Defaults to 5e-5.
     """
     if fixed_seed is not None:
-        utils.enforce_reproducibility(fixed_seed)
+        enforce_reproducibility(fixed_seed)
     
     # prepare datasets for modelling by creating data readers and loaders
     # TODO: parametrize num_workers.
@@ -93,9 +92,9 @@ def train_model(network,
         
         print('\n Epoch {:} / {:}'.format(epoch + 1, epochs))
 
-        train_loss = model_functions.train_(network, dl_train, optimizer, device, scheduler)
+        train_loss = train_(network, dl_train, optimizer, device, scheduler)
         losses.append(train_loss)
-        valid_loss = model_functions.validate_(network, dl_validate, device)
+        valid_loss = validate_(network, dl_validate, device)
 
         print(f"Train Loss = {train_loss} Valid Loss = {valid_loss}")
 

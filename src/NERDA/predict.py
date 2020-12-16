@@ -6,10 +6,10 @@ from tqdm import tqdm
 import warnings
 import nltk
 
-import utils
-import data_generator
-from dataset import create_dataloader
-from model import NER_BERT
+from .utils import target_tags
+from .data_generator import encoder_, get_dane_data_split
+from .dataset import create_dataloader
+from .model import NER_BERT
 
 # Helper function that flattens a list of lists
 def flatten(xs):
@@ -26,17 +26,17 @@ def get_accuracy(predictions, targets):
     # NOTE: utils.target_tags bør hentes fra modelobjekt/parametriseres.
     scores_micro = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
                                                                    y_pred= flat_preds,
-                                                                   labels= utils.target_tags,
+                                                                   labels= target_tags,
                                                                    average= 'micro' ) 
 
     scores_class = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
                                                                    y_pred= flat_preds,
-                                                                   labels= utils.target_tags,
+                                                                   labels= target_tags,
                                                                    average= None ) 
 
     print('MICRO F1: ', scores_micro[2])
     # NOTE: igen
-    class_scores = list(zip(utils.target_tags, scores_class[2]))
+    class_scores = list(zip(target_tags, scores_class[2]))
     for score in class_scores:
         print(score[0], ': ' , score[1], '\n')
 

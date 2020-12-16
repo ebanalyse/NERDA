@@ -1,8 +1,7 @@
-import utils
 import torch
 import torch.nn as nn
 from tqdm import tqdm
-from model import n_tags
+from .model import n_tags
 
 def train_(model, data_loader, optimizer, device, scheduler):
     

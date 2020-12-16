@@ -1,4 +1,4 @@
-import utils
+from .utils import get_bert_tokenizer
 import torch
 
 # NOTE: er dette specifikt for DaNE data eller er det en generel DataSet Reader?
@@ -6,7 +6,7 @@ class DataSetReaderNER():
     def __init__(self, sentences, ner_tags, bert_model_name, max_len):
         self.sentences = sentences
         self.ner_tags = ner_tags
-        self.bert_tokenizer = utils.get_bert_tokenizer(bert_model_name)
+        self.bert_tokenizer = get_bert_tokenizer(bert_model_name)
         self.max_len = max_len
 
     def __len__(self):

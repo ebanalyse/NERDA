@@ -1,9 +1,9 @@
-from train import train_model
-from data_generator import get_dane_data_split
-from inference import predict
+from .train import train_model
+from .data_generator import get_dane_data_split
+from .predict import predict
 import torch
 
-from model import NER_BERT
+from .model import NER_BERT
 
 class NERDA():
 

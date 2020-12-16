@@ -1,4 +1,4 @@
-from train import train_model
+from .train import train_model
 
 from hyperopt import fmin, hp, tpe, space_eval
 from hyperopt.pyll import scope
