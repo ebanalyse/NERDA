@@ -58,11 +58,11 @@ class NERDA():
         self.network.load_state_dict(torch.load(model_path))
         return f'Weights for network loaded from {model_path}'
 
-    def predict(self, df):
+    def predict(self, df, run_dane_inference = False, print_f1_scores = False):
         predictions = predict(network = self.network, 
                               df_test = df,
-                              run_dane_inference = False,
-                              print_f1_scores = False,
+                              run_dane_inference = run_dane_inference,
+                              print_f1_scores = print_f1_scores,
                               max_len = 128,
                               device = self.device,
                               model_path = "model.bin")
@@ -73,7 +73,8 @@ if __name__ == '__main__':
     N = NERDA()
     #N.train()
     #torch.save(N.network.state_dict(), "model.bin")
-    # N.load_network()
+    N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
+    N.predict(rune_dane_inference = True, print_f1_scores = True)
 
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk

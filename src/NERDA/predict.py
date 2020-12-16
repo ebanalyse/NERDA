@@ -26,13 +26,13 @@ def get_accuracy(predictions, targets):
     # NOTE: utils.target_tags bør hentes fra modelobjekt/parametriseres.
     scores_micro = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
                                                                    y_pred= flat_preds,
-                                                                   labels= target_tags,
-                                                                   average= 'micro' ) 
+                                                                   labels = target_tags,
+                                                                   average = 'micro' ) 
 
     scores_class = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
                                                                    y_pred= flat_preds,
                                                                    labels= target_tags,
-                                                                   average= None ) 
+                                                                   average = None ) 
 
     print('MICRO F1: ', scores_micro[2])
     # NOTE: igen
@@ -40,14 +40,13 @@ def get_accuracy(predictions, targets):
     for score in class_scores:
         print(score[0], ': ' , score[1], '\n')
 
-# TODO: implementér som metode til modelobjekt. Skal alligevel ændres mhp. pipeline
 # NOTE: adskil prædiktion fra performance measurement? Behov for yderligere modularisering.
 # NOTE: genbrug kode fra evaluering af model på validering?
 # TODO: Der mangler en funktion til at tage en rå streng (ny observation) og prædiktere den. Hent
 # evt. inspiration fra 'danlp'
 def predict(network = None, 
             df_test = None,
-            run_dane_inference = True,
+            run_dane_inference = False,
             bert_model_name = 'bert-base-multilingual-uncased',
             print_f1_scores = False,
             max_len = 128,
@@ -64,12 +63,11 @@ def predict(network = None,
     """
 
     # NOTE: tokenizer bør arves fra den trænede model
-    encoder = data_generator.encoder_
+    encoder = encoder_
 
     # NOTE: selvstændig funktion??
-    if run_dane_inference and df_test is not None:
-        df_test = data_generator.get_dane_data_split('test')
-        df_test = df_test.iloc[1:5]
+    if run_dane_inference:
+        df_test = get_dane_data_split('test')
 
     refs = df_test['tags'].apply(encoder.inverse_transform)
 
@@ -103,7 +101,7 @@ def predict(network = None,
             predictions.append(preds)
 
     if print_f1_scores:
-        get_accuracy(predictions, refs.tolist())
+        return get_accuracy(predictions, refs.tolist())
 
     return sentences, predictions
 

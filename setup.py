@@ -21,7 +21,8 @@ setuptools.setup(
         'tensorboard',
         'danlp',
         'sklearn',
-        'pandas'
+        'pandas',
+        'nltk'
     ],
     setup_requires=['pytest-runner'],
     tests_require=[
