@@ -25,10 +25,7 @@ setuptools.setup(
         'nltk'
     ],
     setup_requires=['pytest-runner'],
-    tests_require=[
-        'pytest',
-        'pytest-html',
-        'pickle_mixin==1.0.2'],
+    tests_require=['pytest'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
