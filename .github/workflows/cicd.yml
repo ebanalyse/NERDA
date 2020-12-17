@@ -46,5 +46,5 @@ jobs:
       run: |
         pip install -r dev-requirements.txt
         python setup.py sdist bdist_wheel
-        twine upload upload dist/*
+        twine upload dist/*
     
