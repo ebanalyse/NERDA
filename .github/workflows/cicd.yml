@@ -19,12 +19,12 @@ jobs:
       uses: actions/cache@v2
       with: |
         path: ~/.cache/pip
-      key: ${{runner.os}}-python
+      key: ${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.7'
 
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
@@ -44,7 +44,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        pip install wheel twine
+        pip install -r dev-requirements.txt
         python setup.py sdist bdist_wheel
         twine upload upload dist/*
     
