@@ -19,7 +19,7 @@ jobs:
       uses: actions/cache@v2
       with: |
         path: ~/.cache/pip
-      key: ${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+        key: ${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
     - name: Set up Python
       uses: actions/setup-python@v2
