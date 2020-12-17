@@ -15,8 +15,9 @@ from .model import NER_BERT
 def flatten(xs):
     return [item for sublist in xs for item in sublist]
 
+
 # NOTE: er det ikke F1, der uddrages?
-def get_accuracy(predictions, targets):
+def compute_performance(predictions, targets):
     """
     Calculates and print out the accuracy scores for the DaNE test dataset.   
     """
@@ -37,21 +38,18 @@ def get_accuracy(predictions, targets):
     print('MICRO F1: ', scores_micro[2])
     # NOTE: igen
     class_scores = list(zip(target_tags, scores_class[2]))
+    
     for score in class_scores:
         print(score[0], ': ' , score[1], '\n')
 
-# NOTE: adskil prædiktion fra performance measurement? Behov for yderligere modularisering.
+    return class_scores
+
 # NOTE: genbrug kode fra evaluering af model på validering?
-# TODO: Der mangler en funktion til at tage en rå streng (ny observation) og prædiktere den. Hent
-# evt. inspiration fra 'danlp'
 def predict(network = None, 
-            df_test = None,
-            run_dane_inference = False,
+            df = None,
             bert_model_name = 'bert-base-multilingual-uncased',
-            print_f1_scores = False,
             max_len = 128,
-            device = None,
-            model_path = "model.bin"):
+            device = None):
 
     """[summary]
 
@@ -62,25 +60,26 @@ def predict(network = None,
         [List of strings]: returns the predictions for each of the sentences in the test_data provided.
     """
 
-    # NOTE: tokenizer bør arves fra den trænede model
+    # set network to appropriate mode.
+    network.eval()
+
+    # NOTE: tokenizer/encoder skal arves fra den trænede model.
     encoder = encoder_
 
-    # NOTE: selvstændig funktion??
-    if run_dane_inference:
-        df_test = get_dane_data_split('test')
+    # encode tags.
+    refs = df['tags'].apply(encoder.inverse_transform)
 
-    refs = df_test['tags'].apply(encoder.inverse_transform)
-
-    dr_test, dl_test = create_dataloader(df_test, bert_model_name, max_len = 128, batch_size = 1)
+    # TODO: bert_model_name skal arves fra modellen.
+    dr, dl = create_dataloader(df, bert_model_name, max_len = 128, batch_size = 1)
 
     predictions = []
     sentences = []
     with torch.no_grad():
-        for i, dl in enumerate(dl_test): 
+        for i, dl in enumerate(dl): 
 
             # extract word tokenized sentence.
             # TODO: Maybe return words. Or decode.
-            sentence = df_test['words'].iloc[i]
+            sentence = df['words'].iloc[i]
 
             outputs = network(**dl)   
 
@@ -100,19 +99,15 @@ def predict(network = None,
             sentences.append(sentence)
             predictions.append(preds)
 
-    if print_f1_scores:
-        return get_accuracy(predictions, refs.tolist())
-
     return sentences, predictions
 
 if __name__ == '__main__' :
-    predict(print_f1_scores = True, run_dane_inference = True)
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk
     words = nltk.word_tokenize(text)
     tags = [8] * len(words)
     import pandas as pd
     df = pd.DataFrame({'words': [words], 'tags': [tags]})
-    sentences, predictions = predict(df_test = df)
+    sentences, predictions = predict(df = df)
     print(list(zip(sentences, predictions)))
     

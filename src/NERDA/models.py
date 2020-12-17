@@ -1,6 +1,6 @@
 from .train import train_model
-from .data_generator import get_dane_data_split
-from .predict import predict
+from .data_generator import get_dane_data_split, encoder_
+from .predict import predict, compute_performance
 import torch
 
 from .model import NER_BERT
@@ -37,7 +37,7 @@ class NERDA():
 
         self.hyperparameters = {'epochs' : 1,
                                 'warmup_steps' : 0,
-                                'train_batch_size': 13,
+                                'train_batch_size': 5,
                                 'learning_rate': 0.0001}
 
     def train(self):
@@ -58,23 +58,30 @@ class NERDA():
         self.network.load_state_dict(torch.load(model_path))
         return f'Weights for network loaded from {model_path}'
 
-    def predict(self, df, run_dane_inference = False, print_f1_scores = False):
+    def predict(self, df):
         predictions = predict(network = self.network, 
-                              df_test = df,
-                              run_dane_inference = run_dane_inference,
-                              print_f1_scores = print_f1_scores,
+                              df = df,
                               max_len = 128,
-                              device = self.device,
-                              model_path = "model.bin")
+                              device = self.device)
 
         return predictions
+
+    def evaluate_performance(self, df):
+        sentences, tags_predicted = self.predict(df)
+        # TODO: move encoder_ to model.
+        # encode tags.
+        tags_actual = df['tags'].apply(encoder_.inverse_transform).tolist()
+        performance = compute_performance(tags_predicted, tags_actual)
+        return performance
 
 if __name__ == '__main__':
     from NERDA.data_generator import get_dane_data_split
     from NERDA.models import NERDA
-    N = NERDA(df_train = get_dane_data_split('train')[1:16],
-              df_validate = get_dane_data_split('validate')[1:16])
+    N = NERDA(df_train = get_dane_data_split('train')[1:6],
+              df_validate = get_dane_data_split('validate')[1:6])
     N.train()
+    test = get_dane_data_split('test')[1:6]
+    N.evaluate_performance(test)
     #torch.save(N.network.state_dict(), "model.bin")
     #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
     # N.predict(rune_dane_inference = True, print_f1_scores = True)
@@ -85,7 +92,7 @@ if __name__ == '__main__':
     tags = [8] * len(words)
     import pandas as pd
     df = pd.DataFrame({'words': [words], 'tags': [tags]})
-    N.predict(df = df, run_dane_inference = True, print_f1_scores = True)
     sentences, predictions = N.predict(df = df)
     print(list(zip(sentences, predictions)))
+    N.predict(df = df)
         
