@@ -7,7 +7,6 @@ from torch.utils.tensorboard import SummaryWriter
 dabert = 'DJSammy/bert-base-danish-uncased_BotXO,ai'
 
 # Do not include the 'O' (not entity) tag when computing loss function
-target_tags = ['B-ORG', 'B-LOC', 'B-PER','B-MISC', 'I-PER', 'I-LOC', 'I-MISC', 'I-ORG']
 writer = SummaryWriter('runs/tensorboard')
 
 def get_bert_model(model_name):

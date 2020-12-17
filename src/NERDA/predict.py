@@ -6,7 +6,6 @@ from tqdm import tqdm
 import warnings
 import nltk
 
-from .utils import target_tags
 from .data_generator import encoder_, get_dane_data_split
 from .dataset import create_dataloader
 from .model import NER_BERT
@@ -17,27 +16,38 @@ def flatten(xs):
 
 
 # NOTE: er det ikke F1, der uddrages?
-def compute_performance(predictions, targets):
+def compute_performance(predictions, 
+                        targets, 
+                        tag_scheme = [ 
+                            'B-PER',
+                            'I-PER', 
+                            'I-ORG', 
+                            'B-ORG', 
+                            'B-LOC', 
+                            'I-LOC', 
+                            'B-MISC', 
+                            'I-MISC'
+                            ]):
     """
     Calculates and print out the accuracy scores for the DaNE test dataset.   
     """
     flat_preds = flatten(predictions)
     flat_labels = flatten(targets)
 
-    # NOTE: utils.target_tags bør hentes fra modelobjekt/parametriseres.
+    # NOTE: skal tag_scheme gives eksplicit.
     scores_micro = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
-                                                                   y_pred= flat_preds,
-                                                                   labels = target_tags,
+                                                                   y_pred = flat_preds,
+                                                                   labels = tag_scheme,
                                                                    average = 'micro' ) 
 
     scores_class = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
-                                                                   y_pred= flat_preds,
-                                                                   labels= target_tags,
+                                                                   y_pred = flat_preds,
+                                                                   labels = tag_scheme,
                                                                    average = None ) 
 
     print('MICRO F1: ', scores_micro[2])
     # NOTE: igen
-    class_scores = list(zip(target_tags, scores_class[2]))
+    class_scores = list(zip(tag_scheme, scores_class[2]))
     
     for score in class_scores:
         print(score[0], ': ' , score[1], '\n')

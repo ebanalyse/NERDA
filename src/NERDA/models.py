@@ -1,6 +1,7 @@
 from .train import train_model
 from .data_generator import get_dane_data_split, encoder_
 from .predict import predict, compute_performance
+from sklearn import preprocessing
 import torch
 
 from .model import NER_BERT
@@ -10,7 +11,7 @@ class NERDA():
     def __init__(self, 
                 transformer = 'bert-base-multilingual-uncased',
                 device = None, 
-                tag_scheme = ['O', 
+                tag_scheme = [
                             'B-PER',
                             'I-PER', 
                             'I-ORG', 
@@ -18,33 +19,41 @@ class NERDA():
                             'B-LOC', 
                             'I-LOC', 
                             'B-MISC', 
-                            'I-MISC'],
+                            'I-MISC'
+                            ],
+                tag_outside = 'O',
                 df_train = get_dane_data_split('train'),
-                df_validate = get_dane_data_split('validate')):
+                df_validate = get_dane_data_split('validate'),
+                max_len = 128):
         
         # set device automatically if not provided by user.
         if device is None:
             self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
             print("Device automatically set to:", self.device)
-
         self.tag_scheme = tag_scheme
+        self.tag_outside = tag_outside
         self.transformer = transformer
-        
-        self.network = NER_BERT(transformer, self.device, len(tag_scheme))
+        self.max_len = max_len
+        self.network = NER_BERT(transformer, self.device, len(tag_scheme + 1))
         self.network.to(self.device)
         self.df_train = df_train
         self.df_validate = df_validate
-
         self.hyperparameters = {'epochs' : 1,
                                 'warmup_steps' : 0,
                                 'train_batch_size': 5,
                                 'learning_rate': 0.0001}
+        tag_outside = 'O'
+        tag_scheme = ['B-ORG', 'B-LOC', 'B-PER','B-MISC', 'I-PER', 'I-LOC', 'I-MISC', 'I-ORG']
+        tag_encoder = preprocessing.LabelEncoder()
+        # fit encoder to _all_ possible tags.
+        tag_encoder.fit([tag_outside] + tag_scheme)
 
     def train(self):
         network, losses = train_model(network = self.network,
                                       bert_model_name = self.transformer,
                                       df_train = self.df_train,
                                       df_validate = self.df_validate,
+                                      max_len = self.max_len,
                                       device = self.device,
                                       **self.hyperparameters)
         
@@ -61,7 +70,7 @@ class NERDA():
     def predict(self, df):
         predictions = predict(network = self.network, 
                               df = df,
-                              max_len = 128,
+                              max_len = self.max_len,
                               device = self.device)
 
         return predictions
@@ -71,7 +80,9 @@ class NERDA():
         # TODO: move encoder_ to model.
         # encode tags.
         tags_actual = df['tags'].apply(encoder_.inverse_transform).tolist()
-        performance = compute_performance(tags_predicted, tags_actual)
+        performance = compute_performance(tags_predicted, 
+                                          tags_actual, 
+                                          tag_scheme = self.tag_scheme)
         return performance
 
 if __name__ == '__main__':
