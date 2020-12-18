@@ -6,14 +6,12 @@ from tqdm import tqdm
 import warnings
 import nltk
 
-from .data_generator import encoder_, get_dane_data_split
 from .dataset import create_dataloader
 from .model import NER_BERT
 
 # Helper function that flattens a list of lists
 def flatten(xs):
     return [item for sublist in xs for item in sublist]
-
 
 # NOTE: er det ikke F1, der uddrages?
 def compute_performance(predictions, 
@@ -59,7 +57,8 @@ def predict(network = None,
             df = None,
             bert_model_name = 'bert-base-multilingual-uncased',
             max_len = 128,
-            device = None):
+            device = None,
+            tag_encoder = None):
 
     """[summary]
 
@@ -73,14 +72,12 @@ def predict(network = None,
     # set network to appropriate mode.
     network.eval()
 
-    # NOTE: tokenizer/encoder skal arves fra den trænede model.
-    encoder = encoder_
-
-    # encode tags.
-    refs = df['tags'].apply(encoder.inverse_transform)
-
     # TODO: bert_model_name skal arves fra modellen.
-    dr, dl = create_dataloader(df, bert_model_name, max_len = 128, batch_size = 1)
+    dr, dl = create_dataloader(df, 
+                               bert_model_name, 
+                               max_len = max_len, 
+                               batch_size = 1, 
+                               tag_encoder = tag_encoder)
 
     predictions = []
     sentences = []
@@ -93,7 +90,7 @@ def predict(network = None,
 
             outputs = network(**dl)   
 
-            preds = encoder.inverse_transform(
+            preds = tag_encoder.inverse_transform(
                     outputs.argmax(2).cpu().numpy().reshape(-1)
                 )
 
@@ -111,13 +108,3 @@ def predict(network = None,
 
     return sentences, predictions
 
-if __name__ == '__main__' :
-    text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
-    import nltk
-    words = nltk.word_tokenize(text)
-    tags = [8] * len(words)
-    import pandas as pd
-    df = pd.DataFrame({'words': [words], 'tags': [tags]})
-    sentences, predictions = predict(df = df)
-    print(list(zip(sentences, predictions)))
-    

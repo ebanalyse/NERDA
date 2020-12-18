@@ -3,18 +3,21 @@ import torch
 
 # NOTE: er dette specifikt for DaNE data eller er det en generel DataSet Reader?
 class DataSetReaderNER():
-    def __init__(self, sentences, ner_tags, bert_model_name, max_len):
+    def __init__(self, sentences, tags, bert_model_name, max_len, tag_encoder):
         self.sentences = sentences
-        self.ner_tags = ner_tags
+        self.tags = tags
         self.bert_tokenizer = get_bert_tokenizer(bert_model_name)
         self.max_len = max_len
+        self.tag_encoder = tag_encoder
 
     def __len__(self):
         return len(self.sentences)
 
     def __getitem__(self, item):
         sentence = self.sentences[item]
-        tags = self.ner_tags[item]
+        tags = self.tags[item]
+        # encode tags.
+        tags = self.tag_encoder.transform(tags)
 
         # check inputs for consistancy
         assert len(sentence) == len(tags)
@@ -67,14 +70,14 @@ class DataSetReaderNER():
                 'target_tags' : torch.tensor(target_tags, dtype = torch.long),
                 'offsets': offsets} 
       
-      
-def create_dataloader(df, bert_model_name, max_len, batch_size):
+def create_dataloader(df, bert_model_name, max_len, batch_size, tag_encoder):
     
     data_reader = DataSetReaderNER(
         sentences = df['words'].tolist(), 
-        ner_tags = df['tags'].tolist(), 
+        tags = df['tags'].tolist(), 
         bert_model_name = bert_model_name, 
-        max_len = max_len)
+        max_len = max_len,
+        tag_encoder = tag_encoder)
 
     data_loader = torch.utils.data.DataLoader(
         data_reader, batch_size = batch_size, num_workers = 1

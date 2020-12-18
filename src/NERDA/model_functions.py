@@ -1,9 +1,8 @@
 import torch
 import torch.nn as nn
 from tqdm import tqdm
-from .model import n_tags
 
-def train_(model, data_loader, optimizer, device, scheduler):
+def train_(model, data_loader, optimizer, device, scheduler, n_tags):
     
     model.train()    
     final_loss = 0.0
@@ -30,7 +29,7 @@ def train_(model, data_loader, optimizer, device, scheduler):
 
     return final_loss / len(data_loader) # Return average loss        
 
-def validate_(model, data_loader, device):
+def validate_(model, data_loader, device, n_tags):
 
     model.eval()
     final_loss = 0.0

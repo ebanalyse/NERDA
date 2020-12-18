@@ -14,6 +14,7 @@ from transformers import AdamW
 from transformers import get_linear_schedule_with_warmup
 
 def train_model(network,
+                tag_encoder,
                 df_train = get_dane_data_split('train'), 
                 df_validate = get_dane_data_split('validate'), 
                 bert_model_name = 'bert-base-multilingual-uncased',
@@ -24,7 +25,6 @@ def train_model(network,
                 warmup_steps = 0,
                 custom_weight_decay = False,
                 learning_rate = 5e-5,
-                return_valid_loss = False,
                 device = None,
                 fixed_seed = 42):
     
@@ -50,10 +50,13 @@ def train_model(network,
     if fixed_seed is not None:
         enforce_reproducibility(fixed_seed)
     
+    # compute number of unique tags from encoder.
+    n_tags = tag_encoder.classes_.shape[0]
+
     # prepare datasets for modelling by creating data readers and loaders
     # TODO: parametrize num_workers.
-    dr_train, dl_train = create_dataloader(df_train, bert_model_name, max_len, train_batch_size)
-    dr_validate, dl_validate = create_dataloader(df_validate, bert_model_name, max_len, validation_batch_size)
+    dr_train, dl_train = create_dataloader(df_train, bert_model_name, max_len, train_batch_size, tag_encoder)
+    dr_validate, dl_validate = create_dataloader(df_validate, bert_model_name, max_len, validation_batch_size, tag_encoder)
 
     # TODO: one training function, that contains everything below.    
     # Get inspiration from https://github.com/copenlu/stat-nlp-book/blob/master/labs/lab_3.ipynb
@@ -92,9 +95,9 @@ def train_model(network,
         
         print('\n Epoch {:} / {:}'.format(epoch + 1, epochs))
 
-        train_loss = train_(network, dl_train, optimizer, device, scheduler)
+        train_loss = train_(network, dl_train, optimizer, device, scheduler, n_tags)
         losses.append(train_loss)
-        valid_loss = validate_(network, dl_validate, device)
+        valid_loss = validate_(network, dl_validate, device, n_tags)
 
         print(f"Train Loss = {train_loss} Valid Loss = {valid_loss}")
 
@@ -107,17 +110,4 @@ def train_model(network,
 
     return network, losses
 
-if __name__ == '__main__':
-    #df_train, df_validate = get_dane_data_split(['train', 'validate']) 
-    # set to test_run_size to 0, if you want a complete training
-    #test_run_size = 16
-    #if test_run_size != 0:
-    #    df_train = df_train[1:(test_run_size + 1)]
-    #    df_validate = df_validate[1:(test_run_size + 1)]
-    network, losses = train_model(epochs = 1,
-                                  warmup_steps = 0,
-                                  learning_rate = 0.0001,
-                                  train_batch_size = 13)
-    # plt.plot(losses)
-    torch.save(network.state_dict(), "model.bin")
         

@@ -1,5 +1,5 @@
 from .train import train_model
-from .data_generator import get_dane_data_split, encoder_
+from .data_generator import get_dane_data_split
 from .predict import predict, compute_performance
 from sklearn import preprocessing
 import torch
@@ -34,22 +34,24 @@ class NERDA():
         self.tag_outside = tag_outside
         self.transformer = transformer
         self.max_len = max_len
-        self.network = NER_BERT(transformer, self.device, len(tag_scheme + 1))
-        self.network.to(self.device)
         self.df_train = df_train
         self.df_validate = df_validate
         self.hyperparameters = {'epochs' : 1,
                                 'warmup_steps' : 0,
                                 'train_batch_size': 5,
                                 'learning_rate': 0.0001}
-        tag_outside = 'O'
-        tag_scheme = ['B-ORG', 'B-LOC', 'B-PER','B-MISC', 'I-PER', 'I-LOC', 'I-MISC', 'I-ORG']
-        tag_encoder = preprocessing.LabelEncoder()
+        self.tag_outside = tag_outside
+        self.tag_scheme = tag_scheme
+        tag_complete = [tag_outside] + tag_scheme
         # fit encoder to _all_ possible tags.
-        tag_encoder.fit([tag_outside] + tag_scheme)
+        self.tag_encoder = preprocessing.LabelEncoder()
+        self.tag_encoder.fit(tag_complete)
+        self.network = NER_BERT(transformer, self.device, len(tag_complete))
+        self.network.to(self.device)
 
     def train(self):
         network, losses = train_model(network = self.network,
+                                      tag_encoder = self.tag_encoder,
                                       bert_model_name = self.transformer,
                                       df_train = self.df_train,
                                       df_validate = self.df_validate,
@@ -71,15 +73,14 @@ class NERDA():
         predictions = predict(network = self.network, 
                               df = df,
                               max_len = self.max_len,
-                              device = self.device)
+                              device = self.device,
+                              tag_encoder = self.tag_encoder)
 
         return predictions
 
     def evaluate_performance(self, df):
         sentences, tags_predicted = self.predict(df)
-        # TODO: move encoder_ to model.
-        # encode tags.
-        tags_actual = df['tags'].apply(encoder_.inverse_transform).tolist()
+        tags_actual = df['tags'].tolist()
         performance = compute_performance(tags_predicted, 
                                           tags_actual, 
                                           tag_scheme = self.tag_scheme)
@@ -100,10 +101,10 @@ if __name__ == '__main__':
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk
     words = nltk.word_tokenize(text)
-    tags = [8] * len(words)
+    tags = ['O'] * len(words)
     import pandas as pd
     df = pd.DataFrame({'words': [words], 'tags': [tags]})
     sentences, predictions = N.predict(df = df)
     print(list(zip(sentences, predictions)))
-    N.predict(df = df)
+
         

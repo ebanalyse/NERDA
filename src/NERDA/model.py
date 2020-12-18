@@ -2,13 +2,9 @@ from .utils import get_bert_model
 import torch
 import torch.nn as nn
 import transformers
-from .data_generator import tags
-
-# TODO: Overvej at parametrisere
-n_tags = len(tags)
 
 class NER_BERT(nn.Module):
-    def __init__(self, bert_model_name, device, n_tags = n_tags):
+    def __init__(self, bert_model_name, device, n_tags):
         super(NER_BERT, self).__init__()
         self.bert = get_bert_model(bert_model_name) 
         self.dropout = nn.Dropout(0.1)

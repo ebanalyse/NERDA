@@ -6,8 +6,7 @@ from danlp.datasets import DDT
 ddt = DDT()
 ddt_ne = ddt.load_as_simple_ner(predefined_splits= True)
 
-# TODO: hmmm.... håndter encoder anderledes! hører ikke til HER!
-def prepare_split(split, tag_encoder) -> pd.DataFrame: 
+def prepare_split(split) -> pd.DataFrame: 
     """Prepares tokens and tags for classification task.
 
     Uses a label encoder to encode the tags into integer values.
@@ -21,12 +20,10 @@ def prepare_split(split, tag_encoder) -> pd.DataFrame:
     df = pd.DataFrame({'words' : split[0],
                        'tags' : split[1]})
 
-    df['tags'] = df['tags'].apply(tag_encoder.transform)
-
     return df
 
 # TODO: Overvej at give ddt_ne som input
-def get_dane_data_split(tag_encoder, splits = ["train", "validate", "test"]):
+def get_dane_data_split(splits = ["train", "validate", "test"]):
     """
     Returns the train, validate and test datasets as dataframes.
     """
@@ -41,7 +38,7 @@ def get_dane_data_split(tag_encoder, splits = ["train", "validate", "test"]):
     
     # extract and prepare splits.
     # TODO: results as dict would be better.
-    splits_out = [prepare_split(tag_encoder, ddt_ne[splits_map.get(x)]) for x in splits]
+    splits_out = [prepare_split(ddt_ne[splits_map.get(x)]) for x in splits]
 
     # if only one split, don't list results
     if len(splits_out) == 1:
