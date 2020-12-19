@@ -3,8 +3,8 @@ from NERDA.datasets import get_dane_data
 import nltk
 
 # instantiate model.
-model = NERDA(df_train = get_dane_data('train', 5),
-              df_validate = get_dane_data('validate', 5))
+model = NERDA(dataset_training = get_dane_data('train', 5),
+              dataset_validation = get_dane_data('validate', 5))
 
 def test_instantiate_NERDA():
     assert isinstance(model, NERDA)
