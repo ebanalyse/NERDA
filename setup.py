@@ -22,7 +22,8 @@ setuptools.setup(
         'danlp',
         'sklearn',
         'nltk',
-        'pandas'
+        'pandas',
+        'conllu'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
