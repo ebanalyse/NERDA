@@ -1,13 +1,12 @@
+from .preprocessing import create_dataloader
+from .networks import NER_BERT
 import torch
 import numpy as np
-import pandas as pd
 import sklearn.metrics 
 from tqdm import tqdm 
 import warnings
 import nltk
 
-from .preprocess import create_dataloader
-from .model import NER_BERT
 
 # Helper function that flattens a list of lists
 def flatten(xs):
@@ -55,7 +54,7 @@ def compute_performance(predictions,
 # NOTE: genbrug kode fra evaluering af model på validering?
 def predict(network = None, 
             sentences = None,
-            bert_model_name = None,
+            transformer_tokenizer = None,
             max_len = 128,
             device = None,
             tag_encoder = None):
@@ -76,12 +75,11 @@ def predict(network = None,
     tag_fill = [tag_encoder.classes_[0]]
     tags_dummy = [tag_fill * len(sent) for sent in sentences]
     
-    # TODO: bert_model_name skal arves fra modellen.
     # TODO: kan vi genbruge fra validation?
     # TODO: kan vi reducere til danlp-logik?
     dr, dl = create_dataloader(sentences,
                                tags_dummy, 
-                               bert_model_name = bert_model_name,
+                               transformer_tokenizer,
                                max_len = max_len, 
                                batch_size = 1, 
                                tag_encoder = tag_encoder)

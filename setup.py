@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="NERDA", 
-    version="0.0.1",
+    version="0.0.2",
     author="PIN",
     author_email="lars.kjeldgaard@eb.dk",
     description="Named Entity Recognition for DAnish based on Transformers",
@@ -21,7 +21,6 @@ setuptools.setup(
         'tensorboard',
         'danlp',
         'sklearn',
-        'pandas',
         'nltk'
     ],
     setup_requires=['pytest-runner'],

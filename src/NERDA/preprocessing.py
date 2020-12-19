@@ -1,12 +1,10 @@
-from .utils import get_bert_tokenizer
 import torch
 
-# NOTE: er dette specifikt for DaNE data eller er det en generel DataSet Reader?
 class DataSetReaderNER():
-    def __init__(self, sentences, tags, bert_model_name, max_len, tag_encoder):
+    def __init__(self, sentences, tags, transformer_tokenizer, max_len, tag_encoder):
         self.sentences = sentences
         self.tags = tags
-        self.bert_tokenizer = get_bert_tokenizer(bert_model_name)
+        self.transformer_tokenizer = transformer_tokenizer
         self.max_len = max_len
         self.tag_encoder = tag_encoder
 
@@ -29,7 +27,7 @@ class DataSetReaderNER():
         
         for i, word in enumerate(sentence):
             # bert tokenization
-            wordpieces = self.bert_tokenizer.tokenize(word)
+            wordpieces = self.transformer_tokenizer.tokenize(word)
             tokens.extend(wordpieces)
             # make room for CLS
             offsets.extend([1]+[0]*(len(wordpieces)-1))
@@ -43,7 +41,7 @@ class DataSetReaderNER():
         offsets = offsets[:self.max_len - 2]
 
         # encode tokens for BERT
-        ids = self.bert_tokenizer.encode(tokens)
+        ids = self.transformer_tokenizer.encode(tokens)
 
         # fill out other inputs for model.    
         # 8 is the 'O' encoding
@@ -70,17 +68,17 @@ class DataSetReaderNER():
                 'target_tags' : torch.tensor(target_tags, dtype = torch.long),
                 'offsets': offsets} 
       
-def create_dataloader(sentences, tags, bert_model_name, max_len, batch_size, tag_encoder):
+def create_dataloader(sentences, tags, transformer_tokenizer, max_len, batch_size, tag_encoder, num_workers = 1):
     
     data_reader = DataSetReaderNER(
         sentences = sentences, 
         tags = tags,
-        bert_model_name = bert_model_name, 
+        transformer_tokenizer = transformer_tokenizer, 
         max_len = max_len,
         tag_encoder = tag_encoder)
 
     data_loader = torch.utils.data.DataLoader(
-        data_reader, batch_size = batch_size, num_workers = 1
+        data_reader, batch_size = batch_size, num_workers = num_workers
     )
 
     return data_reader, data_loader

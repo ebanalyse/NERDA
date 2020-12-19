@@ -1,10 +1,10 @@
-from .train import train_model
+from .training import train_model
 from .datasets import get_dane_data
-from .predict import predict, compute_performance
+from .predictions import predict, compute_performance
+from .networks import NER_BERT
 from sklearn import preprocessing
+from transformers import BertModel, BertTokenizer
 import torch
-
-from .model import NER_BERT
 
 class NERDA():
 
@@ -46,13 +46,16 @@ class NERDA():
         # fit encoder to _all_ possible tags.
         self.tag_encoder = preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
-        self.network = NER_BERT(transformer, self.device, len(tag_complete))
+        # TODO: hmm, maybe independent of BertModel
+        self.transformer_model = BertModel.from_pretrained(transformer)
+        self.transformer_tokenizer = BertTokenizer.from_pretrained(transformer, do_lower_case = True)  
+        self.network = NER_BERT(self.transformer_model, self.device, len(tag_complete))
         self.network.to(self.device)
 
     def train(self):
         network, losses = train_model(network = self.network,
                                       tag_encoder = self.tag_encoder,
-                                      bert_model_name = self.transformer,
+                                      transformer_tokenizer = self.transformer_tokenizer,
                                       dataset_training = self.dataset_training,
                                       dataset_validation = self.dataset_validation,
                                       max_len = self.max_len,
@@ -72,7 +75,7 @@ class NERDA():
     def predict(self, sentences):
         predictions = predict(network = self.network, 
                               sentences = sentences,
-                              bert_model_name = self.transformer,
+                              transformer_tokenizer = self.transformer_tokenizer,
                               max_len = self.max_len,
                               device = self.device,
                               tag_encoder = self.tag_encoder)
@@ -96,10 +99,10 @@ if __name__ == '__main__':
     N.evaluate_performance(dataset_test)
     #torch.save(N.network.state_dict(), "model.bin")
     #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
-    # N.predict(rune_dane_inference = True, print_f1_scores = True)
 
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk
+    # TODO: must work for a single sentence.
     sentences = [nltk.word_tokenize(text)]
     predictions = N.predict(sentences)
     print(list(zip(sentences, predictions)))
