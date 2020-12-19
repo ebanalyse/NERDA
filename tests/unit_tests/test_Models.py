@@ -1,6 +1,7 @@
 from NERDA.models import NERDA
 from NERDA.datasets import get_dane_data
 import nltk
+nltk.download('punkt')
 
 # instantiate model.
 model = NERDA(dataset_training = get_dane_data('train', 5),
