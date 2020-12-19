@@ -22,7 +22,7 @@ def test_predict():
     assert isinstance(predictions, list)
 
 def test_predict_length():
-    assert len(sentences[0])==len(predictions)
+    assert len(sentences[0])==len(predictions[0])
 
 #text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
 #words = nltk.word_tokenize(text)
