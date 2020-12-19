@@ -1,7 +1,6 @@
 from NERDA.models import NERDA
 from NERDA.datasets import get_dane_data
 import nltk
-import pandas as pd
 
 # instantiate model.
 model = NERDA(df_train = get_dane_data('train')[1:6],
