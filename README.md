@@ -1,4 +1,4 @@
-# NERDA <img src="logo.png" align="right" height=250/>
+# NERDA <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
 Training and deployment of models for Named Entity Recognition in Danish (NERDA) based on Transformers.
 
 ![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)

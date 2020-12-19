@@ -1,5 +1,5 @@
 from .train import train_model
-from .data_generator import get_dane_data_split
+from .datasets import get_dane_data
 from .predict import predict, compute_performance
 from sklearn import preprocessing
 import torch
@@ -22,8 +22,8 @@ class NERDA():
                             'I-MISC'
                             ],
                 tag_outside = 'O',
-                df_train = get_dane_data_split('train'),
-                df_validate = get_dane_data_split('validate'),
+                dataset_training = get_dane_data('train'),
+                dataset_validation = get_dane_data('validate'),
                 max_len = 128):
         
         # set device automatically if not provided by user.
@@ -34,8 +34,8 @@ class NERDA():
         self.tag_outside = tag_outside
         self.transformer = transformer
         self.max_len = max_len
-        self.df_train = df_train
-        self.df_validate = df_validate
+        self.dataset_training = dataset_training
+        self.dataset_validation = dataset_validation
         self.hyperparameters = {'epochs' : 1,
                                 'warmup_steps' : 0,
                                 'train_batch_size': 5,
@@ -53,8 +53,8 @@ class NERDA():
         network, losses = train_model(network = self.network,
                                       tag_encoder = self.tag_encoder,
                                       bert_model_name = self.transformer,
-                                      df_train = self.df_train,
-                                      df_validate = self.df_validate,
+                                      dataset_training = self.dataset_training,
+                                      dataset_validation = self.dataset_validation,
                                       max_len = self.max_len,
                                       device = self.device,
                                       **self.hyperparameters)
@@ -69,42 +69,39 @@ class NERDA():
         self.network.load_state_dict(torch.load(model_path))
         return f'Weights for network loaded from {model_path}'
 
-    def predict(self, df):
+    def predict(self, sentences):
         predictions = predict(network = self.network, 
-                              df = df,
+                              sentences = sentences,
+                              bert_model_name = self.transformer,
                               max_len = self.max_len,
                               device = self.device,
                               tag_encoder = self.tag_encoder)
 
         return predictions
 
-    def evaluate_performance(self, df):
-        sentences, tags_predicted = self.predict(df)
-        tags_actual = df['tags'].tolist()
+    def evaluate_performance(self, dataset):
+        tags_predicted = self.predict(dataset.get('sentences'))
         performance = compute_performance(tags_predicted, 
-                                          tags_actual, 
+                                          dataset.get('tags'),
                                           tag_scheme = self.tag_scheme)
         return performance
 
 if __name__ == '__main__':
-    from NERDA.data_generator import get_dane_data_split
+    from NERDA.datasets import get_dane_data
     from NERDA.models import NERDA
-    N = NERDA(df_train = get_dane_data_split('train')[1:6],
-              df_validate = get_dane_data_split('validate')[1:6])
+    N = NERDA(dataset_training = get_dane_data('train', 5),
+              dataset_validation = get_dane_data('validate', 5))
     N.train()
-    test = get_dane_data_split('test')[1:6]
-    N.evaluate_performance(test)
+    dataset_test = get_dane_data('test', 5)
+    N.evaluate_performance(dataset_test)
     #torch.save(N.network.state_dict(), "model.bin")
     #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
     # N.predict(rune_dane_inference = True, print_f1_scores = True)
 
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk
-    words = nltk.word_tokenize(text)
-    tags = ['O'] * len(words)
-    import pandas as pd
-    df = pd.DataFrame({'words': [words], 'tags': [tags]})
-    sentences, predictions = N.predict(df = df)
+    sentences = [nltk.word_tokenize(text)]
+    predictions = N.predict(sentences)
     print(list(zip(sentences, predictions)))
 
         

@@ -1,5 +1,4 @@
 import torch
-import torch.nn as nn
 from tqdm import tqdm
 
 def train_(model, data_loader, optimizer, device, scheduler, n_tags):
@@ -55,7 +54,7 @@ def validate_(model, data_loader, device, n_tags):
 def compute_loss(preds, target_tags, masks, device, n_tags):
     
     # initialize loss function.
-    lfn = nn.CrossEntropyLoss()
+    lfn = torch.nn.CrossEntropyLoss()
 
     # Compute active loss to not compute loss of paddings
     # TODO: elaborate on view function.

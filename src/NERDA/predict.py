@@ -6,7 +6,7 @@ from tqdm import tqdm
 import warnings
 import nltk
 
-from .dataset import create_dataloader
+from .preprocess import create_dataloader
 from .model import NER_BERT
 
 # Helper function that flattens a list of lists
@@ -54,8 +54,8 @@ def compute_performance(predictions,
 
 # NOTE: genbrug kode fra evaluering af model på validering?
 def predict(network = None, 
-            df = None,
-            bert_model_name = 'bert-base-multilingual-uncased',
+            sentences = None,
+            bert_model_name = None,
             max_len = 128,
             device = None,
             tag_encoder = None):
@@ -72,21 +72,24 @@ def predict(network = None,
     # set network to appropriate mode.
     network.eval()
 
+    # fill 'dummy' tags.
+    tag_fill = [tag_encoder.classes_[0]]
+    tags_dummy = [tag_fill * len(sent) for sent in sentences]
+    
     # TODO: bert_model_name skal arves fra modellen.
-    dr, dl = create_dataloader(df, 
-                               bert_model_name, 
+    # TODO: kan vi genbruge fra validation?
+    # TODO: kan vi reducere til danlp-logik?
+    dr, dl = create_dataloader(sentences,
+                               tags_dummy, 
+                               bert_model_name = bert_model_name,
                                max_len = max_len, 
                                batch_size = 1, 
                                tag_encoder = tag_encoder)
 
     predictions = []
-    sentences = []
+    
     with torch.no_grad():
         for i, dl in enumerate(dl): 
-
-            # extract word tokenized sentence.
-            # TODO: Maybe return words. Or decode.
-            sentence = df['words'].iloc[i]
 
             outputs = network(**dl)   
 
@@ -101,10 +104,9 @@ def predict(network = None,
 
             # make sure resulting predictions have same length as
             # original sentence.
-            assert len(preds) == len(sentence)            
+            assert len(preds) == len(sentences[i])            
 
-            sentences.append(sentence)
             predictions.append(preds)
 
-    return sentences, predictions
+    return predictions
 

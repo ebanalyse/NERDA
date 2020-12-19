@@ -1,17 +1,17 @@
 from NERDA.models import NERDA
-from NERDA.data_generator import get_dane_data_split
+from NERDA.datasets import get_dane_data
 import nltk
 import pandas as pd
 
 # instantiate model.
-model = NERDA(df_train = get_dane_data_split('train')[1:6],
-              df_validate = get_dane_data_split('validate')[1:6])
+model = NERDA(df_train = get_dane_data('train')[1:6],
+              df_validate = get_dane_data('validate')[1:6])
 
 def test_instantiate_NERDA():
     assert isinstance(model, NERDA)
 
-# model.train()
-#
+m = model.train()
+
 #text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
 #words = nltk.word_tokenize(text)
 #tags = [8] * len(words)

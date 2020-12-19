@@ -1,29 +1,17 @@
-import pandas as pd
-import numpy as np
-import re
 from danlp.datasets import DDT
 
 ddt = DDT()
 ddt_ne = ddt.load_as_simple_ner(predefined_splits= True)
 
-def prepare_split(split) -> pd.DataFrame: 
-    """Prepares tokens and tags for classification task.
-
-    Uses a label encoder to encode the tags into integer values.
-
-    Args:
-        split (list): split consisting of tokens [0] and tags [1].
-
-    Returns:
-        pd.DataFrame: resulting tokens and tags.
-    """
-    df = pd.DataFrame({'words' : split[0],
-                       'tags' : split[1]})
-
-    return df
+# helper function
+def prepare_split(split, limit = None):
+    if limit is not None:
+        split = [x[:limit] for x in split]    
+    out = {'sentences': split[0], 'tags': split[1]}
+    return out
 
 # TODO: Overvej at give ddt_ne som input
-def get_dane_data_split(splits = ["train", "validate", "test"]):
+def get_dane_data(splits = ["train", "validate", "test"], limit = None):
     """
     Returns the train, validate and test datasets as dataframes.
     """
@@ -38,7 +26,7 @@ def get_dane_data_split(splits = ["train", "validate", "test"]):
     
     # extract and prepare splits.
     # TODO: results as dict would be better.
-    splits_out = [prepare_split(ddt_ne[splits_map.get(x)]) for x in splits]
+    splits_out = [prepare_split(ddt_ne[splits_map.get(x)], limit = limit) for x in splits]
 
     # if only one split, don't list results
     if len(splits_out) == 1:

@@ -1,22 +1,35 @@
 import pandas as pd
 import numpy as np
-import torch
-from .utils import enforce_reproducibility
-from .dataset import create_dataloader
+from .preprocess import create_dataloader
 from .model_functions import train_, validate_
-from .data_generator import get_dane_data_split
-import torch
-
+from .datasets import get_dane_data
 from .model import NER_BERT
+
+import torch
 from sklearn import preprocessing
 from sklearn import model_selection
 from transformers import AdamW
 from transformers import get_linear_schedule_with_warmup
+import random
+
+def enforce_reproducibility(seed = 42):
+    # Sets seed manually for both CPU and CUDA
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # For atomic operations there is currently 
+    # no simple way to enforce determinism, as
+    # the order of parallel operations is not known.
+    # CUDNN
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    # System based
+    random.seed(seed)
+    np.random.seed(seed)
 
 def train_model(network,
                 tag_encoder,
-                df_train = get_dane_data_split('train'), 
-                df_validate = get_dane_data_split('validate'), 
+                dataset_training = get_dane_data('train'), 
+                dataset_validation = get_dane_data('validate'), 
                 bert_model_name = 'bert-base-multilingual-uncased',
                 max_len = 128,
                 train_batch_size = 16,
@@ -55,15 +68,25 @@ def train_model(network,
 
     # prepare datasets for modelling by creating data readers and loaders
     # TODO: parametrize num_workers.
-    dr_train, dl_train = create_dataloader(df_train, bert_model_name, max_len, train_batch_size, tag_encoder)
-    dr_validate, dl_validate = create_dataloader(df_validate, bert_model_name, max_len, validation_batch_size, tag_encoder)
+    dr_train, dl_train = create_dataloader(dataset_training.get('sentences'),
+                                           dataset_training.get('tags'), 
+                                           bert_model_name, 
+                                           max_len, 
+                                           train_batch_size, 
+                                           tag_encoder)
+    dr_validate, dl_validate = create_dataloader(dataset_validation.get('sentences'), 
+                                                 dataset_validation.get('tags'),
+                                                 bert_model_name, 
+                                                 max_len, 
+                                                 validation_batch_size, 
+                                                 tag_encoder)
 
     # TODO: one training function, that contains everything below.    
     # Get inspiration from https://github.com/copenlu/stat-nlp-book/blob/master/labs/lab_3.ipynb
     optimizer_parameters = network.parameters()
 
     # Applying per-parameter weight-decay if chosen
-    if custom_weight_decay:
+    if custom_weight_decay: 
         param_optimizer = list(network.named_parameters())
         no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
         optimizer_parameters = [
@@ -109,5 +132,6 @@ def train_model(network,
     network.load_state_dict(best_parameters)
 
     return network, losses
+
 
         

@@ -1,7 +1,6 @@
 from .utils import get_bert_model
-import torch
 import torch.nn as nn
-import transformers
+
 
 class NER_BERT(nn.Module):
     def __init__(self, bert_model_name, device, n_tags):

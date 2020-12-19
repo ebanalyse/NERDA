@@ -16,7 +16,7 @@ class DataSetReaderNER():
     def __getitem__(self, item):
         sentence = self.sentences[item]
         tags = self.tags[item]
-        # encode tags.
+        # encode tags
         tags = self.tag_encoder.transform(tags)
 
         # check inputs for consistancy
@@ -28,7 +28,7 @@ class DataSetReaderNER():
         offsets = []
         
         for i, word in enumerate(sentence):
-            # bert tokenization.
+            # bert tokenization
             wordpieces = self.bert_tokenizer.tokenize(word)
             tokens.extend(wordpieces)
             # make room for CLS
@@ -70,11 +70,11 @@ class DataSetReaderNER():
                 'target_tags' : torch.tensor(target_tags, dtype = torch.long),
                 'offsets': offsets} 
       
-def create_dataloader(df, bert_model_name, max_len, batch_size, tag_encoder):
+def create_dataloader(sentences, tags, bert_model_name, max_len, batch_size, tag_encoder):
     
     data_reader = DataSetReaderNER(
-        sentences = df['words'].tolist(), 
-        tags = df['tags'].tolist(), 
+        sentences = sentences, 
+        tags = tags,
         bert_model_name = bert_model_name, 
         max_len = max_len,
         tag_encoder = tag_encoder)
