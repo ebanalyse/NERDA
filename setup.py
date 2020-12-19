@@ -18,7 +18,6 @@ setuptools.setup(
     install_requires=[
         'torch',
         'transformers==3.5.1',
-        'tensorboard',
         'danlp',
         'sklearn',
         'nltk',
