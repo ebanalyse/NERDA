@@ -34,15 +34,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools
 
-    - name: Deploy docs
-      run: |
-        pip install .
-        pip install mkdocs-material mkdocstrings
-        mkdocs gh-deploy --force
-
     - name: Run tests
       run: |
         python setup.py test
+
+    - name: Publish test results
+      uses: EnricoMi/publish-unit-test-result-action@v1.6
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: test-results/**/*.xml
 
     - name: Build and publish
       if: github.ref == 'refs/heads/main'
@@ -54,6 +55,11 @@ jobs:
         python setup.py sdist bdist_wheel
         twine upload dist/*
 
+    - name: Deploy docs
+      run: |
+        pip install .
+        pip install mkdocs-material mkdocstrings
+        mkdocs gh-deploy --force
 
     
     
