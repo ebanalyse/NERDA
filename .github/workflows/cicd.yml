@@ -38,6 +38,11 @@ jobs:
       run: |
         python setup.py test
 
+    - name: Deploy documentation 
+      run: | 
+        pip install mkdocs-material 
+        git pull mkdocs gh-deploy
+
     - name: Build and publish
       if: github.ref == 'refs/heads/main'
       env:
@@ -48,10 +53,6 @@ jobs:
         python setup.py sdist bdist_wheel
         twine upload dist/*
 
-    - name: Deploy documentation 
-      run: | 
-        pip install mkdocs-material 
-        git pull mkdocs gh-deploy
 
     
     
