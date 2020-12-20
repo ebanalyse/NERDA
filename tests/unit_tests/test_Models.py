@@ -11,16 +11,16 @@ def test_instantiate_NERDA():
     assert isinstance(model, NERDA)
 
 #model.train()
-#
+
 #text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
 #import nltk
-## TODO: must work for a single sentence.
+# TODO: must work for a single sentence.
 #sentences = [nltk.word_tokenize(text)]
 #predictions = model.predict(sentences)
-#
+
 #def test_predict():
 #    assert isinstance(predictions, list)
-#
+
 #def test_predict_length():
 #    assert len(sentences[0])==len(predictions[0])
 

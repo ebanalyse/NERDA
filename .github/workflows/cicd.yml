@@ -38,6 +38,13 @@ jobs:
       run: |
         python setup.py test
 
+    - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.xml
+          flags: unittests
+
     - name: Publish test results
       uses: EnricoMi/publish-unit-test-result-action@v1.6
       if: always()
