@@ -43,8 +43,6 @@ jobs:
         pip install mkdocs mkdocs-material mkdocstrings
         mkdocs gh-deploy --force
 
-    - name: Deploy docs
-
     - name: Build and publish
       if: github.ref == 'refs/heads/main'
       env:
