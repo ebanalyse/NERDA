@@ -40,11 +40,8 @@ jobs:
 
     - name: Install documentation deps 
       run: | 
-        pip install mkdocs-material 
-
-    - name: Deploy documentation
-      run: |
-        git pull mkdocs gh-deploy
+        pip install mkdocs-material
+        mkdocs gh-deploy
 
     - name: Build and publish
       if: github.ref == 'refs/heads/main'
