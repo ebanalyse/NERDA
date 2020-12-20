@@ -7,7 +7,6 @@ from tqdm import tqdm
 import warnings
 import nltk
 
-
 # Helper function that flattens a list of lists
 def flatten(xs):
     return [item for sublist in xs for item in sublist]
@@ -58,15 +57,6 @@ def predict(network = None,
             max_len = 128,
             device = None,
             tag_encoder = None):
-
-    """[summary]
-
-    Args:
-        df_test
-        
-    Returns:
-        [List of strings]: returns the predictions for each of the sentences in the test_data provided.
-    """
 
     # set network to appropriate mode.
     network.eval()

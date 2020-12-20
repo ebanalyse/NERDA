@@ -109,25 +109,6 @@ def train_model(network,
                 device = None,
                 fixed_seed = 42):
     
-    """
-    Runs the fine-tuning for the BERT based NER model. 
-    
-    Calling the function with no defined parameters results in a fine-tuning on the DaNE data, with a basic
-    set of hyperparameters. 
-
-    Args:
-        df_train ([type]): [description]
-        df_validate ([type]): [description]
-        bert_model_name ([type]): [description]. Defaults to utils.mbert
-        use_dane_data (bool): [description]. Defaults to True.
-        max_len (int): [description]. Defaults to 128.
-        train_batch_size (int): [description]. Defaults to 16.
-        validation_batch_size (int): [description]. Defaults to 8.
-        epochs (int): [description]. Defaults to 5.
-        warmup_steps (int): [description]. Defaults to 0.
-        custom_weight_decay (bool): [description]. Defaults to False.
-        learning_rate ([type]): [description]. Defaults to 5e-5.
-    """
     if fixed_seed is not None:
         enforce_reproducibility(fixed_seed)
     
