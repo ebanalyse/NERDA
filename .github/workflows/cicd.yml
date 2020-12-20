@@ -38,9 +38,12 @@ jobs:
       run: |
         python setup.py test
 
-    - name: Deploy documentation 
+    - name: Install documentation deps 
       run: | 
         pip install mkdocs-material 
+
+    - name: Deploy documentation
+      run: |
         git pull mkdocs gh-deploy
 
     - name: Build and publish
