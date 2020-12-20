@@ -38,14 +38,12 @@ jobs:
       run: |
         python setup.py test
 
-    - name: Install dependencies for docs
-      run: |
-        pip install mkdocstrings
-        
     - name: Deploy docs
-      uses: mhausenblas/mkdocs-deploy-gh-pages@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        pip install mkdocs mkdocs-material mkdocstrings
+        mkdocs gh-deploy --force
+
+    - name: Deploy docs
 
     - name: Build and publish
       if: github.ref == 'refs/heads/main'
