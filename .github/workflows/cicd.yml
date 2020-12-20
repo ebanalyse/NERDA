@@ -38,6 +38,7 @@ jobs:
       run: |
         pip install .
         pip install mkdocs-material mkdocstrings
+        git pull
         mkdocs gh-deploy --force
 
     - name: Run tests
