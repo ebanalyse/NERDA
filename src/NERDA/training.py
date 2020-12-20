@@ -7,7 +7,7 @@ import random
 import torch
 from tqdm import tqdm
 
-def train_(model, data_loader, optimizer, device, scheduler, n_tags):
+def train(model, data_loader, optimizer, device, scheduler, n_tags):
     
     model.train()    
     final_loss = 0.0
@@ -34,7 +34,7 @@ def train_(model, data_loader, optimizer, device, scheduler, n_tags):
 
     return final_loss / len(data_loader) # Return average loss        
 
-def validate_(model, data_loader, device, n_tags):
+def validate(model, data_loader, device, n_tags):
 
     model.eval()
     final_loss = 0.0
@@ -167,9 +167,9 @@ def train_model(network,
         
         print('\n Epoch {:} / {:}'.format(epoch + 1, epochs))
 
-        train_loss = train_(network, dl_train, optimizer, device, scheduler, n_tags)
+        train_loss = train(network, dl_train, optimizer, device, scheduler, n_tags)
         losses.append(train_loss)
-        valid_loss = validate_(network, dl_validate, device, n_tags)
+        valid_loss = validate(network, dl_validate, device, n_tags)
 
         print(f"Train Loss = {train_loss} Valid Loss = {valid_loss}")
 

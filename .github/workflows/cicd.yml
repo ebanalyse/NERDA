@@ -49,10 +49,9 @@ jobs:
         twine upload dist/*
 
     - name: Deploy documentation 
-        run: | 
-          python -m pip install --upgrade pip 
-          pip install mkdocs-material 
-          git pull mkdocs gh-deploy
+      run: | 
+        pip install mkdocs-material 
+        git pull mkdocs gh-deploy
 
     
     
