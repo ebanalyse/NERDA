@@ -38,10 +38,11 @@ jobs:
       run: |
         python setup.py test
 
-    - name: Install documentation deps 
-      run: | 
-        pip install mkdocs-material
-        mkdocs gh-deploy
+    - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: mkdocs.yml
 
     - name: Build and publish
       if: github.ref == 'refs/heads/main'
