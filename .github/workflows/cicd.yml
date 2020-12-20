@@ -36,6 +36,7 @@ jobs:
 
     - name: Deploy docs
       run: |
+        pip install .
         pip install mkdocs-material mkdocstrings
         mkdocs gh-deploy --force
 
