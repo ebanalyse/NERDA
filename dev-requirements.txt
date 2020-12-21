@@ -1,0 +1,4 @@
+wheel
+twine
+mkdocs-material 
+mkdocstrings
