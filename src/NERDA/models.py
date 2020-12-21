@@ -1,9 +1,9 @@
 from .training import train_model
 from .datasets import get_dane_data
 from .predictions import predict, compute_performance
-from .networks import NER_BERT
+from .networks import TransformerNetwork
 from sklearn import preprocessing
-from transformers import BertModel, BertTokenizer
+from transformers import AutoModel, AutoTokenizer
 import torch
 
 class NERDA():
@@ -47,9 +47,9 @@ class NERDA():
         self.tag_encoder = preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
         # TODO: hmm, maybe independent of BertModel
-        self.transformer_model = BertModel.from_pretrained(transformer)
-        self.transformer_tokenizer = BertTokenizer.from_pretrained(transformer, do_lower_case = True)  
-        self.network = NER_BERT(self.transformer_model, self.device, len(tag_complete))
+        self.transformer_model = AutoModel.from_pretrained(transformer)
+        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, do_lower_case = True)  
+        self.network = TransformerNetwork(self.transformer_model, self.device, len(tag_complete))
         self.network.to(self.device)
 
     def train(self):
@@ -106,5 +106,10 @@ if __name__ == '__main__':
     sentences = [nltk.word_tokenize(text)]
     predictions = N.predict(sentences)
     print(list(zip(sentences, predictions)))
+
+    #m = AutoModel.from_pretrained('bert-base-multilingual-uncased')
+    #config = AutoConfig.from_pretrained('Maltehb/-l-ctra-danish-electra-small-uncased')
+    #m = AutoConfig.from_pretrained('bert-base-multilingual-uncased')
+    
 
         

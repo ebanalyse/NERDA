@@ -1,5 +1,4 @@
 from .preprocessing import create_dataloader
-from .networks import NER_BERT
 import torch
 import numpy as np
 import sklearn.metrics 
