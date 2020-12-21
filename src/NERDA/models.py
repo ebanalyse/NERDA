@@ -92,8 +92,11 @@ class NERDA():
 if __name__ == '__main__':
     from NERDA.datasets import get_dane_data
     from NERDA.models import NERDA
+    t = 'bert-base-multilingual-uncased'
+    t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
     N = NERDA(dataset_training = get_dane_data('train', 5),
-              dataset_validation = get_dane_data('validate', 5))
+              dataset_validation = get_dane_data('validate', 5),
+              transformer = t)
     N.train()
     dataset_test = get_dane_data('test', 5)
     N.evaluate_performance(dataset_test)

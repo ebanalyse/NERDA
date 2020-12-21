@@ -18,15 +18,16 @@ class TransformerNetwork(nn.Module):
 
     # NOTE: offsets not used as-is, but is expected as output
     # down-stream. So don't remove! :)
-    def forward(self, ids, masks, token_type_ids, target_tags, offsets):
+    def forward(self, input_ids, masks, token_type_ids, target_tags, offsets):
 
         # move tensors to device
-        ids = ids.to(self.device)
+        input_ids = input_ids.to(self.device)
         masks = masks.to(self.device)
         token_type_ids = token_type_ids.to(self.device)
         target_tags = target_tags.to(self.device)
-
-        outputs, _ = self.transformer(ids, attention_mask = masks, token_type_ids = token_type_ids)
+        
+        # get transformer hidden states
+        outputs = self.transformer(input_ids, attention_mask = masks, token_type_ids = token_type_ids)[0]
 
         # apply drop-out
         outputs = self.dropout(outputs)
