@@ -17,7 +17,7 @@ pip install NERDA
 Named Entity Recognition (NER) tasks are all about identifying and 
 extracting names of named entitites from natural language texts. 
 
-Read more about NER on [wikipedia](https://en.wikipedia.org/wiki/Named-entity_recognition).
+Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_recognition).
 
 ## '`NERDA`'?
 '`NERDA`' originally stands for *'Named Entity Recognition for DAnish'*. However, this

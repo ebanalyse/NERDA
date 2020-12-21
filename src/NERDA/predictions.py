@@ -67,12 +67,12 @@ def predict(network = None,
     
     # TODO: kan vi genbruge fra validation?
     # TODO: kan vi reducere til danlp-logik?
-    dr, dl = create_dataloader(sentences,
-                               tags_dummy, 
-                               transformer_tokenizer,
-                               max_len = max_len, 
-                               batch_size = 1, 
-                               tag_encoder = tag_encoder)
+    dl = create_dataloader(sentences,
+                           tags_dummy, 
+                           transformer_tokenizer,
+                           max_len = max_len, 
+                           batch_size = 1, 
+                           tag_encoder = tag_encoder)
 
     predictions = []
     

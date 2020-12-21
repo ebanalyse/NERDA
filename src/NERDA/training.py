@@ -117,21 +117,19 @@ def train_model(network,
 
     # prepare datasets for modelling by creating data readers and loaders
     # TODO: parametrize num_workers.
-    dr_train, dl_train = create_dataloader(dataset_training.get('sentences'),
-                                           dataset_training.get('tags'), 
-                                           transformer_tokenizer, 
-                                           max_len, 
-                                           train_batch_size, 
-                                           tag_encoder)
-    dr_validate, dl_validate = create_dataloader(dataset_validation.get('sentences'), 
-                                                 dataset_validation.get('tags'),
-                                                 transformer_tokenizer, 
-                                                 max_len, 
-                                                 validation_batch_size, 
-                                                 tag_encoder)
+    dl_train = create_dataloader(dataset_training.get('sentences'),
+                                 dataset_training.get('tags'), 
+                                 transformer_tokenizer, 
+                                 max_len, 
+                                 train_batch_size, 
+                                 tag_encoder)
+    dl_validate = create_dataloader(dataset_validation.get('sentences'), 
+                                    dataset_validation.get('tags'),
+                                    transformer_tokenizer, 
+                                    max_len, 
+                                    validation_batch_size, 
+                                    tag_encoder)
 
-    # TODO: one training function, that contains everything below.    
-    # Get inspiration from https://github.com/copenlu/stat-nlp-book/blob/master/labs/lab_3.ipynb
     optimizer_parameters = network.parameters()
 
     # Applying per-parameter weight-decay if chosen
@@ -153,7 +151,7 @@ def train_model(network,
             },
         ]
 
-    num_train_steps = int(len(dr_train) / train_batch_size * epochs)
+    num_train_steps = int(len(dataset_training.get('sentences')) / train_batch_size * epochs)
     
     optimizer = AdamW(optimizer_parameters, lr = learning_rate)
     scheduler = get_linear_schedule_with_warmup(

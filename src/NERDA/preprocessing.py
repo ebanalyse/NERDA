@@ -81,5 +81,5 @@ def create_dataloader(sentences, tags, transformer_tokenizer, max_len, batch_siz
         data_reader, batch_size = batch_size, num_workers = num_workers
     )
 
-    return data_reader, data_loader
+    return data_loader
 
