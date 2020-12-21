@@ -61,5 +61,11 @@ jobs:
         pip install wheel twine
         python setup.py sdist bdist_wheel
         twine upload dist/*
+ 
+    - name: Deploy docs
+      if: github.ref == 'refs/heads/main'
+      run: |
+        pip install .
+        mkdocs gh-deploy --force
     
     
