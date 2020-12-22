@@ -1,53 +1,7 @@
 from .preprocessing import create_dataloader
 import torch
 import numpy as np
-import sklearn.metrics 
 from tqdm import tqdm 
-import warnings
-import nltk
-
-# Helper function that flattens a list of lists
-def flatten(xs):
-    return [item for sublist in xs for item in sublist]
-
-# NOTE: er det ikke F1, der uddrages?
-def compute_performance(predictions, 
-                        targets, 
-                        tag_scheme = [ 
-                            'B-PER',
-                            'I-PER', 
-                            'I-ORG', 
-                            'B-ORG', 
-                            'B-LOC', 
-                            'I-LOC', 
-                            'B-MISC', 
-                            'I-MISC'
-                            ]):
-    """
-    Calculates and print out the accuracy scores for the DaNE test dataset.   
-    """
-    flat_preds = flatten(predictions)
-    flat_labels = flatten(targets)
-
-    # NOTE: skal tag_scheme gives eksplicit.
-    scores_micro = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
-                                                                   y_pred = flat_preds,
-                                                                   labels = tag_scheme,
-                                                                   average = 'micro' ) 
-
-    scores_class = sklearn.metrics.precision_recall_fscore_support(y_true = flat_labels,
-                                                                   y_pred = flat_preds,
-                                                                   labels = tag_scheme,
-                                                                   average = None ) 
-
-    print('MICRO F1: ', scores_micro[2])
-    # NOTE: igen
-    class_scores = list(zip(tag_scheme, scores_class[2]))
-    
-    for score in class_scores:
-        print(score[0], ': ' , score[1], '\n')
-
-    return class_scores
 
 # NOTE: genbrug kode fra evaluering af model på validering?
 def predict(network = None, 
@@ -96,4 +50,7 @@ def predict(network = None,
             predictions.append(preds)
 
     return predictions
+
+def tester(**kwargs):
+    print(kwargs)
 

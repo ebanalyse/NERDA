@@ -1,7 +1,9 @@
 from .training import train_model
 from .datasets import get_dane_data
-from .predictions import predict, compute_performance
+from .predictions import predict
+from .performance import compute_f1_scores
 from .networks import GenericNetwork
+import pandas as pd
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer
 import torch
@@ -24,6 +26,7 @@ class NERDA():
                 tag_outside = 'O',
                 dataset_training = get_dane_data('train'),
                 dataset_validation = get_dane_data('validate'),
+                do_lower_case = True,
                 max_len = 128,
                 dropout = 0.1):
         
@@ -47,9 +50,8 @@ class NERDA():
         # fit encoder to _all_ possible tags.
         self.tag_encoder = preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
-        # TODO: hmm, maybe independent of BertModel
         self.transformer_model = AutoModel.from_pretrained(transformer)
-        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, do_lower_case = True)  
+        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, do_lower_case = do_lower_case)  
         self.network = GenericNetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
         self.network.to(self.device)
 
@@ -84,11 +86,36 @@ class NERDA():
         return predictions
 
     def evaluate_performance(self, dataset):
+        
         tags_predicted = self.predict(dataset.get('sentences'))
-        performance = compute_performance(tags_predicted, 
-                                          dataset.get('tags'),
-                                          tag_scheme = self.tag_scheme)
-        return performance
+        
+        f1 = compute_f1_scores(y_pred = tags_predicted, 
+                               y_true = dataset.get('tags'),
+                               labels = self.tag_scheme,
+                               average = None)
+        
+        # create DataFrame with performance scores (=F1)
+        df = list(zip(self.tag_scheme, f1[2]))
+        # TODO: overvej om pandas skal udgå
+        df = pd.DataFrame(df, columns = ['Level', 'F1-Score'])    
+        
+        # compute MICRO-averaged F1-scores and add to table.
+        f1_micro = compute_f1_scores(y_pred = tags_predicted, 
+                                     y_true = dataset.get('tags'),
+                                     labels = self.tag_scheme,
+                                     average = 'micro')
+        f1_micro = pd.DataFrame({'Level' : ['AVG_MICRO'], 'F1-Score': [f1_micro[2]]})
+        df = df.append(f1_micro)
+
+        # compute MACRO-averaged F1-scores and add to table.
+        f1_macro = compute_f1_scores(y_pred = tags_predicted, 
+                                     y_true = dataset.get('tags'),
+                                     labels = self.tag_scheme,
+                                     average = 'macro')
+        f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 'F1-Score': [f1_macro[2]]})
+        df = df.append(f1_macro)
+     
+        return df
 
 if __name__ == '__main__':
     from NERDA.datasets import get_dane_data
@@ -102,7 +129,7 @@ if __name__ == '__main__':
               transformer = t)
     N.train()
     dataset_test = get_dane_data('test', 5)
-    N.evaluate_performance(dataset_test)
+    f1 = N.evaluate_performance(dataset_test)
     #torch.save(N.network.state_dict(), "model.bin")
     #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
 
