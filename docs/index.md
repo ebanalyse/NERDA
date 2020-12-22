@@ -6,9 +6,10 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/NERDA?color=green)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-'NERDA' is not only a mesmerizing muppet-like character. 'NERDA' is also
-a python package, that offers a complete framework for fine-tuning of
-pretrained transformer-models for Named Entity Recognition (=NER) tasks.
+`NERDA` is not only a mesmerizing muppet-like character. `NERDA` is also
+a python package, that offers a complete framework for fine-tuning 
+pretrained [`huggingface` transformers](https://huggingface.co/) 
+for Named Entity Recognition (=NER) tasks.
 
 ## Installation guide
 ```
@@ -23,21 +24,24 @@ Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_re
 
 ## Performance
 
-The table below summarizes the performance (=F1-scores) of the model
+The table below summarizes the performance (=**F1-scores**) of the model
  configurations, that `NERDA` ships with.
 
-| **Level** | **MBERT** | **DABERT** | **ELECTRA**  |
-|---------------------------------------------------|
-| B-PER     | 0.92      | 0.93       | 0.92         |
-| I-PER     | 0.97      | 0.99       | 0.97         |
-| B-ORG     | 0.68      | 0.79       | 0.65         |
-| I-ORG     | 0.67      | 0.79       | 0.72         |
-| B-LOC     | 0.86      | 0.85       | 0.79         |
-| I-LOC     | 0.33      | 0.32       | 0.44         |
-| B-MISC    | 0.73      | 0.74       | 0.61         |
-| I-MISC    | 0.70      | 0.86       | 0.65         |
-| AVG_MICRO | 0.81      | 0.85       | 0.79         |
-| AVG_MACRO | 0.73      | 0.78       | 0.72         |
+| **Level**     | **MBERT** | **DABERT** | **ELECTRA** |
+|---------------|-----------|------------|-------------|
+| B-PER         | 0.92      | 0.93       | 0.92        |       
+| I-PER         | 0.97      | 0.99       | 0.97        |       
+| B-ORG         | 0.68      | 0.79       | 0.65        |       
+| I-ORG         | 0.67      | 0.79       | 0.72        |       
+| B-LOC         | 0.86      | 0.85       | 0.79        |       
+| I-LOC         | 0.33      | 0.32       | 0.44        |       
+| B-MISC        | 0.73      | 0.74       | 0.61        |       
+| I-MISC        | 0.70      | 0.86       | 0.65        |       
+| **AVG_MICRO** | 0.81      | 0.85       | 0.79        |       
+| **AVG_MACRO** | 0.73      | 0.78       | 0.72        | 
+
+
+**AVG_** stands for micro- and macro AVeraGed F1-scores.
 
 ## '`NERDA`'?
 '`NERDA`' originally stands for *'Named Entity Recognition for DAnish'*. However, this
@@ -61,6 +65,4 @@ If you want to contribute (which we encourage you to), open a
 
 If you encounter a bug or want to suggest an enhancement, please 
 [open an issue](https://github.com/ebanalyse/NERDA/issues).
-
-
 
