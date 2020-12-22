@@ -3,6 +3,7 @@ from .datasets import get_dane_data
 from .predictions import predict
 from .performance import compute_f1_scores
 from .networks import GenericNetwork
+import pickle
 import pandas as pd
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer
@@ -16,8 +17,8 @@ class NERDA():
                 tag_scheme = [
                             'B-PER',
                             'I-PER', 
-                            'I-ORG', 
                             'B-ORG', 
+                            'I-ORG', 
                             'B-LOC', 
                             'I-LOC', 
                             'B-MISC', 
@@ -28,7 +29,12 @@ class NERDA():
                 dataset_validation = get_dane_data('validate'),
                 do_lower_case = True,
                 max_len = 128,
-                dropout = 0.1):
+                dropout = 0.1,
+                hyperparameters = {'epochs' : 1,
+                                   'warmup_steps' : 0,
+                                   'train_batch_size': 5,
+                                   'learning_rate': 0.0001},
+                tokenizer_parameters = {'do_lower_case' : True}):
         
         # set device automatically if not provided by user.
         if device is None:
@@ -40,10 +46,7 @@ class NERDA():
         self.max_len = max_len
         self.dataset_training = dataset_training
         self.dataset_validation = dataset_validation
-        self.hyperparameters = {'epochs' : 1,
-                                'warmup_steps' : 0,
-                                'train_batch_size': 5,
-                                'learning_rate': 0.0001}
+        self.hyperparameters = hyperparameters
         self.tag_outside = tag_outside
         self.tag_scheme = tag_scheme
         tag_complete = [tag_outside] + tag_scheme
@@ -51,7 +54,7 @@ class NERDA():
         self.tag_encoder = preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
         self.transformer_model = AutoModel.from_pretrained(transformer)
-        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, do_lower_case = do_lower_case)  
+        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)  
         self.network = GenericNetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
         self.network.to(self.device)
 
@@ -117,9 +120,66 @@ class NERDA():
      
         return df
 
+def train_MBERT(limit = None):
+    name = 'mbert'
+    transformer = 'bert-base-multilingual-uncased'
+    model = NERDA(transformer = transformer,
+                  dataset_training = get_dane_data('train', limit = limit), 
+                  dataset_validation = get_dane_data('validate', limit = limit),
+                  hyperparameters = {'epochs' : 4,
+                                     'warmup_steps' : 500,
+                                     'train_batch_size': 13,
+                                     'learning_rate': 0.0001})
+    model.train()
+    torch.save(model.network.state_dict(), f'{name}_model.bin')
+    dataset_test = get_dane_data('test', limit = limit)
+    f1 = model.evaluate_performance(dataset_test)
+    with open(f'{name}_f1.pickle', 'wb') as f:
+        pickle.dump(f1, f)
+    return model, f1   
+
+def train_DABERT(limit = None):
+    name = 'dabert'
+    transformer = 'DJSammy/bert-base-danish-uncased_BotXO,ai'
+    # TODO: prøv at reducere til 2 epochs.
+    model = NERDA(transformer = transformer,
+                  dataset_training = get_dane_data('train', limit = limit), 
+                  dataset_validation = get_dane_data('validate', limit = limit),
+                  hyperparameters = {'epochs' : 4,
+                                     'warmup_steps' : 500,
+                                     'train_batch_size': 13,
+                                     'learning_rate': 0.0001})
+    model.train()
+    torch.save(model.network.state_dict(), f'{name}_model.bin')
+    dataset_test = get_dane_data('test', limit = limit)
+    f1 = model.evaluate_performance(dataset_test)
+    with open(f'{name}_f1.pickle', 'wb') as f:
+        pickle.dump(f1, f)
+    return model, f1 
+
+def train_ELECTRA(limit = None):
+    name = 'electra'
+    transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased'
+    model = NERDA(transformer = transformer,
+                  dataset_training = get_dane_data('train', limit = limit), 
+                  dataset_validation = get_dane_data('validate', limit = limit),
+                  hyperparameters = {'epochs' : 4,
+                                     'warmup_steps' : 500,
+                                     'train_batch_size': 13,
+                                     'learning_rate': 0.0001})
+    model.train()
+    torch.save(model.network.state_dict(), f'{name}_model.bin')
+    dataset_test = get_dane_data('test', limit = limit)
+    f1 = model.evaluate_performance(dataset_test)
+    with open(f'{name}_f1.pickle', 'wb') as f:
+        pickle.dump(f1, f)
+    return model, f1 
+
 if __name__ == '__main__':
-    from NERDA.datasets import get_dane_data
-    from NERDA.models import NERDA
+    from NERDA.models import train_MBERT, train_DABERT, train_ELECTRA
+    # m, f1 = train_MBERT()
+    m, f1 = train_DABERT()
+    m, f1 = train_ELECTRA()
     t = 'bert-base-multilingual-uncased'
     # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
     # t = 'xlm-roberta-base' # predicter I-MISC

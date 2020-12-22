@@ -6,6 +6,7 @@ __pycache__/
 # Data and models
 /data
 /daNER
+src/*.pickle
 
 # C extensions
 *.so

@@ -10,7 +10,7 @@ class GenericNetwork(nn.Module):
         # extract AutoConfig, from which relevant parameters can be extracted.
         transformer_config = AutoConfig.from_pretrained(transformer_name)
 
-        self.transformer = transformer 
+        self.transformer = transformer
         self.dropout = nn.Dropout(dropout)
         self.tags = nn.Linear(transformer_config.hidden_size, n_tags)
         self.device = device
@@ -26,6 +26,7 @@ class GenericNetwork(nn.Module):
         target_tags = target_tags.to(self.device)
         
         # get transformer hidden states
+        # TODO: check hvilke argumenter, transformerne accepterer og match på dem.
         outputs = self.transformer(input_ids, attention_mask = masks, token_type_ids = token_type_ids)[0]
 
         # apply drop-out
