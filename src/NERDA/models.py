@@ -1,7 +1,7 @@
 from .training import train_model
 from .datasets import get_dane_data
 from .predictions import predict, compute_performance
-from .networks import TransformerNetwork
+from .networks import GenericNetwork
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer
 import torch
@@ -24,7 +24,8 @@ class NERDA():
                 tag_outside = 'O',
                 dataset_training = get_dane_data('train'),
                 dataset_validation = get_dane_data('validate'),
-                max_len = 128):
+                max_len = 128,
+                dropout = 0.1):
         
         # set device automatically if not provided by user.
         if device is None:
@@ -49,7 +50,7 @@ class NERDA():
         # TODO: hmm, maybe independent of BertModel
         self.transformer_model = AutoModel.from_pretrained(transformer)
         self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, do_lower_case = True)  
-        self.network = TransformerNetwork(self.transformer_model, self.device, len(tag_complete))
+        self.network = GenericNetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
         self.network.to(self.device)
 
     def train(self):
@@ -93,7 +94,9 @@ if __name__ == '__main__':
     from NERDA.datasets import get_dane_data
     from NERDA.models import NERDA
     t = 'bert-base-multilingual-uncased'
-    t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
+    # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
+    # t = 'xlm-roberta-base' # predicter I-MISC
+    # t = 'distilbert-base-multilingual-cased' # TODO: forward tager ikke 'token_type_ids', fejler -> Fjern? 
     N = NERDA(dataset_training = get_dane_data('train', 5),
               dataset_validation = get_dane_data('validate', 5),
               transformer = t)

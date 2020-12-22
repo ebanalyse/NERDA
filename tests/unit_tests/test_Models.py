@@ -5,7 +5,8 @@ nltk.download('punkt')
 
 # instantiate model.
 model = NERDA(dataset_training = get_dane_data('train', 5),
-              dataset_validation = get_dane_data('validate', 5))
+              dataset_validation = get_dane_data('validate', 5),
+              transformer = 'bert-base-multilingual-uncased')
 
 def test_instantiate_NERDA():
     assert isinstance(model, NERDA)

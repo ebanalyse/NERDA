@@ -1,18 +1,17 @@
 import torch.nn as nn
 from transformers import AutoConfig
 
-class TransformerNetwork(nn.Module):
-    def __init__(self, transformer, device, n_tags):
-        super(TransformerNetwork, self).__init__()
+class GenericNetwork(nn.Module):
+    def __init__(self, transformer, device, n_tags, dropout = 0.1):
+        super(GenericNetwork, self).__init__()
         
         # extract transformer name
-        # TODO: er det mere sikkert at give med fra træningsfunktionen?
         transformer_name = transformer.name_or_path
         # extract AutoConfig, from which relevant parameters can be extracted.
         transformer_config = AutoConfig.from_pretrained(transformer_name)
 
         self.transformer = transformer 
-        self.dropout = nn.Dropout(0.1)
+        self.dropout = nn.Dropout(dropout)
         self.tags = nn.Linear(transformer_config.hidden_size, n_tags)
         self.device = device
 
