@@ -168,11 +168,25 @@ def train_ELECTRA(limit = None):
                                      'train_batch_size': 13,
                                      'learning_rate': 0.0001})
     model.train()
-    torch.save(model.network.state_dict(), f'{name}_model.bin')
+    
+    model_file = f'{name}_model.bin'
+    torch.save(model.network.state_dict(), model_file)
     dataset_test = get_dane_data('test', limit = limit)
+    
     f1 = model.evaluate_performance(dataset_test)
-    with open(f'{name}_f1.pickle', 'wb') as f:
+    f1_file = f'{name}_f1.pickle'
+    with open(f1_file, 'wb') as f:
         pickle.dump(f1, f)
+    
+    # upload to S3.
+    import boto3
+    s3 = boto3.resource('s3')
+    file = 'README.md'
+    s3.Bucket('larsktest').upload_file(
+        Filename=model_file, Key = f'NERDA/{model_file}')
+    s3.Bucket('larsktest').upload_file(
+        Filename=f1_file, Key = f'NERDA/{f1_file}')
+
     return model, f1 
 
 if __name__ == '__main__':
@@ -204,5 +218,6 @@ if __name__ == '__main__':
     #config = AutoConfig.from_pretrained('Maltehb/-l-ctra-danish-electra-small-uncased')
     #m = AutoConfig.from_pretrained('bert-base-multilingual-uncased')
     
-
+    #s3.Object('larsktest', 'NERDA/electra_model.bin').download_file(
+    #'tester.bin')
         
