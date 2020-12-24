@@ -138,6 +138,24 @@ def train_MBERT(limit = None):
         pickle.dump(f1, f)
     return model, f1   
 
+def train_XLMROBERTA(limit = None):
+    name = 'xlmroberta'
+    transformer = 'xlm-roberta-base'
+    model = NERDA(transformer = transformer,
+                  dataset_training = get_dane_data('train', limit = limit), 
+                  dataset_validation = get_dane_data('validate', limit = limit),
+                  hyperparameters = {'epochs' : 4,
+                                     'warmup_steps' : 500,
+                                     'train_batch_size': 13,
+                                     'learning_rate': 0.0001})
+    model.train()
+    torch.save(model.network.state_dict(), f'{name}_model.bin')
+    dataset_test = get_dane_data('test', limit = limit)
+    f1 = model.evaluate_performance(dataset_test)
+    with open(f'{name}_f1.pickle', 'wb') as f:
+        pickle.dump(f1, f)
+    return model, f1   
+
 def train_DABERT(limit = None):
     name = 'dabert'
     transformer = 'DJSammy/bert-base-danish-uncased_BotXO,ai'
@@ -190,13 +208,13 @@ def train_ELECTRA(limit = None):
     return model, f1 
 
 if __name__ == '__main__':
-    from NERDA.models import train_MBERT, train_DABERT, train_ELECTRA
+    from NERDA.models import NERDA, train_MBERT, train_DABERT, train_ELECTRA, train_XLMROBERTA
     # m, f1 = train_MBERT()
-    m, f1 = train_DABERT()
-    m, f1 = train_ELECTRA()
+    #m, f1 = train_DABERT()
+    #m, f1 = train_ELECTRA()
     t = 'bert-base-multilingual-uncased'
     # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
-    # t = 'xlm-roberta-base' # predicter I-MISC
+    t = 'xlm-roberta-base' # predicter I-MISC
     # t = 'distilbert-base-multilingual-cased' # TODO: forward tager ikke 'token_type_ids', fejler -> Fjern? 
     N = NERDA(dataset_training = get_dane_data('train', 5),
               dataset_validation = get_dane_data('validate', 5),

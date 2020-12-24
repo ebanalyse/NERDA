@@ -4,6 +4,7 @@ import numpy as np
 from tqdm import tqdm 
 
 # NOTE: genbrug kode fra evaluering af model på validering?
+# TODO: add batch_size, num_workers (til dataloader) som args.
 def predict(network = None, 
             sentences = None,
             transformer_tokenizer = None,
