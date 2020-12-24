@@ -39,7 +39,7 @@ def predict(network = None,
                     outputs.argmax(2).cpu().numpy().reshape(-1)
                 )
 
-            # subset predictions for origional word tokens
+            # subset predictions for original word tokens
             preds = [prediction for prediction, offset in zip(preds.tolist(), dl.get('offsets')) if offset]
             # Remove special tokens ('CLS' + 'SEP')
             preds = preds[1:-1]  
@@ -52,6 +52,4 @@ def predict(network = None,
 
     return predictions
 
-def tester(**kwargs):
-    print(kwargs)
 

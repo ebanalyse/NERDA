@@ -27,19 +27,18 @@ Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_re
 The table below summarizes the performance (=**F1-scores**) of the model
  configurations, that `NERDA` ships with.
 
-| **Level**     | **MBERT** | **DABERT** | **ELECTRA** |
-|---------------|-----------|------------|-------------|
-| B-PER         | 0.92      | 0.93       | 0.92        |       
-| I-PER         | 0.97      | 0.99       | 0.97        |       
-| B-ORG         | 0.68      | 0.79       | 0.65        |       
-| I-ORG         | 0.67      | 0.79       | 0.72        |       
-| B-LOC         | 0.86      | 0.85       | 0.79        |       
-| I-LOC         | 0.33      | 0.32       | 0.44        |       
-| B-MISC        | 0.73      | 0.74       | 0.61        |       
-| I-MISC        | 0.70      | 0.86       | 0.65        |       
-| **AVG_MICRO** | 0.81      | 0.85       | 0.79        |       
-| **AVG_MACRO** | 0.73      | 0.78       | 0.72        | 
-
+| **Level**     | **MBERT** | **DABERT** | **ELECTRA** | **XLMROBERTA** | **DISTILMBERT** |
+|---------------|-----------|------------|-------------|----------------|-----------------|
+| B-PER         | 0.92      | 0.93       | 0.92        | 0.94           | 0.89            |      
+| I-PER         | 0.97      | 0.99       | 0.97        | 0.99           | 0.96            |   
+| B-ORG         | 0.68      | 0.79       | 0.65        | 0.78           | 0.66            |     
+| I-ORG         | 0.67      | 0.79       | 0.72        | 0.77           | 0.61            |   
+| B-LOC         | 0.86      | 0.85       | 0.79        | 0.87           | 0.80            |     
+| I-LOC         | 0.33      | 0.32       | 0.44        | 0.24           | 0.29            |     
+| B-MISC        | 0.73      | 0.74       | 0.61        | 0.77           | 0.70            |     
+| I-MISC        | 0.70      | 0.86       | 0.65        | 0.91           | 0.61            |   
+| **AVG_MICRO** | 0.81      | 0.85       | 0.79        | 0.86           | 0.78            |      
+| **AVG_MACRO** | 0.73      | 0.78       | 0.72        | 0.78           | 0.69            |
 
 **AVG_** stands for micro- and macro AVeraGed F1-scores.
 
