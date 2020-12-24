@@ -3,7 +3,6 @@ from .datasets import get_dane_data
 from .predictions import predict
 from .performance import compute_f1_scores
 from .networks import GenericNetwork
-import pickle
 import pandas as pd
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer
@@ -120,120 +119,9 @@ class NERDA():
      
         return df
 
-def train_MBERT(limit = None):
-    name = 'mbert'
-    transformer = 'bert-base-multilingual-uncased'
-    model = NERDA(transformer = transformer,
-                  dataset_training = get_dane_data('train', limit = limit), 
-                  dataset_validation = get_dane_data('validate', limit = limit),
-                  hyperparameters = {'epochs' : 4,
-                                     'warmup_steps' : 500,
-                                     'train_batch_size': 13,
-                                     'learning_rate': 0.0001})
-    model.train()
-    torch.save(model.network.state_dict(), f'{name}_model.bin')
-    dataset_test = get_dane_data('test', limit = limit)
-    f1 = model.evaluate_performance(dataset_test)
-    with open(f'{name}_f1.pickle', 'wb') as f:
-        pickle.dump(f1, f)
-    return model, f1   
-
-def train_XLMROBERTA(limit = None):
-    name = 'xlmroberta'
-    transformer = 'xlm-roberta-base'
-    model = NERDA(transformer = transformer,
-                  dataset_training = get_dane_data('train', limit = limit), 
-                  dataset_validation = get_dane_data('validate', limit = limit),
-                  hyperparameters = {'epochs' : 4,
-                                     'warmup_steps' : 500,
-                                     'train_batch_size': 13,
-                                     'learning_rate': 0.0001})
-    model.train()
-    torch.save(model.network.state_dict(), f'{name}_model.bin')
-    dataset_test = get_dane_data('test', limit = limit)
-    f1 = model.evaluate_performance(dataset_test)
-    with open(f'{name}_f1.pickle', 'wb') as f:
-        pickle.dump(f1, f)
-    return model, f1   
-
-def train_DABERT(limit = None):
-    name = 'dabert'
-    transformer = 'DJSammy/bert-base-danish-uncased_BotXO,ai'
-    # TODO: prøv at reducere til 2 epochs.
-    model = NERDA(transformer = transformer,
-                  dataset_training = get_dane_data('train', limit = limit), 
-                  dataset_validation = get_dane_data('validate', limit = limit),
-                  hyperparameters = {'epochs' : 4,
-                                     'warmup_steps' : 500,
-                                     'train_batch_size': 13,
-                                     'learning_rate': 0.0001})
-    model.train()
-    torch.save(model.network.state_dict(), f'{name}_model.bin')
-    dataset_test = get_dane_data('test', limit = limit)
-    f1 = model.evaluate_performance(dataset_test)
-    with open(f'{name}_f1.pickle', 'wb') as f:
-        pickle.dump(f1, f)
-    return model, f1 
-
-def train_DISTILBERT(limit = None):
-    name = 'distilbert'
-    transformer = 'distilbert-base-multilingual-cased'
-    # TODO: prøv at reducere til 2 epochs.
-    model = NERDA(transformer = transformer,
-                  dataset_training = get_dane_data('train', limit = limit), 
-                  dataset_validation = get_dane_data('validate', limit = limit),
-                  hyperparameters = {'epochs' : 4,
-                                     'warmup_steps' : 500,
-                                     'train_batch_size': 13,
-                                     'learning_rate': 0.0001})
-    model.train()
-    torch.save(model.network.state_dict(), f'{name}_model.bin')
-    dataset_test = get_dane_data('test', limit = limit)
-    f1 = model.evaluate_performance(dataset_test)
-    with open(f'{name}_f1.pickle', 'wb') as f:
-        pickle.dump(f1, f)
-    return model, f1 
-
-def train_ELECTRA(limit = None):
-    name = 'electra'
-    transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased'
-    model = NERDA(transformer = transformer,
-                  dataset_training = get_dane_data('train', limit = limit), 
-                  dataset_validation = get_dane_data('validate', limit = limit),
-                  hyperparameters = {'epochs' : 4,
-                                     'warmup_steps' : 500,
-                                     'train_batch_size': 13,
-                                     'learning_rate': 0.0001})
-    model.train()
-    
-    model_file = f'{name}_model.bin'
-    torch.save(model.network.state_dict(), model_file)
-    dataset_test = get_dane_data('test', limit = limit)
-    
-    f1 = model.evaluate_performance(dataset_test)
-    f1_file = f'{name}_f1.pickle'
-    with open(f1_file, 'wb') as f:
-        pickle.dump(f1, f)
-    
-    # upload to S3.
-    import boto3
-    s3 = boto3.resource('s3')
-    file = 'README.md'
-    s3.Bucket('larsktest').upload_file(
-        Filename=model_file, Key = f'NERDA/{model_file}')
-    s3.Bucket('larsktest').upload_file(
-        Filename=f1_file, Key = f'NERDA/{f1_file}')
-
-    return model, f1 
-
 if __name__ == '__main__':
-    from NERDA.models import NERDA, train_MBERT, train_DABERT, train_ELECTRA, train_XLMROBERTA, train_DISTILBERT
+    from NERDA.models import NERDA
     from NERDA.datasets import get_dane_data
-    # m, f1 = train_XLMROBERTA()
-    # m, f1 = train_MBERT()
-    #m, f1 = train_DABERT()
-    #m, f1 = train_ELECTRA()
-    m, f1 = train_DISTILBERT()
     # t = 'bert-base-multilingual-uncased'
     # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
     # t = 'xlm-roberta-base' # predicter I-MISC
