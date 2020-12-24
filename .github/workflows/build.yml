@@ -2,9 +2,6 @@
 # Build, Test and Publish Package
 #---------------------------------------------------------------------
 name: build
-env:
-  TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-  TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
 on: [push]
 
@@ -68,11 +65,17 @@ jobs:
         flags: unittests
 
     - name: Build and publish to TEST PyPI
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python setup.py sdist bdist_wheel
         twine upload -r testpypi dist/*
 
     - name: Publish to PyPI
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       if: github.ref == 'refs/heads/main'
       run: |
         twine upload dist/*
