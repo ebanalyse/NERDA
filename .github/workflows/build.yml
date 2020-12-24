@@ -68,7 +68,6 @@ jobs:
         flags: unittests
 
     - name: Build and publish to TEST PyPI
-      if: github.ref == 'refs/heads/main'
       run: |
         python setup.py sdist bdist_wheel
         twine upload -r testpypi dist/*
