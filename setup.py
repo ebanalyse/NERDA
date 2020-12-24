@@ -23,7 +23,8 @@ setuptools.setup(
         'nltk',
         'pandas',
         'conllu',
-        'pickle_mixin'
+        'pickle_mixin',
+        'boto3'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest',

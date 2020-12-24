@@ -1,9 +1,11 @@
 #---------------------------------------------------------------------
-# GitHub Actions Workflow to Test, Build and Publish Package
-#
+# Build, Test and Publish Package
 #---------------------------------------------------------------------
 name: build
-    
+env:
+  TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+  TWINE_PASSWORD: ${{ secrets.PYPI_USERNAME }}
+
 on: [push]
 
 jobs:
@@ -51,13 +53,6 @@ jobs:
       run: |
         python setup.py test
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage.xml
-        flags: unittests
-
     - name: Publish test results
       uses: EnricoMi/publish-unit-test-result-action@v1.6
       if: always()
@@ -65,14 +60,22 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         files: test-results/**/*.xml
 
-    - name: Build and publish
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage.xml
+        flags: unittests
+
+    - name: Build and publish to TEST PyPI
       if: github.ref == 'refs/heads/main'
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        pip install wheel twine
         python setup.py sdist bdist_wheel
+        twine upload -r testpypi dist/*
+
+    - name: Publish to PyPI
+      if: github.ref == 'refs/heads/main'
+      run: |
         twine upload dist/*
  
     - name: Deploy docs
