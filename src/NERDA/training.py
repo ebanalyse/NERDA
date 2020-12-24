@@ -7,7 +7,7 @@ import random
 import torch
 from tqdm import tqdm
 
-def train(model, data_loader, optimizer, device, scheduler, n_tags):
+def train(model, data_loader, optimizer, device, scheduler, n_tags, writer = None):
     
     model.train()    
     final_loss = 0.0
@@ -26,20 +26,17 @@ def train(model, data_loader, optimizer, device, scheduler, n_tags):
         scheduler.step()
         final_loss += loss.item()
 
-        # TODO: 
-        # Insert gradient acummulation control flow
-        # Insert checkpoint-saving flow
-
-        # utils.writer.add_scalar('Training Loss', loss,  global_step=i)
+        if writer is not None:
+            writer.add_scalar('Training Loss', loss,  global_step=i)
 
     return final_loss / len(data_loader) # Return average loss        
 
-def validate(model, data_loader, device, n_tags):
+def validate(model, data_loader, device, n_tags, writer = None):
 
     model.eval()
     final_loss = 0.0
 
-    for _, dl in tqdm(enumerate(data_loader), total=len(data_loader)):
+    for i, dl in tqdm(enumerate(data_loader), total=len(data_loader)):
         
         outputs = model(**dl)
         loss = compute_loss(outputs, 
@@ -49,11 +46,8 @@ def validate(model, data_loader, device, n_tags):
                             n_tags)
         final_loss += loss.item()
 
-        # TODO: 
-        # Insert gradient acummulation control flow
-        # Insert checkpoint-saving flow
-
-        #utils.writer.add_scalar('Validation Loss', loss,  global_step=i)
+        if writer is not None:
+            writer.add_scalar('Validation Loss', loss,  global_step=i)
         
     return final_loss / len(data_loader) # Return average loss     
 
@@ -107,6 +101,7 @@ def train_model(network,
                 custom_weight_decay = False,
                 learning_rate = 5e-5,
                 device = None,
+                writer = None,
                 fixed_seed = 42):
     
     if fixed_seed is not None:
@@ -165,9 +160,9 @@ def train_model(network,
         
         print('\n Epoch {:} / {:}'.format(epoch + 1, epochs))
 
-        train_loss = train(network, dl_train, optimizer, device, scheduler, n_tags)
+        train_loss = train(network, dl_train, optimizer, device, scheduler, n_tags, writer = writer)
         losses.append(train_loss)
-        valid_loss = validate(network, dl_validate, device, n_tags)
+        valid_loss = validate(network, dl_validate, device, n_tags, writer = writer)
 
         print(f"Train Loss = {train_loss} Valid Loss = {valid_loss}")
 

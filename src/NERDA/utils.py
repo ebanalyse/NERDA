@@ -2,9 +2,6 @@
 def flatten(xs):
     return [item for sublist in xs for item in sublist]
 
-def tester(a, b):
-    return a + b
-
 def match_kwargs(function, **kwargs):
     
     arg_count = function.__code__.co_argcount
