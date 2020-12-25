@@ -1,6 +1,6 @@
 from .training import train_model
 from .datasets import get_dane_data
-from .predictions import predict
+from .predictions import predict, predict_text
 from .performance import compute_f1_scores
 from .networks import GenericNetwork
 import pandas as pd
@@ -79,14 +79,21 @@ class NERDA():
         return f'Weights for network loaded from {model_path}'
 
     def predict(self, sentences):
-        predictions = predict(network = self.network, 
-                              sentences = sentences,
-                              transformer_tokenizer = self.transformer_tokenizer,
-                              max_len = self.max_len,
-                              device = self.device,
-                              tag_encoder = self.tag_encoder)
+        return predict(network = self.network, 
+                       sentences = sentences,
+                       transformer_tokenizer = self.transformer_tokenizer,
+                       max_len = self.max_len,
+                       device = self.device,
+                       tag_encoder = self.tag_encoder)
 
-        return predictions
+    def predict_text(self, text, **kwargs):
+        return predict_text(network = self.network, 
+                            text = text,
+                            transformer_tokenizer = self.transformer_tokenizer,
+                            max_len = self.max_len,
+                            device = self.device,
+                            tag_encoder = self.tag_encoder,
+                            **kwargs)
 
     def evaluate_performance(self, dataset):
         
@@ -132,12 +139,16 @@ if __name__ == '__main__':
     N = NERDA(dataset_training = get_dane_data('train', 5),
               dataset_validation = get_dane_data('validate', 5),
               transformer = t)
-    N.train()
+    N.train(writer = writer)
     dataset_test = get_dane_data('test', 5)
     f1 = N.evaluate_performance(dataset_test)
     #torch.save(N.network.state_dict(), "model.bin")
     #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
 
+    # large text.
+    text = "Ivan Flemserik kommer fra Viborg. Børge er Gud."
+    N.predict_text(text)
+    
     text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
     import nltk
     # TODO: must work for a single sentence.

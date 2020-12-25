@@ -2,6 +2,7 @@ from .preprocessing import create_dataloader
 import torch
 import numpy as np
 from tqdm import tqdm 
+from nltk.tokenize import sent_tokenize, word_tokenize
 
 # NOTE: genbrug kode fra evaluering af model på validering?
 # TODO: add batch_size, num_workers (til dataloader) som args.
@@ -51,5 +52,28 @@ def predict(network = None,
             predictions.append(preds)
 
     return predictions
+
+def predict_text(network = None, 
+                 text = "Ronaldo spiller i Juventus. Han er god.",
+                 transformer_tokenizer = None,
+                 max_len = 128,
+                 device = None,
+                 tag_encoder = None,
+                 sent_tokenizer = sent_tokenize,
+                 word_tokenizer = word_tokenize):
+
+    sentences = sent_tokenize(text)
+
+    sentences = [word_tokenize(sentence) for sentence in sentences]
+
+    predictions = predict(network = network, 
+                          sentences = sentences,
+                          transformer_tokenizer = transformer_tokenizer,
+                          max_len = max_len,
+                          device = device,
+                          tag_encoder = tag_encoder)
+
+    return sentences, predictions
+
 
 

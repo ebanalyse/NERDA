@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="NERDA", 
-    version="0.0.18",
+    version="0.0.19",
     author="PIN",
     author_email="lars.kjeldgaard@eb.dk",
     description="Named Entity Recognition for DAnish based on Transformers",
