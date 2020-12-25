@@ -1,12 +1,14 @@
 import torch
+import warnings
 
 class DataSetReaderNER():
-    def __init__(self, sentences, tags, transformer_tokenizer, max_len, tag_encoder):
+    def __init__(self, sentences, tags, transformer_tokenizer, transformer_config, max_len, tag_encoder):
         self.sentences = sentences
         self.tags = tags
         self.transformer_tokenizer = transformer_tokenizer
         self.max_len = max_len
         self.tag_encoder = tag_encoder
+        self.pad_token_id = transformer_config.pad_token_id
 
     def __len__(self):
         return len(self.sentences)
@@ -36,6 +38,8 @@ class DataSetReaderNER():
         
         # Make room for adding special tokens (one for both 'CLS' and 'SEP' special tokens)
         # max_len includes _all_ tokens.
+        if len(tokens) > self.max_len - 2:
+            warnings.warn('Sentence exceeds max_len and has been truncated')
         tokens = tokens[:self.max_len - 2] 
         target_tags = target_tags[:self.max_len - 2]
         offsets = offsets[:self.max_len - 2]
@@ -45,6 +49,7 @@ class DataSetReaderNER():
 
         # fill out other inputs for model.    
         # 8 is the 'O' encoding
+        # TODO: fix this hotfix!!!
         target_tags = [8] + target_tags + [8] 
         masks = [1] * len(input_ids)
         # set to 0, because we are not doing NSP or QA type task (across multiple sentences)
@@ -55,7 +60,7 @@ class DataSetReaderNER():
         # Padding to max length 
         # compute padding length
         padding_len = self.max_len - len(input_ids)
-        input_ids = input_ids + ([0] * padding_len)
+        input_ids = input_ids + ([self.pad_token_id] * padding_len)
         masks = masks + ([0] * padding_len)  
         offsets = offsets + ([0] * padding_len)
         token_type_ids = token_type_ids + ([0] * padding_len)
@@ -68,12 +73,13 @@ class DataSetReaderNER():
                 'target_tags' : torch.tensor(target_tags, dtype = torch.long),
                 'offsets': offsets} 
       
-def create_dataloader(sentences, tags, transformer_tokenizer, max_len, batch_size, tag_encoder, num_workers = 1):
+def create_dataloader(sentences, tags, transformer_tokenizer, transformer_config, max_len, batch_size, tag_encoder, num_workers = 1):
     
     data_reader = DataSetReaderNER(
         sentences = sentences, 
         tags = tags,
         transformer_tokenizer = transformer_tokenizer, 
+        transformer_config = transformer_config,
         max_len = max_len,
         tag_encoder = tag_encoder)
 

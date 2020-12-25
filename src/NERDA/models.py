@@ -5,7 +5,7 @@ from .performance import compute_f1_scores
 from .networks import GenericNetwork
 import pandas as pd
 from sklearn import preprocessing
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoTokenizer, AutoConfig
 import torch
 
 class NERDA():
@@ -53,7 +53,8 @@ class NERDA():
         self.tag_encoder = preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
         self.transformer_model = AutoModel.from_pretrained(transformer)
-        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)  
+        self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)
+        self.transformer_config = AutoConfig.from_pretrained(transformer)  
         self.network = GenericNetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
         self.network.to(self.device)
 
@@ -61,6 +62,7 @@ class NERDA():
         network, losses = train_model(network = self.network,
                                       tag_encoder = self.tag_encoder,
                                       transformer_tokenizer = self.transformer_tokenizer,
+                                      transformer_config = self.transformer_config,
                                       dataset_training = self.dataset_training,
                                       dataset_validation = self.dataset_validation,
                                       max_len = self.max_len,
@@ -82,6 +84,7 @@ class NERDA():
         return predict(network = self.network, 
                        sentences = sentences,
                        transformer_tokenizer = self.transformer_tokenizer,
+                       transformer_config = self.transformer_config,
                        max_len = self.max_len,
                        device = self.device,
                        tag_encoder = self.tag_encoder)
@@ -90,6 +93,7 @@ class NERDA():
         return predict_text(network = self.network, 
                             text = text,
                             transformer_tokenizer = self.transformer_tokenizer,
+                            transformer_config = self.transformer_config,
                             max_len = self.max_len,
                             device = self.device,
                             tag_encoder = self.tag_encoder,
@@ -132,14 +136,13 @@ if __name__ == '__main__':
     from NERDA.datasets import get_dane_data
     from torch.utils.tensorboard import SummaryWriter
     writer = SummaryWriter('runs/NERDA/')
-    # t = 'bert-base-multilingual-uncased'
+    t = 'bert-base-multilingual-uncased'
     # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
     # t = 'xlm-roberta-base' # predicter I-MISC
-    t = 'distilbert-base-multilingual-cased' # TODO: forward tager ikke 'token_type_ids', fejler -> Fjern? 
+    # t = 'distilbert-base-multilingual-cased' # TODO: forward tager ikke 'token_type_ids', fejler -> Fjern? 
     N = NERDA(dataset_training = get_dane_data('train', 5),
-              dataset_validation = get_dane_data('validate', 5),
-              transformer = t)
-    N.train(writer = writer)
+              dataset_validation = get_dane_data('validate', 5))
+    N.train()
     dataset_test = get_dane_data('test', 5)
     f1 = N.evaluate_performance(dataset_test)
     #torch.save(N.network.state_dict(), "model.bin")
