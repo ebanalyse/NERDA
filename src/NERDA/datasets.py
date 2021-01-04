@@ -4,7 +4,6 @@ from io import BytesIO
 from urllib.request import urlopen
 from zipfile import ZipFile
 import pyconll
-from danlp.datasets import DDT
 from typing import Union, List, Dict
 
 def download_unzip(url_zip: str,
