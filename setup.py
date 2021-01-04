@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="NERDA", 
-    version="0.0.20",
+    version="0.0.21",
     author="PIN",
     author_email="lars.kjeldgaard@eb.dk",
     description="Named Entity Recognition for DAnish based on Transformers",
@@ -18,11 +18,10 @@ setuptools.setup(
     install_requires=[
         'torch',
         'transformers==3.5.1',
-        'danlp',
         'sklearn',
         'nltk',
         'pandas',
-        'conllu',
+        'pyconll',
         'pickle_mixin',
         'boto3'
     ],

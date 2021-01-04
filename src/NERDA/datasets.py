@@ -1,50 +1,65 @@
-from danlp.datasets import DDT
-from pathlib import Path
-from typing import Union, List, Dict
 import os
+from pathlib import Path
+from io import BytesIO
+from urllib.request import urlopen
+from zipfile import ZipFile
+import pyconll
+from danlp.datasets import DDT
+from typing import Union, List, Dict
 
-# helper function
-def prepare_split(split, limit = None):
-    if limit is not None:
-        split = [x[:limit] for x in split]    
-    out = {'sentences': split[0], 'tags': split[1]}
-    return out
+def download_unzip(url_zip: str,
+                   dir_extract: str):
+    
+    print(f'Reading {url_zip}')
+    with urlopen(url_zip) as zipresp:
+        with ZipFile(BytesIO(zipresp.read())) as zfile:
+            zfile.extractall(dir_extract)
 
-# TODO: Overvej at give ddt_ne som input
-def get_dane_data(splits: Union[str, List[str]] = ["train", "validate", "test"], 
+    return f'archive extracted to {dir_extract}'
+
+def download_dane_data(dir = os.path.join(str(Path.home()), '.dane')):
+
+    return download_unzip(url_zip = 'http://danlp-downloads.alexandra.dk/datasets/ddt.zip',
+                          dir_extract = dir)
+
+def get_dane_data(split: str = 'train', 
                   limit: int = None, 
-                  cache_dir: str = os.path.join(str(Path.home()), '.NERDA')) -> Union[Dict, List[Dict]]:
+                  dir: str = os.path.join(str(Path.home()), '.dane')) -> list:
     """Get DaNE Data
 
     Loads one or more data splits from the DaNE ressource.
 
     Args:
-        splits (Union[str, List[str]], optional): Choose which splits to load. You can choose from 'train', 'validate' or 'test'. Defaults to ["train", "validate", "test"].
+        split (str, optional): Choose which split to load. You can choose from 'train', 'dev' or 'test'. Defaults to "train".
         limit (int, optional): Limit the number of observations to be returned from a given split. Defaults to None.
-        cache_dir (str, optional): Directory where data is cached. Defaults to '.NERDA' folder in home directory.
+        dir (str, optional): Directory where data is cached. Defaults to '.dane' folder in home directory.
 
-    Returns:
-        Union[Dict, List[Dict]]: Dictionary with word-tokenized 'sentences' and NER 'tags' in IOB format.
+    Returns: 
+        dict: Dictionary with word-tokenized 'sentences' and NER 'tags' in IOB format.
     """
     
-    # (down)load DaNE data.
-    # TODO: fix!
-    # ddt = DDT(cache_dir = cache_dir)
-    ddt = DDT()
-    dane = ddt.load_as_simple_ner(predefined_splits = True)
+    assert isinstance(split, str)
+    splits = ['train', 'dev', 'test']
+    assert split in splits, f'Choose between the following splits: {splits}'
+    assert os.path.isdir(dir), f'Directory {dir} does not exist. Try downloading DaNE data with download_dane_data()'
     
-    if isinstance(splits, str):
-        splits = [splits]
+    file_path = os.path.join(dir, f'ddt.{split}.conllu')
+    assert os.path.isfile(file_path), f'File {file_path} does not exist. Try downloading DaNE data with download_dane_data()'
 
-    # TODO: assert that splits are inside splits map.
-    # dictionary with indices of DaNE splits
-    splits_map = {'train': 0, 'validate': 1, 'test': 2}
+    split = pyconll.load_from_file(file_path)
+
+    sentences = []
+    entities = []
+
+    for sent in split:
+        sentences.append([token.form for token in sent._tokens])
+        entities.append([token.misc['name'].pop() for token in sent._tokens])
     
-    # extract and prepare splits
-    splits_out = [prepare_split(dane[splits_map.get(x)], limit = limit) for x in splits]
+    if limit is not None:
+        sentences = sentences[:limit]
+        entities = entities[:limit]
+    
+    out = {'sentences': sentences, 'tags': entities}
+    
+    return out
 
-    # if only one split, don't list results
-    if len(splits_out) == 1:
-        splits_out = splits_out[0]
-
-    return splits_out

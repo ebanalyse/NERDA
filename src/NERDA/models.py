@@ -25,7 +25,7 @@ class NERDA():
                             ],
                 tag_outside = 'O',
                 dataset_training = get_dane_data('train'),
-                dataset_validation = get_dane_data('validate'),
+                dataset_validation = get_dane_data('dev'),
                 do_lower_case = True,
                 max_len = 128,
                 dropout = 0.1,
@@ -141,7 +141,7 @@ if __name__ == '__main__':
     # t = 'xlm-roberta-base' # predicter I-MISC
     # t = 'distilbert-base-multilingual-cased' # TODO: forward tager ikke 'token_type_ids', fejler -> Fjern? 
     N = NERDA(dataset_training = get_dane_data('train', 5),
-              dataset_validation = get_dane_data('validate', 5))
+              dataset_validation = get_dane_data('dev', 5))
     N.train()
     dataset_test = get_dane_data('test', 5)
     f1 = N.evaluate_performance(dataset_test)
