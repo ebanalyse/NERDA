@@ -88,6 +88,7 @@ def enforce_reproducibility(seed = 42):
     random.seed(seed)
     np.random.seed(seed)
 
+# TODO: fjern eventuelt get_dane_data fra parameterkonfiguration, da det giver bøvl i test.
 def train_model(network,
                 tag_encoder,
                 transformer_tokenizer,
@@ -99,7 +100,6 @@ def train_model(network,
                 validation_batch_size = 8,
                 epochs = 5,
                 warmup_steps = 0,
-                custom_weight_decay = False,
                 learning_rate = 5e-5,
                 device = None,
                 writer = None,
@@ -129,25 +129,6 @@ def train_model(network,
                                     tag_encoder)
 
     optimizer_parameters = network.parameters()
-
-    # Applying per-parameter weight-decay if chosen
-    if custom_weight_decay: 
-        param_optimizer = list(network.named_parameters())
-        no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
-        optimizer_parameters = [
-            {
-                "params": [
-                    p for n, p in param_optimizer if not any(nd in n for nd in no_decay)
-                ],
-                "weight_decay": 0.001,
-            },
-            {
-                "params": [
-                    p for n, p in param_optimizer if any(nd in n for nd in no_decay)
-                ],
-                "weight_decay": 0.0,
-            },
-        ]
 
     num_train_steps = int(len(dataset_training.get('sentences')) / train_batch_size * epochs)
     
