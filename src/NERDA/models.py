@@ -58,7 +58,7 @@ class NERDA():
         self.network = GenericNetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
         self.network.to(self.device)
 
-    def train(self, writer = None):
+    def train(self):
         network, losses = train_model(network = self.network,
                                       tag_encoder = self.tag_encoder,
                                       transformer_tokenizer = self.transformer_tokenizer,
@@ -67,7 +67,6 @@ class NERDA():
                                       dataset_validation = self.dataset_validation,
                                       max_len = self.max_len,
                                       device = self.device,
-                                      writer = writer,
                                       **self.hyperparameters)
         
         # attach as attributes to class
@@ -134,8 +133,6 @@ class NERDA():
 if __name__ == '__main__':
     from NERDA.models import NERDA
     from NERDA.datasets import get_dane_data
-    from torch.utils.tensorboard import SummaryWriter
-    writer = SummaryWriter('runs/NERDA/')
     t = 'bert-base-multilingual-uncased'
     # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
     # t = 'xlm-roberta-base' # predicter I-MISC

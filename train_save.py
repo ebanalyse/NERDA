@@ -1,5 +1,5 @@
-from .models import NERDA
-from .datasets import get_dane_data
+from NERDA.models import NERDA
+from NERDA.datasets import get_dane_data
 import pickle
 import torch
 import boto3
