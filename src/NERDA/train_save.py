@@ -16,7 +16,7 @@ def train_save(transformer = 'bert-base-multilingual-uncased',
     # instantiate model.
     model = NERDA(transformer = transformer,
                   dataset_training = get_dane_data('train', limit = limit), 
-                  dataset_validation = get_dane_data('validate', limit = limit),
+                  dataset_validation = get_dane_data('dev', limit = limit),
                   hyperparameters = {'epochs' : 4,
                                      'warmup_steps' : 500,
                                      'train_batch_size': 13,
