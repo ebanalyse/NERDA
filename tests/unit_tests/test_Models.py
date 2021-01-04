@@ -1,12 +1,13 @@
-from NERDA.models import NERDA
 from NERDA.datasets import get_dane_data, download_dane_data
+# Bør ikke være nødvendigt at downloade før import af NERDA.
+download_dane_data()
+from NERDA.models import NERDA
 import nltk
 nltk.download('punkt')
-download_dane_data('dane')
 
 # instantiate model.
-model = NERDA(dataset_training = get_dane_data('train', 5, dir = 'dane'),
-              dataset_validation = get_dane_data('dev', 5, dir = 'dane'),
+model = NERDA(dataset_training = get_dane_data('train', 5),
+              dataset_validation = get_dane_data('dev', 5),
               transformer = 'bert-base-multilingual-uncased')
 
 def test_instantiate_NERDA():
