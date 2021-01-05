@@ -51,7 +51,6 @@ def compute_loss(preds, target_tags, masks, device, n_tags):
     lfn = torch.nn.CrossEntropyLoss()
 
     # Compute active loss to not compute loss of paddings
-    # TODO: elaborate on view function.
     active_loss = masks.view(-1) == 1
 
     active_logits = preds.view(-1, n_tags)
@@ -85,6 +84,7 @@ def enforce_reproducibility(seed = 42):
 # TODO: fjern eventuelt get_dane_data fra parameterkonfiguration, da det giver bøvl i test.
 def train_model(network,
                 tag_encoder,
+                tag_outside,
                 transformer_tokenizer,
                 transformer_config,
                 dataset_training = get_dane_data('train'), 
@@ -112,14 +112,16 @@ def train_model(network,
                                  transformer_config,
                                  max_len, 
                                  train_batch_size, 
-                                 tag_encoder)
+                                 tag_encoder,
+                                 tag_outside)
     dl_validate = create_dataloader(dataset_validation.get('sentences'), 
                                     dataset_validation.get('tags'),
                                     transformer_tokenizer,
                                     transformer_config, 
                                     max_len, 
                                     validation_batch_size, 
-                                    tag_encoder)
+                                    tag_encoder,
+                                    tag_outside)
 
     optimizer_parameters = network.parameters()
 

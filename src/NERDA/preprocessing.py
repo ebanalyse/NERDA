@@ -2,13 +2,14 @@ import torch
 import warnings
 
 class DataSetReaderNER():
-    def __init__(self, sentences, tags, transformer_tokenizer, transformer_config, max_len, tag_encoder):
+    def __init__(self, sentences, tags, transformer_tokenizer, transformer_config, max_len, tag_encoder, tag_outside):
         self.sentences = sentences
         self.tags = tags
         self.transformer_tokenizer = transformer_tokenizer
         self.max_len = max_len
         self.tag_encoder = tag_encoder
         self.pad_token_id = transformer_config.pad_token_id
+        self.tag_outside_transformed = tag_encoder.transform([tag_outside])[0]
 
     def __len__(self):
         return len(self.sentences)
@@ -46,11 +47,9 @@ class DataSetReaderNER():
 
         # encode tokens for BERT
         input_ids = self.transformer_tokenizer.encode(tokens)
-
+        
         # fill out other inputs for model.    
-        # 8 is the 'O' encoding
-        # TODO: fix this hotfix!!!
-        target_tags = [8] + target_tags + [8] 
+        target_tags = [self.tag_outside_transformed] + target_tags + [self.tag_outside_transformed] 
         masks = [1] * len(input_ids)
         # set to 0, because we are not doing NSP or QA type task (across multiple sentences)
         # token_type_ids distinguishes sentences.
@@ -73,7 +72,15 @@ class DataSetReaderNER():
                 'target_tags' : torch.tensor(target_tags, dtype = torch.long),
                 'offsets': offsets} 
       
-def create_dataloader(sentences, tags, transformer_tokenizer, transformer_config, max_len, batch_size, tag_encoder, num_workers = 1):
+def create_dataloader(sentences, 
+                      tags, 
+                      transformer_tokenizer, 
+                      transformer_config, 
+                      max_len, 
+                      batch_size, 
+                      tag_encoder, 
+                      tag_outside,
+                      num_workers = 1):
     
     data_reader = DataSetReaderNER(
         sentences = sentences, 
@@ -81,7 +88,8 @@ def create_dataloader(sentences, tags, transformer_tokenizer, transformer_config
         transformer_tokenizer = transformer_tokenizer, 
         transformer_config = transformer_config,
         max_len = max_len,
-        tag_encoder = tag_encoder)
+        tag_encoder = tag_encoder,
+        tag_outside = tag_outside)
 
     data_loader = torch.utils.data.DataLoader(
         data_reader, batch_size = batch_size, num_workers = num_workers

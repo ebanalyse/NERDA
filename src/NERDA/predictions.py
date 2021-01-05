@@ -12,7 +12,8 @@ def predict(network = None,
             transformer_config = None,
             max_len = 128,
             device = None,
-            tag_encoder = None):
+            tag_encoder = None,
+            tag_outside = None):
 
     # set network to appropriate mode.
     network.eval()
@@ -29,7 +30,8 @@ def predict(network = None,
                            transformer_config,
                            max_len = max_len, 
                            batch_size = 1, 
-                           tag_encoder = tag_encoder)
+                           tag_encoder = tag_encoder,
+                           tag_outside = tag_outside)
 
     predictions = []
     
@@ -62,6 +64,7 @@ def predict_text(network = None,
                  max_len = 128,
                  device = None,
                  tag_encoder = None,
+                 tag_outside = None,
                  sent_tokenizer = sent_tokenize,
                  word_tokenizer = word_tokenize):
 
@@ -75,7 +78,8 @@ def predict_text(network = None,
                           transformer_config = transformer_config,
                           max_len = max_len,
                           device = device,
-                          tag_encoder = tag_encoder)
+                          tag_encoder = tag_encoder,
+                          tag_outside = tag_outside)
 
     return sentences, predictions
 

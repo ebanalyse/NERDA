@@ -61,6 +61,7 @@ class NERDA():
     def train(self):
         network, losses = train_model(network = self.network,
                                       tag_encoder = self.tag_encoder,
+                                      tag_outside = self.tag_outside,
                                       transformer_tokenizer = self.transformer_tokenizer,
                                       transformer_config = self.transformer_config,
                                       dataset_training = self.dataset_training,
@@ -73,7 +74,7 @@ class NERDA():
         setattr(self, "network", network)
         setattr(self, "losses", losses)
 
-        return network, losses
+        return "Model trained successfully"
 
     def load_network(self, model_path = "model.bin"):
         self.network.load_state_dict(torch.load(model_path))
@@ -86,7 +87,8 @@ class NERDA():
                        transformer_config = self.transformer_config,
                        max_len = self.max_len,
                        device = self.device,
-                       tag_encoder = self.tag_encoder)
+                       tag_encoder = self.tag_encoder,
+                       tag_outside = self.tag_outside)
 
     def predict_text(self, text, **kwargs):
         return predict_text(network = self.network, 
@@ -96,6 +98,7 @@ class NERDA():
                             max_len = self.max_len,
                             device = self.device,
                             tag_encoder = self.tag_encoder,
+                            tag_outside = self.tag_outside,
                             **kwargs)
 
     def evaluate_performance(self, dataset):
