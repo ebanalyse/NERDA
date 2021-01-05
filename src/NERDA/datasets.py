@@ -1,13 +1,29 @@
 import os
-from pathlib import Path
+import pyconll
 from io import BytesIO
+from pathlib import Path
+from typing import Union, List, Dict
 from urllib.request import urlopen
 from zipfile import ZipFile
-import pyconll
-from typing import Union, List, Dict
+
+DIR_DANE_DEFAULT = os.path.join(str(Path.home()), '.dane')
 
 def download_unzip(url_zip: str,
-                   dir_extract: str):
+                   dir_extract: str) -> str:
+    """Download and unzip a ZIP archive to folder.
+
+    Loads a ZIP file from URL and extracts all of the files to a 
+    given folder.
+
+    Args:
+        url_zip (str): URL to ZIP file.
+        dir_extract (str): Directory where files are extracted.
+
+    Returns:
+        str: a message telling, if the archive was succesfully
+        extracted. Obviously the files in the ZIP archive are
+        extracted to the desired directory as a side-effect.
+    """
     
     print(f'Reading {url_zip}')
     with urlopen(url_zip) as zipresp:
@@ -16,30 +32,52 @@ def download_unzip(url_zip: str,
 
     return f'archive extracted to {dir_extract}'
 
-def download_dane_data(dir = os.path.join(str(Path.home()), '.dane')):
+def download_dane_data(dir: str = None) -> str:
+    """Download DaNE data set.
+
+    Downloads the 'DaNE' data set annotated for Named Entity
+    Recognition kindly hosted by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
+
+    Args:
+        dir (str, optional): Directory where DaNE datasets will be saved. If no directory is provided, data will be saved to a hidden folder '.dane' in your home directory.  
+                           
+    Returns:
+        str: a message telling, if the archive was in fact 
+        succesfully extracted. Obviously the DaNE datasets are
+        extracted to the desired directory as a side-effect.
+    """
+    # set to default directory if nothing else has been provided by user.
+    if dir is None:
+        dir = DIR_DANE_DEFAULT
 
     return download_unzip(url_zip = 'http://danlp-downloads.alexandra.dk/datasets/ddt.zip',
                           dir_extract = dir)
 
 def get_dane_data(split: str = 'train', 
                   limit: int = None, 
-                  dir: str = os.path.join(str(Path.home()), '.dane')) -> list:
-    """Get DaNE Data
+                  dir: str = None) -> dict:
+    """Get DaNE data split.
 
-    Loads one or more data splits from the DaNE ressource.
+    Loads a single data split from the DaNE data set kindly hosted
+    by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
 
     Args:
-        split (str, optional): Choose which split to load. You can choose from 'train', 'dev' or 'test'. Defaults to "train".
-        limit (int, optional): Limit the number of observations to be returned from a given split. Defaults to None.
-        dir (str, optional): Directory where data is cached. Defaults to '.dane' folder in home directory.
+        split (str, optional): Choose which split to load. Choose from 'train', 'dev' or 'test'. Defaults to "train".
+        limit (int, optional): Limit the number of observations to be returned from a given split. Defaults to None, which implies that the entire data split is returned.
+        dir (str, optional): Directory where data is cached. If set to None, the function will try to look for files in '.dane' folder in home directory.
 
     Returns: 
-        dict: Dictionary with word-tokenized 'sentences' and NER 'tags' in IOB format.
+        dict: Dictionary with word-tokenized 'sentences' and 
+        NER 'tags' in IOB format.
     """
     
     assert isinstance(split, str)
     splits = ['train', 'dev', 'test']
     assert split in splits, f'Choose between the following splits: {splits}'
+
+    # set to default directory if nothing else has been provided by user.
+    if dir is None:
+        dir = DIR_DANE_DEFAULT
     assert os.path.isdir(dir), f'Directory {dir} does not exist. Try downloading DaNE data with download_dane_data()'
     
     file_path = os.path.join(dir, f'ddt.{split}.conllu')

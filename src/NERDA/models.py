@@ -165,4 +165,3 @@ if __name__ == '__main__':
     
     #s3.Object('larsktest', 'NERDA/electra_model.bin').download_file(
     #'tester.bin')
-        
