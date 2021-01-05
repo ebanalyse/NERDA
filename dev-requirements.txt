@@ -3,3 +3,5 @@ wheel
 twine
 mkdocs-material 
 mkdocstrings
+mknotebooks
+jupyter

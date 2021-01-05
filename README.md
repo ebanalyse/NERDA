@@ -1,4 +1,4 @@
-# NERDA <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
+# NERDA - UNDER CONSTRUCTION <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
 
 ![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX)](https://codecov.io/gh/ebanalyse/NERDA)
@@ -6,6 +6,7 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/NERDA?color=green)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+## !!! UNDER CONSTRUCTION!!!!
 `NERDA` is not only a mesmerizing muppet-like character. `NERDA` is also
 a python package, that offers a complete framework for fine-tuning 
 pretrained [`huggingface` transformers](https://huggingface.co/) 

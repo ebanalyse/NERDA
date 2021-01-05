@@ -144,3 +144,4 @@ runs/
 
 # tensor board results
 .DS_Store
+.vscode
