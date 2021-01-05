@@ -1,7 +1,3 @@
-# Helper function that flattens a list of lists
-def flatten(xs):
-    return [item for sublist in xs for item in sublist]
-
 def match_kwargs(function: function, **kwargs: str) -> dict:
     """Matches Arguments with Function
 

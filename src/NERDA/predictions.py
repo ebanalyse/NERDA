@@ -4,7 +4,6 @@ import numpy as np
 from tqdm import tqdm 
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-# NOTE: genbrug kode fra evaluering af model på validering?
 # TODO: add batch_size, num_workers (til dataloader) som args.
 def predict(network = None, 
             sentences = None,
@@ -22,8 +21,6 @@ def predict(network = None,
     tag_fill = [tag_encoder.classes_[0]]
     tags_dummy = [tag_fill * len(sent) for sent in sentences]
     
-    # TODO: kan vi genbruge fra validation?
-    # TODO: kan vi reducere til danlp-logik?
     dl = create_dataloader(sentences,
                            tags_dummy, 
                            transformer_tokenizer,

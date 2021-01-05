@@ -6,8 +6,6 @@ from typing import Union, List, Dict
 from urllib.request import urlopen
 from zipfile import ZipFile
 
-DIR_DANE_DEFAULT = os.path.join(str(Path.home()), '.dane')
-
 def download_unzip(url_zip: str,
                    dir_extract: str) -> str:
     """Download and unzip a ZIP archive to folder.
@@ -48,7 +46,7 @@ def download_dane_data(dir: str = None) -> str:
     """
     # set to default directory if nothing else has been provided by user.
     if dir is None:
-        dir = DIR_DANE_DEFAULT
+        dir = os.path.join(str(Path.home()), '.dane')
 
     return download_unzip(url_zip = 'http://danlp-downloads.alexandra.dk/datasets/ddt.zip',
                           dir_extract = dir)
@@ -77,7 +75,7 @@ def get_dane_data(split: str = 'train',
 
     # set to default directory if nothing else has been provided by user.
     if dir is None:
-        dir = DIR_DANE_DEFAULT
+        dir = os.path.join(str(Path.home()), '.dane')
     assert os.path.isdir(dir), f'Directory {dir} does not exist. Try downloading DaNE data with download_dane_data()'
     
     file_path = os.path.join(dir, f'ddt.{split}.conllu')

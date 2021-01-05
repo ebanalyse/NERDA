@@ -31,7 +31,6 @@ class GenericNetwork(nn.Module):
         # match args with transformer
         transformer_inputs = match_kwargs(self.transformer.forward, **transformer_inputs)
            
-        # TODO: check hvilke argumenter, transformerne accepterer og match på dem.
         outputs = self.transformer(**transformer_inputs)[0]
 
         # apply drop-out

@@ -4,14 +4,25 @@ from sklearn.metrics import precision_recall_fscore_support
 def flatten(xs):
     return [item for sublist in xs for item in sublist]
 
-# NOTE: er det ikke F1, der uddrages?
-def compute_f1_scores(y_pred, 
-                      y_true, 
-                      labels,
-                      **kwargs):
+
+def compute_f1_scores(y_pred: list, 
+                      y_true: list, 
+                      labels: list,
+                      **kwargs) -> list:
+    """Compute F1 Scores
+
+    Computes F1 Scores.
+
+    Args:
+        y_pred (list): predicted values.
+        y_true (list): observed/true values.
+        labels (list): all possible tags.
+        kwargs (str): all optional arguments.
+
+    Returns:
+        list: resulting F1 scores.
     """
-    Calculates and print out the accuracy scores for the DaNE test dataset.   
-    """
+
     y_pred = flatten(y_pred)
     y_true = flatten(y_true)
 

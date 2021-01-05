@@ -112,7 +112,7 @@ class NERDA():
         
         # create DataFrame with performance scores (=F1)
         df = list(zip(self.tag_scheme, f1[2]))
-        # TODO: overvej om pandas skal udgå
+        # TODO: maybe don't use pandas?
         df = pd.DataFrame(df, columns = ['Level', 'F1-Score'])    
         
         # compute MICRO-averaged F1-scores and add to table.
