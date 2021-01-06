@@ -23,9 +23,9 @@ class NERDA:
             Entity Recognition task. 
     """
     def __init__(self, 
-                transformer: str = 'bert-base-multilingual-uncased',
-                device: str = None, 
-                tag_scheme: List[str] = [
+                 transformer: str = 'bert-base-multilingual-uncased',
+                 device: str = None, 
+                 tag_scheme: List[str] = [
                             'B-PER',
                             'I-PER', 
                             'B-ORG', 
@@ -35,16 +35,16 @@ class NERDA:
                             'B-MISC', 
                             'I-MISC'
                             ],
-                tag_outside: str = 'O',
-                dataset_training: dict = None,
-                dataset_validation: dict = None,
-                max_len: int = 128,
-                dropout: float = 0.1,
-                hyperparameters: dict = {'epochs' : 1,
-                                   'warmup_steps' : 0,
-                                   'train_batch_size': 5,
-                                   'learning_rate': 0.0001},
-                tokenizer_parameters: dict = {'do_lower_case' : True}) -> None:
+                 tag_outside: str = 'O',
+                 dataset_training: dict = None,
+                 dataset_validation: dict = None,
+                 max_len: int = 128,
+                 dropout: float = 0.1,
+                 hyperparameters: dict = {'epochs' : 1,
+                                          'warmup_steps' : 0,
+                                          'train_batch_size': 5,
+                                          'learning_rate': 0.0001},
+                 tokenizer_parameters: dict = {'do_lower_case' : True}) -> None:
         """Initialize NERDA model
 
         Args:
@@ -234,6 +234,64 @@ class NERDA:
         df = df.append(f1_macro)
       
         return df
+
+class BERT_ML_DaNE(NERDA):
+    """NERDA Multilingual BERT Finetuned on DaNE data set"""
+    def __init__(self) -> None:
+        """Initialize model"""
+        super().__init__(transformer = 'bert-base-multilingual-uncased',
+                         device = None,
+                         tag_scheme = [
+                            'B-PER',
+                            'I-PER', 
+                            'B-ORG', 
+                            'I-ORG', 
+                            'B-LOC', 
+                            'I-LOC', 
+                            'B-MISC', 
+                            'I-MISC'
+                            ],
+                         tag_outside = 'O',
+                         dataset_training = get_dane_data('train'),
+                         dataset_validation = get_dane_data('dev'),
+                         max_len = 128,
+                         dropout = 0.1,
+                         hyperparameters = {'epochs' : 4,
+                                            'warmup_steps' : 500,
+                                            'train_batch_size': 13,
+                                            'learning_rate': 0.0001},
+                         tokenizer_parameters = {'do_lower_case' : True})
+
+class ELECTRA_DA_DaNE(NERDA):
+    """NERDA Multilingual BERT Finetuned on DaNE data set"""
+    def __init__(self) -> None:
+        """Initialize model"""
+        super().__init__(transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
+                         device = None,
+                         tag_scheme = [
+                            'B-PER',
+                            'I-PER', 
+                            'B-ORG', 
+                            'I-ORG', 
+                            'B-LOC', 
+                            'I-LOC', 
+                            'B-MISC', 
+                            'I-MISC'
+                            ],
+                         tag_outside = 'O',
+                         dataset_training = get_dane_data('train'),
+                         dataset_validation = get_dane_data('dev'),
+                         max_len = 128,
+                         dropout = 0.1,
+                         hyperparameters = {'epochs' : 4,
+                                            'warmup_steps' : 500,
+                                            'train_batch_size': 13,
+                                            'learning_rate': 0.0001},
+                         tokenizer_parameters = {'do_lower_case' : True})
+
+    def get_name(self):
+        return type(self).__name__
+
 
 if __name__ == '__main__':
     from NERDA.models import NERDA
