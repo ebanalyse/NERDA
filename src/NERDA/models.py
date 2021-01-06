@@ -1,19 +1,31 @@
-from .training import train_model
+"""NERDA models"""
+
 from .datasets import get_dane_data
+from .networks import GenericNetwork
 from .predictions import predict, predict_text
 from .performance import compute_f1_scores
-from .networks import GenericNetwork
+from .training import train_model
 import pandas as pd
+import torch
+from typing import List
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer, AutoConfig
-import torch
 
-class NERDA():
+class NERDA:
+    """NERDA model
 
+    A NERDA model object containing a complete model configuration.
+    The model can be trained with the 'train' method. Afterwards
+    new observations can be predicted with 'predict*' methods.
+
+    Attributes:
+        network (GenericNetwork): (trained) network for Named 
+            Entity Recognition task. 
+    """
     def __init__(self, 
-                transformer = 'bert-base-multilingual-uncased',
-                device = None, 
-                tag_scheme = [
+                transformer: str = 'bert-base-multilingual-uncased',
+                device: str = None, 
+                tag_scheme: List[str] = [
                             'B-PER',
                             'I-PER', 
                             'B-ORG', 
@@ -23,17 +35,44 @@ class NERDA():
                             'B-MISC', 
                             'I-MISC'
                             ],
-                tag_outside = 'O',
-                dataset_training = get_dane_data('train'),
-                dataset_validation = get_dane_data('dev'),
-                do_lower_case = True,
-                max_len = 128,
-                dropout = 0.1,
-                hyperparameters = {'epochs' : 1,
+                tag_outside: str = 'O',
+                dataset_training: dict = None,
+                dataset_validation: dict = None,
+                max_len: int = 128,
+                dropout: float = 0.1,
+                hyperparameters: dict = {'epochs' : 1,
                                    'warmup_steps' : 0,
                                    'train_batch_size': 5,
                                    'learning_rate': 0.0001},
-                tokenizer_parameters = {'do_lower_case' : True}):
+                tokenizer_parameters: dict = {'do_lower_case' : True}) -> None:
+        """Initialize NERDA model
+
+        Args:
+            transformer (str, optional): name of which pretrained 'huggingface' 
+                transformer to use. 
+            device (str, optional): the desired device to use for computation. 
+                If not provided by the user, we take a guess.
+            tag_scheme (List[str], optional): [description]. All available NER 
+                tags for the given data set EXCLUDING the special outside tag, 
+                that is handled separately.
+            tag_outside (str, optional): the value of the special outside tag. 
+                Defaults to 'O'.
+            dataset_training (dict, optional): the training data. Must consist 
+                of 'sentences': word-tokenized sentences and 'tags': corresponding 
+                NER tags. Defaults to None, in which case the DaNE data set is used.
+            dataset_validation (dict, optional): the validation data. Must consist
+                of 'sentences': word-tokenized sentences and 'tags': corresponding 
+                NER tags. Defaults to None, in which case the DaNE data set is used.
+            max_len (int, optional): the maximum sentence length (number of 
+                tokens after applying the transformer tokenizer) for the transformer. 
+                Sentences are truncated accordingly.
+            dropout (float, optional): dropout probability. Defaults to 0.1.
+            hyperparameters (dict, optional): Hyperparameters for the model. Defaults
+                to {'epochs' : 1, 'warmup_steps' : 0, 'train_batch_size': 5, 
+                'learning_rate': 0.0001}.
+            tokenizer_parameters (dict, optional): parameters for the transformer 
+                tokenizer. Defaults to {'do_lower_case' : True}.
+        """
         
         # set device automatically if not provided by user.
         if device is None:
@@ -43,6 +82,11 @@ class NERDA():
         self.tag_outside = tag_outside
         self.transformer = transformer
         self.max_len = max_len
+        # TODO: maybe replace with english data set. Or None.
+        if dataset_training is None:
+            dataset_training = get_dane_data('train')
+        if dataset_validation is None:
+            dataset_validation = get_dane_data('validation')     
         self.dataset_training = dataset_training
         self.dataset_validation = dataset_validation
         self.hyperparameters = hyperparameters
@@ -59,6 +103,16 @@ class NERDA():
         self.network.to(self.device)
 
     def train(self):
+        """Train Network
+
+        Trains the network from the NERDA model specification.
+
+        Returns:
+            str: a message saying if the model was trained succesfully.
+            The network in the 'network' attribute is trained as a 
+            side-effect. Training losses are also saved in 'losses' 
+            attribute as a side-effect.
+        """
         network, losses = train_model(network = self.network,
                                       tag_encoder = self.tag_encoder,
                                       tag_outside = self.tag_outside,
@@ -76,11 +130,34 @@ class NERDA():
 
         return "Model trained successfully"
 
-    def load_network(self, model_path = "model.bin"):
+    def load_network(self, model_path = "model.bin") -> str:
+        """Load Pretrained NERDA Network
+
+        Loads weights for a pretrained NERDA Network from file.
+
+        Args:
+            model_path (str, optional): Path for model file. 
+                Defaults to "model.bin".
+
+        Returns:
+            str: message telling if weights for network were
+            loaded succesfully.
+        """
         self.network.load_state_dict(torch.load(model_path))
         return f'Weights for network loaded from {model_path}'
 
-    def predict(self, sentences):
+    def predict(self, sentences: List[List[str]]) -> List[List[str]]:
+        """Predict Named Entities in Word-Tokenized Sentences
+
+        Predicts word-tokenized sentences with trained model.
+
+        Args:
+            sentences (List[List[str]]): word-tokenized sentences.
+
+        Returns:
+            List[List[str]]: Predicted tags for sentences - one
+            predicted tag/entity per word token.
+        """
         return predict(network = self.network, 
                        sentences = sentences,
                        transformer_tokenizer = self.transformer_tokenizer,
@@ -90,7 +167,20 @@ class NERDA():
                        tag_encoder = self.tag_encoder,
                        tag_outside = self.tag_outside)
 
-    def predict_text(self, text, **kwargs):
+    def predict_text(self, text: str, **kwargs) -> list:
+        """Predict Named Entities in a Text
+
+        Predicts named entities in a text. Before doing so
+        the text is sentence- and word-tokenized.
+
+        Args:
+            text (str): text to predict named entities in.
+            **kwargs: arbitrary keyword arguments.
+            
+        Returns:
+            List with word-tokenized sentences and predicted 
+            tags/entities.
+        """
         return predict_text(network = self.network, 
                             text = text,
                             transformer_tokenizer = self.transformer_tokenizer,
@@ -101,7 +191,19 @@ class NERDA():
                             tag_outside = self.tag_outside,
                             **kwargs)
 
-    def evaluate_performance(self, dataset):
+    def evaluate_performance(self, dataset: dict) -> pd.DataFrame:
+        """Evaluate Performance
+
+        Evaluates the performance of the model on an arbitrary
+        data set.
+
+        Args:
+            dataset (dict): Data set that mush consist of
+                'sentences' and 'tags'.
+
+        Returns:
+            DataFrame with performance numbers.
+        """
         
         tags_predicted = self.predict(dataset.get('sentences'))
         
@@ -130,7 +232,7 @@ class NERDA():
                                      average = 'macro')
         f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 'F1-Score': [f1_macro[2]]})
         df = df.append(f1_macro)
-     
+      
         return df
 
 if __name__ == '__main__':

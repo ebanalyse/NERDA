@@ -1,3 +1,5 @@
+"""Functionality for loading Named Entity Recognition data sets."""
+
 import os
 import pyconll
 from io import BytesIO
@@ -11,7 +13,7 @@ def download_unzip(url_zip: str,
     """Download and unzip a ZIP archive to folder.
 
     Loads a ZIP file from URL and extracts all of the files to a 
-    given folder.
+    given folder. Does not save the ZIP file itself.
 
     Args:
         url_zip (str): URL to ZIP file.
@@ -54,21 +56,25 @@ def download_dane_data(dir: str = None) -> str:
 def get_dane_data(split: str = 'train', 
                   limit: int = None, 
                   dir: str = None) -> dict:
-    """Get DaNE data split.
+    """Load DaNE data split.
 
     Loads a single data split from the DaNE data set kindly hosted
     by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
 
     Args:
-        split (str, optional): Choose which split to load. Choose from 'train', 'dev' or 'test'. Defaults to "train".
-        limit (int, optional): Limit the number of observations to be returned from a given split. Defaults to None, which implies that the entire data split is returned.
-        dir (str, optional): Directory where data is cached. If set to None, the function will try to look for files in '.dane' folder in home directory.
+        split (str, optional): Choose which split to load. Choose 
+            from 'train', 'dev' and 'test'. Defaults to 'train'.
+        limit (int, optional): Limit the number of observations to be 
+            returned from a given split. Defaults to None, which implies 
+            that the entire data split is returned.
+        dir (str, optional): Directory where data is cached. If set to 
+            None, the function will try to look for files in '.dane' folder in home directory.
 
-    Returns: 
-        dict: Dictionary with word-tokenized 'sentences' and 
-        NER 'tags' in IOB format.
+    Returns:
+        dict: Dictionary with word-tokenized 'sentences' and named 
+        entity 'tags' in IOB format.
+
     """
-    
     assert isinstance(split, str)
     splits = ['train', 'dev', 'test']
     assert split in splits, f'Choose between the following splits: {splits}'

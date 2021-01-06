@@ -17,5 +17,6 @@ nav:
     - Home: index.md
     - Examples: tester.ipynb
     - Code Reference:
+        - Models: models.md
         - Datasets: datasets.md
 

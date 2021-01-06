@@ -1,4 +1,4 @@
-def match_kwargs(function: function, **kwargs: str) -> dict:
+def match_kwargs(function, **kwargs) -> dict:
     """Matches Arguments with Function
 
     Match keywords arguments with a function.
