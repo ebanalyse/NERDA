@@ -8,6 +8,28 @@ from typing import Union, List, Dict
 from urllib.request import urlopen
 from zipfile import ZipFile
 
+def tester(x: float, **kwargs) -> float:
+    """Test
+
+    Examples:
+        The examples section can alternate between normal text and examples:
+
+        >>> # This is some code
+        >>> tester(5)
+        25
+
+    Args:
+        x (float): Number
+        kwargs: arbitrary keyword arguments.
+
+    Returns:
+        float: The number squared
+    """
+    
+    return x * x
+
+
+
 def download_unzip(url_zip: str,
                    dir_extract: str) -> str:
     """Download and unzip a ZIP archive to folder.

@@ -170,13 +170,10 @@ class NERDA:
     def predict_text(self, text: str, **kwargs) -> list:
         """Predict Named Entities in a Text
 
-        Predicts named entities in a text. Before doing so
-        the text is sentence- and word-tokenized.
-
         Args:
-            text (str): text to predict named entities in.
-            **kwargs: arbitrary keyword arguments.
-            
+            text (str): text to predict entities in.
+            kwargs: arbitrary keyword arguments.
+
         Returns:
             List with word-tokenized sentences and predicted 
             tags/entities.
