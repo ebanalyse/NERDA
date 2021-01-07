@@ -263,7 +263,11 @@ class BERT_ML_DaNE(NERDA):
                          tokenizer_parameters = {'do_lower_case' : True})
 
 class ELECTRA_DA_DaNE(NERDA):
-    """NERDA Multilingual BERT Finetuned on DaNE data set"""
+    """NERDA Danish Electra (-l-ctra) finetuned on DaNE data set
+    
+    We have spent literally no time on actually finetuning the model,
+    so performance can very likely be improved.
+    """
     def __init__(self) -> None:
         """Initialize model"""
         super().__init__(transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
@@ -288,10 +292,6 @@ class ELECTRA_DA_DaNE(NERDA):
                                             'train_batch_size': 13,
                                             'learning_rate': 0.0001},
                          tokenizer_parameters = {'do_lower_case' : True})
-
-    def get_name(self):
-        return type(self).__name__
-
 
 if __name__ == '__main__':
     from NERDA.models import NERDA
