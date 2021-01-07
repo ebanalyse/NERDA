@@ -37,5 +37,11 @@ def deploy_model_to_s3(model, test_set = get_dane_data('test')):
             Filename=file_performance, 
             Key = file_performance)
 
-    return "Model deployed to S3 successfully."   
+    return "Model deployed to S3 successfully." 
+
+if __name__ == '__main__':
+    from NERDA.precooked import ELECTRA_DA_DaNE
+    model = ELECTRA_DA_DaNE()
+    model.train()  
+    deploy_model_to_s3(model)
 

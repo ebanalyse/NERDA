@@ -86,7 +86,7 @@ class NERDA:
         if dataset_training is None:
             dataset_training = get_dane_data('train')
         if dataset_validation is None:
-            dataset_validation = get_dane_data('validation')     
+            dataset_validation = get_dane_data('dev')     
         self.dataset_training = dataset_training
         self.dataset_validation = dataset_validation
         self.hyperparameters = hyperparameters
@@ -130,8 +130,8 @@ class NERDA:
 
         return "Model trained successfully"
 
-    def load_network(self, model_path = "model.bin") -> str:
-        """Load Pretrained NERDA Network
+    def load_network_from_file(self, model_path = "model.bin") -> str:
+        """Load Pretrained NERDA Network from file
 
         Loads weights for a pretrained NERDA Network from file.
 
@@ -235,67 +235,13 @@ class NERDA:
       
         return df
 
-class BERT_ML_DaNE(NERDA):
-    """NERDA Multilingual BERT Finetuned on DaNE data set"""
-    def __init__(self) -> None:
-        """Initialize model"""
-        super().__init__(transformer = 'bert-base-multilingual-uncased',
-                         device = None,
-                         tag_scheme = [
-                            'B-PER',
-                            'I-PER', 
-                            'B-ORG', 
-                            'I-ORG', 
-                            'B-LOC', 
-                            'I-LOC', 
-                            'B-MISC', 
-                            'I-MISC'
-                            ],
-                         tag_outside = 'O',
-                         dataset_training = get_dane_data('train'),
-                         dataset_validation = get_dane_data('dev'),
-                         max_len = 128,
-                         dropout = 0.1,
-                         hyperparameters = {'epochs' : 4,
-                                            'warmup_steps' : 500,
-                                            'train_batch_size': 13,
-                                            'learning_rate': 0.0001},
-                         tokenizer_parameters = {'do_lower_case' : True})
-
-class ELECTRA_DA_DaNE(NERDA):
-    """NERDA Danish Electra (-l-ctra) finetuned on DaNE data set
-    
-    We have spent literally no time on actually finetuning the model,
-    so performance can very likely be improved.
-    """
-    def __init__(self) -> None:
-        """Initialize model"""
-        super().__init__(transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
-                         device = None,
-                         tag_scheme = [
-                            'B-PER',
-                            'I-PER', 
-                            'B-ORG', 
-                            'I-ORG', 
-                            'B-LOC', 
-                            'I-LOC', 
-                            'B-MISC', 
-                            'I-MISC'
-                            ],
-                         tag_outside = 'O',
-                         dataset_training = get_dane_data('train'),
-                         dataset_validation = get_dane_data('dev'),
-                         max_len = 128,
-                         dropout = 0.1,
-                         hyperparameters = {'epochs' : 4,
-                                            'warmup_steps' : 500,
-                                            'train_batch_size': 13,
-                                            'learning_rate': 0.0001},
-                         tokenizer_parameters = {'do_lower_case' : True})
-
 if __name__ == '__main__':
-    from NERDA.models import NERDA
+    from NERDA.models import NERDA, ELECTRA_DA_DaNE
+    m = ELECTRA_DA_DaNE()
+    m.download_network()
+    m.predict_text("Jens Hansen har en bondegård")
     from NERDA.datasets import get_dane_data
+    
     t = 'bert-base-multilingual-uncased'
     # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
     # t = 'xlm-roberta-base' # predicter I-MISC
