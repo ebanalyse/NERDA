@@ -108,7 +108,8 @@ def train_model(network,
                 warmup_steps = 0,
                 learning_rate = 5e-5,
                 device = None,
-                fixed_seed = 42):
+                fixed_seed = 42,
+                num_workers = 1):
     
     if fixed_seed is not None:
         enforce_reproducibility(fixed_seed)
@@ -118,22 +119,24 @@ def train_model(network,
 
     # prepare datasets for modelling by creating data readers and loaders
     # TODO: parametrize num_workers.
-    dl_train = create_dataloader(dataset_training.get('sentences'),
-                                 dataset_training.get('tags'), 
-                                 transformer_tokenizer, 
-                                 transformer_config,
-                                 max_len, 
-                                 train_batch_size, 
-                                 tag_encoder,
-                                 tag_outside)
-    dl_validate = create_dataloader(dataset_validation.get('sentences'), 
-                                    dataset_validation.get('tags'),
-                                    transformer_tokenizer,
-                                    transformer_config, 
-                                    max_len, 
-                                    validation_batch_size, 
-                                    tag_encoder,
-                                    tag_outside)
+    dl_train = create_dataloader(sentences = dataset_training.get('sentences'),
+                                 tags = dataset_training.get('tags'), 
+                                 transformer_tokenizer = transformer_tokenizer, 
+                                 transformer_config = transformer_config,
+                                 max_len = max_len, 
+                                 batch_size = train_batch_size, 
+                                 tag_encoder = tag_encoder,
+                                 tag_outside = tag_outside,
+                                 num_workers = num_workers)
+    dl_validate = create_dataloader(sentences = dataset_validation.get('sentences'), 
+                                    tags = dataset_validation.get('tags'),
+                                    transformer_tokenizer = transformer_tokenizer,
+                                    transformer_config = transformer_config, 
+                                    max_len = max_len, 
+                                    batch_size = validation_batch_size, 
+                                    tag_encoder = tag_encoder,
+                                    tag_outside = tag_outside,
+                                    num_workers = num_workers)
 
     optimizer_parameters = network.parameters()
 

@@ -21,6 +21,8 @@ import nltk
 sentences = [nltk.word_tokenize(text)]
 predictions = model.predict(sentences)
 
+
+
 def test_predict():
     assert isinstance(predictions, list)
 

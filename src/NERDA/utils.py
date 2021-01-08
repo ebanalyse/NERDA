@@ -1,4 +1,7 @@
-def match_kwargs(function, **kwargs) -> dict:
+from typing import Callable
+
+
+def match_kwargs(function: Callable, **kwargs) -> dict:
     """Matches Arguments with Function
 
     Match keywords arguments with the arguments of a function.

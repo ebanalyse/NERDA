@@ -59,6 +59,7 @@ class Precooked(NERDA):
         if file_path is None:
             file_path = os.path.join(str(Path.home()), '.nerda', f'{model_name}.bin')
 
+        assert os.path.exists(file_path), "File does not exist! You can download network with download_network()"
         self.load_network_from_file(file_path)
         
 class BERT_ML_DaNE(Precooked):

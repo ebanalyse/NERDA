@@ -1,12 +1,12 @@
 """NERDA models"""
-
 from .datasets import get_dane_data
-from .networks import GenericNetwork
+from .networks import NERDANetwork
 from .predictions import predict, predict_text
 from .performance import compute_f1_scores
 from .training import train_model
 import pandas as pd
 import torch
+import os
 from typing import List
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer, AutoConfig
@@ -18,9 +18,50 @@ class NERDA:
     The model can be trained with the 'train' method. Afterwards
     new observations can be predicted with 'predict*' methods.
 
+    Examples:
+        Model for a VERY small subset of Danish NER data
+        >>> from NERDA.dataset import get_dane_data
+        >>> trn = get_dane_data('train', 5)
+        >>> valid = get_dane_data('dev', 5)
+        >>> tag_scheme = ['B-PER', 'I-PER' 'B-LOC', 'I-LOC',
+                          'B-ORG', 'I-ORG', 'B-MISC, 'I-MISC']
+        >>> tag_outside = 'O'
+        >>> transformer = 'bert-base-multilingual-uncased',
+        >>> model = NERDA(transformer = transformer,
+                          tag_scheme = tag_scheme,
+                          tag_outside = tag_outside,
+                          dataset_training = trn,
+                          dataset_validation = valid)
+
+        Model for complete Danish NER data (DaNE) with modified hyperparameters
+        >>> trn = get_dane_data('train')
+        >>> valid = get_dane_data('dev')
+        >>> transformer = 'bert-base-multilingual-uncased',
+        >>> hyperparameters = {'epochs' : 3,
+                               'warmup_steps' : 400,
+                               'train_batch_size': 16,
+                               'learning_rate': 0.0001},
+        >>> model = NERDA(transformer = transformer,
+                          dataset_training = trn,
+                          dataset_validation = valid,
+                          tag_scheme = tag_scheme,
+                          tag_outside = tag_outside,
+                          dropout = 0.1,
+                          hyperparameters = hyperparameters)
+
     Attributes:
-        network (GenericNetwork): (trained) network for Named 
-            Entity Recognition task. 
+        network (NERDANetwork): network for Named Entity 
+            Recognition task.
+        tag_encoder (preprocessing.LabelEncoder): encoder for the
+            NER labels/tags.
+        transformer_model (AutoModel): (Auto)Model derived from the
+            transformer.
+        transformer_tokenizer (AutoTokenizer): (Auto)Tokenizer
+            derived from the transformer.
+        transformer_config (AutoConfig): (Auto)Config derived from
+            the transformer. 
+        losses (list): holds training losses, when the model has been 
+            trained.
     """
     def __init__(self, 
                  transformer: str = 'bert-base-multilingual-uncased',
@@ -38,17 +79,19 @@ class NERDA:
                  tag_outside: str = 'O',
                  dataset_training: dict = None,
                  dataset_validation: dict = None,
-                 max_len: int = 128,
+                 max_len: int = 130,
                  dropout: float = 0.1,
-                 hyperparameters: dict = {'epochs' : 1,
-                                          'warmup_steps' : 0,
-                                          'train_batch_size': 5,
+                 hyperparameters: dict = {'epochs' : 3,
+                                          'warmup_steps' : 500,
+                                          'train_batch_size': 16,
                                           'learning_rate': 0.0001},
-                 tokenizer_parameters: dict = {'do_lower_case' : True}) -> None:
+                 tokenizer_parameters: dict = {'do_lower_case' : True},
+                 validation_batch_size: int = 8,
+                 num_workers: int = 1) -> None:
         """Initialize NERDA model
 
         Args:
-            transformer (str, optional): name of which pretrained 'huggingface' 
+            transformer (str, optional): which pretrained 'huggingface' 
                 transformer to use. 
             device (str, optional): the desired device to use for computation. 
                 If not provided by the user, we take a guess.
@@ -68,10 +111,13 @@ class NERDA:
                 Sentences are truncated accordingly.
             dropout (float, optional): dropout probability. Defaults to 0.1.
             hyperparameters (dict, optional): Hyperparameters for the model. Defaults
-                to {'epochs' : 1, 'warmup_steps' : 0, 'train_batch_size': 5, 
+                to {'epochs' : 3, 'warmup_steps' : 500, 'train_batch_size': 16, 
                 'learning_rate': 0.0001}.
             tokenizer_parameters (dict, optional): parameters for the transformer 
                 tokenizer. Defaults to {'do_lower_case' : True}.
+            validation_batch_size (int, optional): batch size for validation. Defaults
+                to 8.
+            num_workers (int, optional): number of workers for data loader.
         """
         
         # set device automatically if not provided by user.
@@ -82,7 +128,6 @@ class NERDA:
         self.tag_outside = tag_outside
         self.transformer = transformer
         self.max_len = max_len
-        # TODO: maybe replace with english data set. Or None.
         if dataset_training is None:
             dataset_training = get_dane_data('train')
         if dataset_validation is None:
@@ -99,10 +144,13 @@ class NERDA:
         self.transformer_model = AutoModel.from_pretrained(transformer)
         self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)
         self.transformer_config = AutoConfig.from_pretrained(transformer)  
-        self.network = GenericNetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
+        self.network = NERDANetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
         self.network.to(self.device)
+        self.validation_batch_size = validation_batch_size
+        self.num_workers = num_workers
+        self.losses = []
 
-    def train(self):
+    def train(self) -> str:
         """Train Network
 
         Trains the network from the NERDA model specification.
@@ -120,8 +168,10 @@ class NERDA:
                                       transformer_config = self.transformer_config,
                                       dataset_training = self.dataset_training,
                                       dataset_validation = self.dataset_validation,
+                                      validation_batch_size = self.validation_batch_size,
                                       max_len = self.max_len,
                                       device = self.device,
+                                      num_workers = self.num_workers,
                                       **self.hyperparameters)
         
         # attach as attributes to class
@@ -143,16 +193,20 @@ class NERDA:
             str: message telling if weights for network were
             loaded succesfully.
         """
+        # TODO: change assert to Raise.
+        assert os.path.exists(model_path), "File does not exist. You can download network with download_network()"
         self.network.load_state_dict(torch.load(model_path))
         return f'Weights for network loaded from {model_path}'
 
-    def predict(self, sentences: List[List[str]]) -> List[List[str]]:
+    def predict(self, sentences: List[List[str]], **kwargs) -> List[List[str]]:
         """Predict Named Entities in Word-Tokenized Sentences
 
         Predicts word-tokenized sentences with trained model.
 
         Args:
             sentences (List[List[str]]): word-tokenized sentences.
+            kwargs: arbitrary keyword arguments. For instance
+                'batch_size' and 'num_workers'.
 
         Returns:
             List[List[str]]: Predicted tags for sentences - one
@@ -165,14 +219,16 @@ class NERDA:
                        max_len = self.max_len,
                        device = self.device,
                        tag_encoder = self.tag_encoder,
-                       tag_outside = self.tag_outside)
+                       tag_outside = self.tag_outside,
+                       **kwargs)
 
     def predict_text(self, text: str, **kwargs) -> list:
         """Predict Named Entities in a Text
 
         Args:
             text (str): text to predict entities in.
-            kwargs: arbitrary keyword arguments.
+            kwargs: arbitrary keyword arguments. For instance
+                'batch_size' and 'num_workers'.
 
         Returns:
             List with word-tokenized sentences and predicted 
@@ -199,7 +255,7 @@ class NERDA:
                 'sentences' and NER'tags'.
 
         Returns:
-            DataFrame with performance numbers.
+            DataFrame with performance numbers, F1-scores.
         """
         
         tags_predicted = self.predict(dataset.get('sentences'))
@@ -230,40 +286,3 @@ class NERDA:
         df = df.append(f1_macro)
       
         return df
-
-if __name__ == '__main__':
-    from NERDA.models import NERDA, ELECTRA_DA_DaNE
-    m = ELECTRA_DA_DaNE()
-    m.download_network()
-    m.predict_text("Jens Hansen har en bondegård")
-    from NERDA.datasets import get_dane_data
-    
-    t = 'bert-base-multilingual-uncased'
-    # t = 'Maltehb/-l-ctra-danish-electra-small-uncased'
-    # t = 'xlm-roberta-base' # predicter I-MISC
-    # t = 'distilbert-base-multilingual-cased' # TODO: forward tager ikke 'token_type_ids', fejler -> Fjern? 
-    N = NERDA(dataset_training = get_dane_data('train', 5),
-              dataset_validation = get_dane_data('dev', 5))
-    N.train()
-    dataset_test = get_dane_data('test', 5)
-    f1 = N.evaluate_performance(dataset_test)
-    #torch.save(N.network.state_dict(), "model.bin")
-    #N.load_network(model_path = "/home/ec2-user/NERDA/model.bin")
-
-    # large text.
-    text = "Ivan Flemserik kommer fra Viborg. Børge er Gud."
-    N.predict_text(text)
-    
-    text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
-    import nltk
-    # TODO: must work for a single sentence.
-    sentences = [nltk.word_tokenize(text)]
-    predictions = N.predict(sentences)
-    print(list(zip(sentences, predictions)))
-
-    #m = AutoModel.from_pretrained('bert-base-multilingual-uncased')
-    #config = AutoConfig.from_pretrained('Maltehb/-l-ctra-danish-electra-small-uncased')
-    #m = AutoConfig.from_pretrained('bert-base-multilingual-uncased')
-    
-    #s3.Object('larsktest', 'NERDA/electra_model.bin').download_file(
-    #'tester.bin')

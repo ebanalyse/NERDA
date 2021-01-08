@@ -1,7 +1,7 @@
 import torch
 import warnings
 
-class DataSetReaderNER():
+class NERDADataSetReader():
     def __init__(self, sentences, tags, transformer_tokenizer, transformer_config, max_len, tag_encoder, tag_outside):
         self.sentences = sentences
         self.tags = tags
@@ -76,13 +76,13 @@ def create_dataloader(sentences,
                       tags, 
                       transformer_tokenizer, 
                       transformer_config, 
-                      max_len, 
-                      batch_size, 
+                      max_len,  
                       tag_encoder, 
                       tag_outside,
+                      batch_size = 1,
                       num_workers = 1):
     
-    data_reader = DataSetReaderNER(
+    data_reader = NERDADataSetReader(
         sentences = sentences, 
         tags = tags,
         transformer_tokenizer = transformer_tokenizer, 

@@ -12,23 +12,26 @@ def predict(network = None,
             max_len = 128,
             device = None,
             tag_encoder = None,
-            tag_outside = None):
+            tag_outside = None,
+            batch_size = 1,
+            num_workers = 1):
 
     # set network to appropriate mode.
     network.eval()
 
-    # fill 'dummy' tags.
+    # fill 'dummy' tags (expected input for dataloader).
     tag_fill = [tag_encoder.classes_[0]]
     tags_dummy = [tag_fill * len(sent) for sent in sentences]
     
-    dl = create_dataloader(sentences,
-                           tags_dummy, 
-                           transformer_tokenizer,
-                           transformer_config,
+    dl = create_dataloader(sentences = sentences,
+                           tags = tags_dummy, 
+                           transformer_tokenizer = transformer_tokenizer,
+                           transformer_config = transformer_config,
                            max_len = max_len, 
-                           batch_size = 1, 
+                           batch_size = batch_size, 
                            tag_encoder = tag_encoder,
-                           tag_outside = tag_outside)
+                           tag_outside = tag_outside,
+                           num_workers = num_workers)
 
     predictions = []
     
@@ -54,16 +57,18 @@ def predict(network = None,
 
     return predictions
 
-def predict_text(network = None, 
-                 text = "Ronaldo spiller i Juventus. Han er god.",
-                 transformer_tokenizer = None,
-                 transformer_config = None,
-                 max_len = 128,
-                 device = None,
-                 tag_encoder = None,
-                 tag_outside = None,
-                 sent_tokenizer = sent_tokenize,
-                 word_tokenizer = word_tokenize):
+def predict_text(network, 
+                 text,
+                 transformer_tokenizer,
+                 transformer_config,
+                 max_len,
+                 device,
+                 tag_encoder,
+                 tag_outside,
+                 batch_size = 1,
+                 num_workers = 1,
+                 sent_tokenize = sent_tokenize,
+                 word_tokenize = word_tokenize):
 
     sentences = sent_tokenize(text)
 
@@ -75,10 +80,10 @@ def predict_text(network = None,
                           transformer_config = transformer_config,
                           max_len = max_len,
                           device = device,
+                          batch_size = batch_size,
+                          num_workers = num_workers,
                           tag_encoder = tag_encoder,
                           tag_outside = tag_outside)
 
     return sentences, predictions
-
-
 

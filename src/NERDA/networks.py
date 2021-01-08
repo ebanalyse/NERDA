@@ -2,9 +2,15 @@ import torch.nn as nn
 from transformers import AutoConfig
 from .utils import match_kwargs
 
-class GenericNetwork(nn.Module):
-    def __init__(self, transformer, device, n_tags, dropout = 0.1):
-        super(GenericNetwork, self).__init__()
+class NERDANetwork(nn.Module):
+    """A Generic Network for NERDA models.
+
+    Can be replaced with a custom user-defined network.
+    """
+
+    def __init__(self, transformer, device, n_tags, dropout = 0.1) -> None:
+        """Initialize NERDA network"""
+        super(NERDANetwork, self).__init__()
         
         # extract transformer name
         transformer_name = transformer.name_or_path
@@ -20,8 +26,8 @@ class GenericNetwork(nn.Module):
     # down-stream. So _DON'T_ remove! :)
     def forward(self, input_ids, masks, token_type_ids, target_tags, offsets):
 
-        # TODO: kan gøres endnu bedre med ** og flyt alt til device i et hug.
-        # subset transformer input tensors and move to device
+        # TODO: can be improved with ** and move everything to device in a
+        # single step.
         transformer_inputs = {
             'input_ids': input_ids.to(self.device),
             'masks': masks.to(self.device),
