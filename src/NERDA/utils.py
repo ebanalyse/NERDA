@@ -1,7 +1,7 @@
 def match_kwargs(function, **kwargs) -> dict:
     """Matches Arguments with Function
 
-    Match keywords arguments with a function.
+    Match keywords arguments with the arguments of a function.
 
     Args:
         function (function): Function to match arguments for.

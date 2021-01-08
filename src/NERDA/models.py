@@ -195,8 +195,8 @@ class NERDA:
         data set.
 
         Args:
-            dataset (dict): Data set that mush consist of
-                'sentences' and 'tags'.
+            dataset (dict): Data set that must consist of
+                'sentences' and NER'tags'.
 
         Returns:
             DataFrame with performance numbers.
@@ -211,7 +211,6 @@ class NERDA:
         
         # create DataFrame with performance scores (=F1)
         df = list(zip(self.tag_scheme, f1[2]))
-        # TODO: maybe don't use pandas?
         df = pd.DataFrame(df, columns = ['Level', 'F1-Score'])    
         
         # compute MICRO-averaged F1-scores and add to table.

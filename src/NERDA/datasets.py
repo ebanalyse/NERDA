@@ -8,28 +8,6 @@ from typing import Union, List, Dict
 from urllib.request import urlopen
 from zipfile import ZipFile
 
-def tester(x: float, **kwargs) -> float:
-    """Test
-
-    Examples:
-        The examples section can alternate between normal text and examples:
-
-        >>> # This is some code
-        >>> tester(5)
-        25
-
-    Args:
-        x (float): Number
-        kwargs: arbitrary keyword arguments.
-
-    Returns:
-        float: The number squared
-    """
-    
-    return x * x
-
-
-
 def download_unzip(url_zip: str,
                    dir_extract: str) -> str:
     """Download and unzip a ZIP archive to folder.
@@ -60,6 +38,10 @@ def download_dane_data(dir: str = None) -> str:
     Downloads the 'DaNE' data set annotated for Named Entity
     Recognition kindly hosted by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
 
+    Examples:
+        >>> download_dane_data()
+        >>> download_dane_data(dir = 'DaNE')
+
     Args:
         dir (str, optional): Directory where DaNE datasets will be saved. If no directory is provided, data will be saved to a hidden folder '.dane' in your home directory.  
                            
@@ -82,6 +64,13 @@ def get_dane_data(split: str = 'train',
 
     Loads a single data split from the DaNE data set kindly hosted
     by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
+
+    Examples:
+        Get test split
+        >>> get_dane_data('test')
+
+        Get first 5 observations from training split
+        >>> get_dane_data('training', limit = 5)
 
     Args:
         split (str, optional): Choose which split to load. Choose 

@@ -1,8 +1,8 @@
 from sklearn.metrics import precision_recall_fscore_support
 
-# Helper function that flattens a list of lists
-def flatten(xs):
-    return [item for sublist in xs for item in sublist]
+def flatten(l: list):
+    """Flattens list"""
+    return [item for sublist in l for item in sublist]
 
 
 def compute_f1_scores(y_pred: list, 
@@ -17,7 +17,7 @@ def compute_f1_scores(y_pred: list,
         y_pred (list): predicted values.
         y_true (list): observed/true values.
         labels (list): all possible tags.
-        kwargs (str): all optional arguments.
+        kwargs: all optional arguments for precision/recall function.
 
     Returns:
         list: resulting F1 scores.

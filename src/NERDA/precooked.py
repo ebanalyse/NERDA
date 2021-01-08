@@ -6,16 +6,36 @@ import urllib
 from pathlib import Path
 
 class Precooked(NERDA):
-    """Precooked NERDA model"""
+    """Precooked NERDA Model
+
+    NERDA model specification that has been precooked/pretrained
+    and is available for download.
+    """
     def __init__(self, **kwargs) -> None:
-        """Initialize NERDA model"""
+        """Initialize Precooked NERDA Model
+
+        Args:
+            kwargs: all arguments for NERDA Model.
+        """
         super().__init__(**kwargs)
 
-    def download_network(self, dir = None):
-        """Download Precooked Network"""
+    def download_network(self, dir = None) -> None:
+        """Download Precooked Network from Web
+
+        Args:
+            dir (str, optional): Directory where the model file
+                will be saved. Defaults to None, in which case
+                the model will be saved in a folder '.nerda' in
+                your home directory.
+
+        Returns:
+            str: Message saying if the download was successfull.
+            Model is downloaded as a side-effect.
+        """
 
         model_name = type(self).__name__
 
+        # url for public S3 bucket with NERDA models.
         url_s3 = 'https://nerda.s3-eu-west-1.amazonaws.com'
         url_model = f'{url_s3}/{model_name}.bin'
         
@@ -42,7 +62,7 @@ class Precooked(NERDA):
         self.load_network_from_file(file_path)
         
 class BERT_ML_DaNE(Precooked):
-    """NERDA Multilingual BERT Finetuned on DaNE data set"""
+    """NERDA Multilingual BERT for Danish Finetuned on DaNE data set."""
     def __init__(self) -> None:
         """Initialize model"""
         super().__init__(transformer = 'bert-base-multilingual-uncased',
@@ -69,7 +89,8 @@ class BERT_ML_DaNE(Precooked):
                          tokenizer_parameters = {'do_lower_case' : True})
 
 class ELECTRA_DA_DaNE(Precooked):
-    """NERDA Danish Electra (-l-ctra) finetuned on DaNE data set
+    """NERDA Danish Electra (-l-ctra) for Danish finetuned on 
+    DaNE data set.
     
     We have spent literally no time on actually finetuning the model,
     so performance can very likely be improved.

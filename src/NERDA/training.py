@@ -1,6 +1,5 @@
 import numpy as np
 from .preprocessing import create_dataloader
-from .datasets import get_dane_data
 from sklearn import preprocessing
 from transformers import AdamW, get_linear_schedule_with_warmup
 import random
@@ -8,7 +7,8 @@ import torch
 from tqdm import tqdm
 
 def train(model, data_loader, optimizer, device, scheduler, n_tags):
-    
+    """One Iteration of Training"""
+
     model.train()    
     final_loss = 0.0
     
@@ -26,9 +26,11 @@ def train(model, data_loader, optimizer, device, scheduler, n_tags):
         scheduler.step()
         final_loss += loss.item()
 
-    return final_loss / len(data_loader) # Return average loss        
+    # Return average loss
+    return final_loss / len(data_loader)
 
 def validate(model, data_loader, device, n_tags):
+    """One Iteration of Validation"""
 
     model.eval()
     final_loss = 0.0
@@ -42,8 +44,9 @@ def validate(model, data_loader, device, n_tags):
                             device, 
                             n_tags)
         final_loss += loss.item()
-        
-    return final_loss / len(data_loader) # Return average loss     
+    
+    # Return average loss.
+    return final_loss / len(data_loader)   
 
 def compute_loss(preds, target_tags, masks, device, n_tags):
     
@@ -67,13 +70,23 @@ def compute_loss(preds, target_tags, masks, device, n_tags):
 
     return loss
 
-def enforce_reproducibility(seed = 42):
+def enforce_reproducibility(seed = 42) -> None:
+    """Enforce Reproducibity
+
+    Enforces reproducibility of models to the furthest 
+    possible extent. This is done by setting fixed seeds for
+    random number generation etcetera. 
+
+    For atomic operations there is currently no simple way to
+    enforce determinism, as the order of parallel operations
+    is not known.
+
+    Args:
+        seed (int, optional): Fixed seed. Defaults to 42.
+    """
     # Sets seed manually for both CPU and CUDA
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-    # For atomic operations there is currently 
-    # no simple way to enforce determinism, as
-    # the order of parallel operations is not known.
     # CUDNN
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
@@ -81,14 +94,13 @@ def enforce_reproducibility(seed = 42):
     random.seed(seed)
     np.random.seed(seed)
 
-# TODO: fjern eventuelt get_dane_data fra parameterkonfiguration, da det giver bøvl i test.
 def train_model(network,
                 tag_encoder,
                 tag_outside,
                 transformer_tokenizer,
                 transformer_config,
-                dataset_training = get_dane_data('train'), 
-                dataset_validation = get_dane_data('dev'), 
+                dataset_training, 
+                dataset_validation, 
                 max_len = 128,
                 train_batch_size = 16,
                 validation_batch_size = 8,
