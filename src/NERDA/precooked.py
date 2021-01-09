@@ -10,6 +10,8 @@ class Precooked(NERDA):
 
     NERDA model specification that has been precooked/pretrained
     and is available for download.
+
+    Inherits from [NERDA.models.NERDA][].
     """
     def __init__(self, **kwargs) -> None:
         """Initialize Precooked NERDA Model
@@ -52,7 +54,16 @@ class Precooked(NERDA):
 
         return "Network downloaded successfully."
 
-    def load_network(self, file_path = None):
+    def load_network(self, file_path: str = None) -> None:
+        """Load Pretrained Network
+
+        Loads pretrained network from file.
+
+        Args:
+            file_path (str, optional): Path to model file. Defaults to None,
+                in which case, the function points to the '.nerda' folder
+                the home directory.
+        """
 
         model_name = type(self).__name__
         
@@ -63,7 +74,20 @@ class Precooked(NERDA):
         self.load_network_from_file(file_path)
         
 class BERT_ML_DaNE(Precooked):
-    """NERDA Multilingual BERT for Danish Finetuned on DaNE data set."""
+    """NERDA [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) 
+    for Danish Finetuned on [DaNE data set](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
+    
+    Inherits from [NERDA.precooked.Precooked][].
+    
+    Examples:
+        >>> from NERDA.precooked import BERT_ML_DaNE()
+        >>> model = BERT_ML_DaNE()
+        >>> model.download_network()
+        >>> model.load_network()
+        >>> text = 'Jens Hansen har en bondegård'
+        >>> model.predict_text(text)
+    
+    """
     def __init__(self) -> None:
         """Initialize model"""
         super().__init__(transformer = 'bert-base-multilingual-uncased',
@@ -90,11 +114,22 @@ class BERT_ML_DaNE(Precooked):
                          tokenizer_parameters = {'do_lower_case' : True})
 
 class ELECTRA_DA_DaNE(Precooked):
-    """NERDA Danish Electra (-l-ctra) for Danish finetuned on 
-    DaNE data set.
+    """NERDA [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) 
+    for Danish finetuned on [DaNE data set](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
     
     We have spent literally no time on actually finetuning the model,
     so performance can very likely be improved.
+
+    Inherits from [NERDA.precooked.Precooked][].
+
+    Examples:
+        >>> from NERDA.precooked import ELECTRA_DA_DaNE()
+        >>> model = ELECTRA_DA_DaNE()
+        >>> model.download_network()
+        >>> model.load_network()
+        >>> text = 'Jens Hansen har en bondegård'
+        >>> model.predict_text(text)
+
     """
     def __init__(self) -> None:
         """Initialize model"""

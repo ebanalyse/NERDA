@@ -15,11 +15,12 @@ class NERDA:
     """NERDA model
 
     A NERDA model object containing a complete model configuration.
-    The model can be trained with the 'train' method. Afterwards
-    new observations can be predicted with 'predict*' methods.
+    The model can be trained with the `train` method. Afterwards
+    new observations can be predicted with the `predict` and
+    `predict_text` methods.
 
     Examples:
-        Model for a VERY small subset of Danish NER data
+        Model for a VERY small subset (5 observations) of Danish NER data
         >>> from NERDA.dataset import get_dane_data
         >>> trn = get_dane_data('train', 5)
         >>> valid = get_dane_data('dev', 5)
@@ -50,15 +51,15 @@ class NERDA:
                           hyperparameters = hyperparameters)
 
     Attributes:
-        network (NERDANetwork): network for Named Entity 
+        network (torch.nn.Module): network for Named Entity 
             Recognition task.
-        tag_encoder (preprocessing.LabelEncoder): encoder for the
+        tag_encoder (sklearn.preprocessing.LabelEncoder): encoder for the
             NER labels/tags.
-        transformer_model (AutoModel): (Auto)Model derived from the
+        transformer_model (transformers.AutoModel): (Auto)Model derived from the
             transformer.
-        transformer_tokenizer (AutoTokenizer): (Auto)Tokenizer
+        transformer_tokenizer (transformers.AutoTokenizer): (Auto)Tokenizer
             derived from the transformer.
-        transformer_config (AutoConfig): (Auto)Config derived from
+        transformer_config (transformers.AutoConfig): (Auto)Config derived from
             the transformer. 
         losses (list): holds training losses, when the model has been 
             trained.
@@ -80,6 +81,7 @@ class NERDA:
                  dataset_training: dict = None,
                  dataset_validation: dict = None,
                  max_len: int = 130,
+                 network: torch.nn.Module = NERDANetwork,
                  dropout: float = 0.1,
                  hyperparameters: dict = {'epochs' : 3,
                                           'warmup_steps' : 500,
@@ -95,7 +97,7 @@ class NERDA:
                 transformer to use. 
             device (str, optional): the desired device to use for computation. 
                 If not provided by the user, we take a guess.
-            tag_scheme (List[str], optional): [description]. All available NER 
+            tag_scheme (List[str], optional): All available NER 
                 tags for the given data set EXCLUDING the special outside tag, 
                 that is handled separately.
             tag_outside (str, optional): the value of the special outside tag. 
@@ -109,6 +111,10 @@ class NERDA:
             max_len (int, optional): the maximum sentence length (number of 
                 tokens after applying the transformer tokenizer) for the transformer. 
                 Sentences are truncated accordingly.
+            network (torch.nn.module, optional): network to be trained. Defaults
+                to a default generic `NERDANetwork`. Can be replaced with your own 
+                customized network architecture. It must however take the same 
+                arguments as `NERDANetwork`.
             dropout (float, optional): dropout probability. Defaults to 0.1.
             hyperparameters (dict, optional): Hyperparameters for the model. Defaults
                 to {'epochs' : 3, 'warmup_steps' : 500, 'train_batch_size': 16, 
@@ -195,7 +201,7 @@ class NERDA:
         """
         # TODO: change assert to Raise.
         assert os.path.exists(model_path), "File does not exist. You can download network with download_network()"
-        self.network.load_state_dict(torch.load(model_path))
+        self.network.load_state_dict(torch.load(model_path, map_location = torch.device(self.device)))
         return f'Weights for network loaded from {model_path}'
 
     def predict(self, sentences: List[List[str]], **kwargs) -> List[List[str]]:

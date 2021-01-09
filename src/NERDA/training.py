@@ -82,7 +82,7 @@ def enforce_reproducibility(seed = 42) -> None:
     is not known.
 
     Args:
-        seed (int, optional): Fixed seed. Defaults to 42.
+        seed (int, optional): Fixed seed. Defaults to 42.  
     """
     # Sets seed manually for both CPU and CUDA
     torch.manual_seed(seed)
@@ -118,7 +118,6 @@ def train_model(network,
     n_tags = tag_encoder.classes_.shape[0]
 
     # prepare datasets for modelling by creating data readers and loaders
-    # TODO: parametrize num_workers.
     dl_train = create_dataloader(sentences = dataset_training.get('sentences'),
                                  tags = dataset_training.get('tags'), 
                                  transformer_tokenizer = transformer_tokenizer, 

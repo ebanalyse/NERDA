@@ -63,7 +63,6 @@ class NERDADataSetReader():
         masks = masks + ([0] * padding_len)  
         offsets = offsets + ([0] * padding_len)
         token_type_ids = token_type_ids + ([0] * padding_len)
-        # set to 8, since 'O' encoded as 8
         target_tags = target_tags + ([self.tag_outside_transformed] * padding_len)  
 
         return {'input_ids' : torch.tensor(input_ids, dtype = torch.long),

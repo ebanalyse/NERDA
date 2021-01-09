@@ -1,6 +1,5 @@
 from typing import Callable
 
-
 def match_kwargs(function: Callable, **kwargs) -> dict:
     """Matches Arguments with Function
 
@@ -8,11 +7,12 @@ def match_kwargs(function: Callable, **kwargs) -> dict:
 
     Args:
         function (function): Function to match arguments for.
-        **kwargs (str): keyword arguments to match against.
+        kwargs: keyword arguments to match against.
 
     Returns:
         dict: dictionary with matching arguments and their
         respective values.
+
     """
     arg_count = function.__code__.co_argcount
     args = function.__code__.co_varnames[:arg_count]

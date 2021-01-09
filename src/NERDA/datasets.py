@@ -38,10 +38,6 @@ def download_dane_data(dir: str = None) -> str:
     Downloads the 'DaNE' data set annotated for Named Entity
     Recognition kindly hosted by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
 
-    Examples:
-        >>> download_dane_data()
-        >>> download_dane_data(dir = 'DaNE')
-
     Args:
         dir (str, optional): Directory where DaNE datasets will be saved. If no directory is provided, data will be saved to a hidden folder '.dane' in your home directory.  
                            
@@ -49,6 +45,11 @@ def download_dane_data(dir: str = None) -> str:
         str: a message telling, if the archive was in fact 
         succesfully extracted. Obviously the DaNE datasets are
         extracted to the desired directory as a side-effect.
+    
+    Examples:
+        >>> download_dane_data()
+        >>> download_dane_data(dir = 'DaNE')
+        
     """
     # set to default directory if nothing else has been provided by user.
     if dir is None:
@@ -65,13 +66,6 @@ def get_dane_data(split: str = 'train',
     Loads a single data split from the DaNE data set kindly hosted
     by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
 
-    Examples:
-        Get test split
-        >>> get_dane_data('test')
-
-        Get first 5 observations from training split
-        >>> get_dane_data('training', limit = 5)
-
     Args:
         split (str, optional): Choose which split to load. Choose 
             from 'train', 'dev' and 'test'. Defaults to 'train'.
@@ -84,6 +78,13 @@ def get_dane_data(split: str = 'train',
     Returns:
         dict: Dictionary with word-tokenized 'sentences' and named 
         entity 'tags' in IOB format.
+
+    Examples:
+        Get test split
+        >>> get_dane_data('test')
+
+        Get first 5 observations from training split
+        >>> get_dane_data('training', limit = 5)
 
     """
     assert isinstance(split, str)

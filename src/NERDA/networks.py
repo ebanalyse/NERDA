@@ -1,3 +1,5 @@
+"""Networks for NERDA"""
+
 import torch.nn as nn
 from transformers import AutoConfig
 from .utils import match_kwargs
@@ -5,7 +7,8 @@ from .utils import match_kwargs
 class NERDANetwork(nn.Module):
     """A Generic Network for NERDA models.
 
-    Can be replaced with a custom user-defined network.
+    Can be replaced with a custom user-defined network with 
+    the restriction, that it must take the arguments.
     """
 
     def __init__(self, transformer, device, n_tags, dropout = 0.1) -> None:
