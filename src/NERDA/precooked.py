@@ -4,6 +4,22 @@ from .models import NERDA
 import os
 import urllib
 from pathlib import Path
+import progressbar
+
+pbar = None
+
+def show_progress(block_num, block_size, total_size):
+    global pbar
+    if pbar is None:
+        pbar = progressbar.ProgressBar(maxval=total_size)
+
+    downloaded = block_num * block_size
+    pbar.start()
+    if downloaded < total_size:
+        pbar.update(downloaded)
+    else:
+        pbar.finish()
+        pbar = None
 
 class Precooked(NERDA):
     """Precooked NERDA Model
@@ -50,7 +66,7 @@ class Precooked(NERDA):
         file_path = os.path.join(dir, f'{model_name}.bin')
         
         print(f'Downloading {url_model} to {file_path}')
-        urllib.request.urlretrieve(url_model, file_path)
+        urllib.request.urlretrieve(url_model, file_path, show_progress)
 
         return "Network downloaded successfully."
 

@@ -21,6 +21,7 @@ setuptools.setup(
         'sklearn',
         'nltk',
         'pandas',
+        'progressbar',
         'pyconll'
     ],
     setup_requires=['pytest-runner'],
