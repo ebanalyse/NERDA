@@ -64,6 +64,12 @@ jobs:
         file: coverage.xml
         flags: unittests
 
+    - name: Deploy docs
+      if: github.ref == 'refs/heads/main'
+      run: |
+        pip install .
+        mkdocs gh-deploy --force
+        
     - name: Build and publish to TEST PyPI
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
@@ -80,10 +86,5 @@ jobs:
       run: |
         twine upload dist/*
  
-    - name: Deploy docs
-      if: github.ref == 'refs/heads/main'
-      run: |
-        pip install .
-        mkdocs gh-deploy --force
     
     
