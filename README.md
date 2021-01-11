@@ -41,10 +41,10 @@ Identify person names and organizations in text:
 
 **Solution**
 
-| **Named Entity type** | **Named Entity**   | 
-|-----------------------|--------------------|
-| Person                | 'Jim'              |
-| Organization          | 'Acme Corp.'       |
+| **Named Entity**   | **Named Entity type** | 
+|--------------------|-----------------------|
+| 'Jim'              | Person                |
+| 'Acme Corp.'       | Organization          |
 
 Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_recognition).
 
@@ -96,7 +96,7 @@ in a lot of ways:
 
 Read more about advanced usage of `NERDA` in the detailed documentation.
 
-## Use a Precooked NERDA model ##
+## Use a Precooked `NERDA` model ##
 
 We have precooked a number of `NERDA` models, that you can download 
 and use right off the shelf. 
