@@ -6,7 +6,7 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/NERDA?color=green)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-`NERDA` is not only a mesmerizing muppet-like character. `NERDA` is also
+Not only is `NERDA` a mesmerizing muppet-like character. `NERDA` is also
 a python package, that offers a slick easy-to-use interface for fine-tuning 
 pretrained transformers for Named Entity Recognition
  (=NER) tasks. 
@@ -23,7 +23,7 @@ pip install NERDA
 
 If you want the development version then install directly from [GitHub](https://github.com/ebanalyse/NERDA).
 
-## NER tasks
+## Named-Entity Recogntion tasks
 Named-entity recognition (NER) (also known as (named) entity identification, 
 entity chunking, and entity extraction) is a subtask of information extraction
 that seeks to locate and classify named entities mentioned in unstructured 
@@ -41,10 +41,10 @@ Identify person names and organizations in text:
 
 **Solution**
 
-| **Entity type** | **Named Entity ** | 
-|-----------------|-------------------|
-| Person          | 'Jim'             |
-| Organization    | 'Acme Corp.'      |
+| **Named Entity type** | **Named Entity**   | 
+|-----------------------|--------------------|
+| Person                | 'Jim'              |
+| Organization          | 'Acme Corp.'       |
 
 Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_recognition).
 
@@ -83,7 +83,7 @@ named entities in new texts.
 text = 'Jens Hansen har en bondegård'
 model.predict_text(text)
 ```
-.. It is as simple that!
+.. It is as simple as that!
 
 Please note, that the `NERDA` model configuration above was instantiated 
 with all default settings. You can however customize your `NERDA` model
@@ -99,7 +99,9 @@ Read more about advanced usage of `NERDA` in the detailed documentation.
 ## Use a Precooked NERDA model ##
 
 We have precooked a number of `NERDA` models, that you can download 
-and use right off the shelf.
+and use right off the shelf. 
+
+Here is an example.
 
 Instantiate multingual BERT model, that has been finetuned for NER in Danish,
 `BERT_ML_DaNE`.
@@ -136,12 +138,13 @@ The table below shows the precooked `NERDA` models publicly available for downlo
 | `EN_BERT_ML`    | English      | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased)| zz.z              |
 
 Note, that we have not spent a lot of time on actually fine-tuning the models,
-so there could be room for improvement.
+so there could be room for improvement. If you are able to improve the models,
+we will be happy to hear from you and include your `NERDA` model.
 
 ## Performance
 
 The table below summarizes the performance as measured by F1-scores of the model
- configurations, that `NERDA` ships with.
+ configurations, that `NERDA` ships with. 
 
 | **Level**     | **MBERT** | **DABERT** | **ELECTRA** | **XLMROBERTA** | **DISTILMBERT** |
 |---------------|-----------|------------|-------------|----------------|-----------------|
@@ -162,10 +165,6 @@ is somewhat misleading, since the functionality is no longer limited to Danish.
 On the contrary it generalizes to all other languages, i.e. NERDA supports 
 fine-tuning of transformer-based models for NER tasks for any arbitrary 
 language.
-
-## Read more
-The detailed documentation for `NERDA` including code references and
-examples can be accessed [here](https://ebanalyse.github.io/NERDA/).
 
 ## Contact
 We hope, that you will find `NERDA` useful.
