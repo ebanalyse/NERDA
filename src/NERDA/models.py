@@ -1,15 +1,17 @@
 """NERDA models"""
+from numpy.core.numeric import Infinity
 from .datasets import get_dane_data
 from .networks import NERDANetwork
 from .predictions import predict, predict_text
 from .performance import compute_f1_scores
 from .training import train_model
 import pandas as pd
+import numpy as np
 import torch
 import os
-from typing import List
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer, AutoConfig
+from typing import List
 
 class NERDA:
     """NERDA model
@@ -61,8 +63,9 @@ class NERDA:
             derived from the transformer.
         transformer_config (transformers.AutoConfig): (Auto)Config derived from
             the transformer. 
-        losses (list): holds training losses, when the model has been 
+        train_losses (list): holds training losses, when the model has been 
             trained.
+        valid_loss (float): holds validation loss, when the model has been trained.
     """
     def __init__(self, 
                  transformer: str = 'bert-base-multilingual-uncased',
@@ -83,8 +86,8 @@ class NERDA:
                  max_len: int = 130,
                  network: torch.nn.Module = NERDANetwork,
                  dropout: float = 0.1,
-                 hyperparameters: dict = {'epochs' : 3,
-                                          'warmup_steps' : 500,
+                 hyperparameters: dict = {'epochs' : 1,
+                                          'warmup_steps' : 100,
                                           'train_batch_size': 16,
                                           'learning_rate': 0.0001},
                  tokenizer_parameters: dict = {'do_lower_case' : True},
@@ -154,7 +157,8 @@ class NERDA:
         self.network.to(self.device)
         self.validation_batch_size = validation_batch_size
         self.num_workers = num_workers
-        self.losses = []
+        self.train_losses = []
+        self.valid_loss = np.nan
 
     def train(self) -> str:
         """Train Network
@@ -167,22 +171,23 @@ class NERDA:
             side-effect. Training losses are also saved in 'losses' 
             attribute as a side-effect.
         """
-        network, losses = train_model(network = self.network,
-                                      tag_encoder = self.tag_encoder,
-                                      tag_outside = self.tag_outside,
-                                      transformer_tokenizer = self.transformer_tokenizer,
-                                      transformer_config = self.transformer_config,
-                                      dataset_training = self.dataset_training,
-                                      dataset_validation = self.dataset_validation,
-                                      validation_batch_size = self.validation_batch_size,
-                                      max_len = self.max_len,
-                                      device = self.device,
-                                      num_workers = self.num_workers,
-                                      **self.hyperparameters)
+        network, train_losses, valid_loss = train_model(network = self.network,
+                                                        tag_encoder = self.tag_encoder,
+                                                        tag_outside = self.tag_outside,
+                                                        transformer_tokenizer = self.transformer_tokenizer,
+                                                        transformer_config = self.transformer_config,
+                                                        dataset_training = self.dataset_training,
+                                                        dataset_validation = self.dataset_validation,
+                                                        validation_batch_size = self.validation_batch_size,
+                                                        max_len = self.max_len,
+                                                        device = self.device,
+                                                        num_workers = self.num_workers,
+                                                        **self.hyperparameters)
         
         # attach as attributes to class
         setattr(self, "network", network)
-        setattr(self, "losses", losses)
+        setattr(self, "train_losses", train_losses)
+        setattr(self, "valid_loss", valid_loss)
 
         return "Model trained successfully"
 

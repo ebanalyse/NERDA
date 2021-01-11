@@ -4,14 +4,15 @@ from .models import NERDA
 import os
 import urllib
 from pathlib import Path
-import progressbar
+from progressbar import ProgressBar
 
 pbar = None
 
+# helper function to show progressbar
 def show_progress(block_num, block_size, total_size):
     global pbar
     if pbar is None:
-        pbar = progressbar.ProgressBar(maxval=total_size)
+        pbar = ProgressBar(maxval=total_size)
 
     downloaded = block_num * block_size
     pbar.start()
