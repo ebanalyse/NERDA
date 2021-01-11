@@ -15,7 +15,7 @@ plugins:
 
 nav:
     - Home: index.md
-    - Examples: tester.ipynb
+    - Workflow Examples: tester.ipynb
     - Code Reference:
         - NERDA Models: nerda_models.md
         - Precooked NERDA Models: precooked_models.md

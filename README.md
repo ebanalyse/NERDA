@@ -74,6 +74,9 @@ The model can then be trained/fine-tuned by invoking the `train` method, e.g.
 model.train()
 ````
 
+**Note**: this will take some time depending on the dimensions of your machine.
+With a decent AWS EC2 instance it will take below 15 minutes.
+
 After the model has been trained, the model can be used for predicting 
 named entities in new texts.
 

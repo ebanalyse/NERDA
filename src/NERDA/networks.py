@@ -7,6 +7,9 @@ from .utils import match_kwargs
 class NERDANetwork(nn.Module):
     """A Generic Network for NERDA models.
 
+    The network has the same architecture as the models in
+    [Hvingelby et al. 2020](http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf).
+
     Can be replaced with a custom user-defined network with 
     the restriction, that it must take the arguments.
     """
