@@ -12,12 +12,15 @@ plugins:
             - sys.path.append("src")
   - mknotebooks:
       execute: True
+      preamble: "docs/preamble.py"
 
 nav:
     - Home: index.md
-    - Workflow Examples: tester.ipynb
+    - Workflow Examples: workflow.ipynb
     - Code Reference:
         - NERDA Models: nerda_models.md
         - Precooked NERDA Models: precooked_models.md
         - Datasets: datasets.md
+
+
 

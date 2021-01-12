@@ -41,7 +41,7 @@ Identify person names and organizations in text:
 
 **Solution**
 
-| **Named Entity**   | **Named Entity type** | 
+| **Named Entity**   | **Type**              | 
 |--------------------|-----------------------|
 | 'Jim'              | Person                |
 | 'Acme Corp.'       | Organization          |
