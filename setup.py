@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="NERDA", 
-    version="0.0.33",
+    version="0.0.40",
     author="PIN",
     author_email="lars.kjeldgaard@eb.dk",
     description="A Framework for Finetuning Transformers for Named Entity Recognition",
