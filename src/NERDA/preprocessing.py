@@ -19,7 +19,7 @@ class NERDADataSetReader():
         tags = self.tags[item]
         # encode tags
         tags = self.tag_encoder.transform(tags)
-
+        
         # check inputs for consistancy
         assert len(sentence) == len(tags)
 
@@ -28,6 +28,8 @@ class NERDADataSetReader():
         tokens = []
         offsets = []
         
+        # for debugging purposes
+        # print(item)
         for i, word in enumerate(sentence):
             # bert tokenization
             wordpieces = self.transformer_tokenizer.tokenize(word)

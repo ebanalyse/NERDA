@@ -4,6 +4,7 @@ import csv
 import os
 import pyconll
 from io import BytesIO
+from itertools import compress
 from pathlib import Path
 from typing import Union, List, Dict
 from urllib.request import urlopen
@@ -198,14 +199,23 @@ def get_conll_data(split: str = 'train',
     for row in data:
         # extract first element of list.
         row = row[0]
+        # TO DO: move to data reader.
         if len(row) > 0 and row[0] != '-DOCSTART-':
             sentence.append(row[0])
             tags.append(row[-1])        
         if len(row) == 0 and len(sentence) > 0:
-            sentences.append(sentence)
-            entities.append(tags)
+            # clean up sentence/tags.
+            # remove white spaces.
+            selector = [word != ' ' for word in sentence]
+            sentence = list(compress(sentence, selector))
+            tags = list(compress(tags, selector))
+            # append if sentence length is still greater than zero..
+            if len(sentence) > 0:
+                sentences.append(sentence)
+                entities.append(tags)
             sentence = []
             tags = []
+            
    
     if limit is not None:
         sentences = sentences[:limit]

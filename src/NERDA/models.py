@@ -255,7 +255,7 @@ class NERDA:
                             tag_outside = self.tag_outside,
                             **kwargs)
 
-    def evaluate_performance(self, dataset: dict) -> pd.DataFrame:
+    def evaluate_performance(self, dataset: dict, batch_size: int = 1) -> pd.DataFrame:
         """Evaluate Performance
 
         Evaluates the performance of the model on an arbitrary
@@ -264,12 +264,14 @@ class NERDA:
         Args:
             dataset (dict): Data set that must consist of
                 'sentences' and NER'tags'.
+            batch_size: batch size for dataloader.
 
         Returns:
             DataFrame with performance numbers, F1-scores.
         """
         
-        tags_predicted = self.predict(dataset.get('sentences'))
+        tags_predicted = self.predict(dataset.get('sentences'), 
+                                      batch_size = batch_size)
         
         f1 = compute_f1_scores(y_pred = tags_predicted, 
                                y_true = dataset.get('tags'),
@@ -297,3 +299,4 @@ class NERDA:
         df = df.append(f1_macro)
       
         return df
+

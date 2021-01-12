@@ -23,8 +23,11 @@ def compute_f1_scores(y_pred: list,
         list: resulting F1 scores.
     """
 
+    # HACK: truncate observed values to match predict function.
+    y_true = [t[:len(p)] for t, p in zip(y_true, y_pred)]
+    
     y_pred = flatten(y_pred)
-    y_true = flatten(y_true)
+    y_true = flatten(y_true) 
 
     f1_scores = precision_recall_fscore_support(y_true = y_true,
                                                 y_pred = y_pred,

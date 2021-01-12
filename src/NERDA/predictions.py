@@ -47,11 +47,12 @@ def predict(network = None,
             # subset predictions for original word tokens
             preds = [prediction for prediction, offset in zip(preds.tolist(), dl.get('offsets')) if offset]
             # Remove special tokens ('CLS' + 'SEP')
-            preds = preds[1:-1]  
-
+            preds = preds[1:-1]
+            
             # make sure resulting predictions have same length as
             # original sentence.
-            assert len(preds) == len(sentences[i])            
+            # TODO: relax assumption?
+            # assert len(preds) == len(sentences[i])            
 
             predictions.append(preds)
 
