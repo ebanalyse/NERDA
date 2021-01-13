@@ -79,3 +79,11 @@ model.evaluate_performance(test)
 #from transformers import AutoTokenizer
 #t = AutoTokenizer.from_pretrained('bert-base-multilingual-uncased')
 #valid = get_conll_data('valid')
+
+from NERDA.datasets import get_dane_data
+trn = get_conll_data('train', 5)
+valid = get_conll_data('dev', 5)
+transformer = 'bert-base-multilingual-uncased',
+model = NERDA(transformer = transformer,
+              dataset_training = trn,
+              dataset_validation = valid)

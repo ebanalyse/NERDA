@@ -23,7 +23,7 @@ class NERDA:
 
     Examples:
         Model for a VERY small subset (5 observations) of Danish NER data
-        >>> from NERDA.dataset import get_dane_data
+        >>> from NERDA.datasets import get_dane_data
         >>> trn = get_dane_data('train', 5)
         >>> valid = get_dane_data('dev', 5)
         >>> tag_scheme = ['B-PER', 'I-PER' 'B-LOC', 'I-LOC',
