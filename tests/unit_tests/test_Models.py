@@ -1,27 +1,35 @@
 from NERDA.datasets import get_dane_data, download_dane_data
-# Bør ikke være nødvendigt at downloade før import af NERDA.
+# TODO: should not be necesssary to download before importing NERDA.
+
+# Download necessary ressources
 download_dane_data()
 from NERDA.models import NERDA
 import nltk
 nltk.download('punkt')
 
-# instantiate model.
+# instantiate a minimal model.
 model = NERDA(dataset_training = get_dane_data('train', 5),
               dataset_validation = get_dane_data('dev', 5),
-              transformer = 'bert-base-multilingual-uncased')
+              max_len = 128,
+              transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
+              hyperparameters = {'epochs' : 1,
+                                 'warmup_steps' : 10,
+                                 'train_batch_size': 5,
+                                 'learning_rate': 0.0001})
 
 def test_instantiate_NERDA():
+    """Test that model has the correct/expected class"""
     assert isinstance(model, NERDA)
 
-model.train()
+def test_training():
+    """Test if training runs successfully"""
+    model.train()
 
 text = "Pernille Rosenkrantz-Theil kommer fra Vejle"
 import nltk
 # TODO: must work for a single sentence.
 sentences = [nltk.word_tokenize(text)]
 predictions = model.predict(sentences)
-
-
 
 def test_predict():
     assert isinstance(predictions, list)

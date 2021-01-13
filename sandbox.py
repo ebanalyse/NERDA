@@ -1,5 +1,37 @@
 from NERDA.models import NERDA
-from NERDA.datasets import get_conll_data
+from NERDA.datasets import get_conll_data, get_dane_data
+from transformers import AutoTokenizer
+trans = 'bert-base-multilingual-uncased'
+tokenizer = AutoTokenizer.from_pretrained(trans, do_lower_case = True)
+data = get_dane_data('train')
+
+sents = data.get('sentences')
+
+out = []
+
+for sent in sents:
+    sent = sents[3595]
+    tokens = []
+    for word in sent:
+            tokens.extend(tokenizer.tokenize(word))
+    out.append(tokens)
+
+lens = [len(x) for x in out]
+
+max(lens)
+
+sents[3595]
+
+
+
+
+
+
+
+
+
+
+
 
 #trn = get_conll_data('train')
 #idx_min = 3110

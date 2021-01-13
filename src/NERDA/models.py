@@ -113,7 +113,10 @@ class NERDA:
                 NER tags. Defaults to None, in which case the DaNE data set is used.
             max_len (int, optional): the maximum sentence length (number of 
                 tokens after applying the transformer tokenizer) for the transformer. 
-                Sentences are truncated accordingly.
+                Sentences are truncated accordingly. Look at your data to get an 
+                impression of, what could be a meaningful setting. Also be aware 
+                that many transformers have a maximum accepted length. Defaults 
+                to 130. 
             network (torch.nn.module, optional): network to be trained. Defaults
                 to a default generic `NERDANetwork`. Can be replaced with your own 
                 customized network architecture. It must however take the same 
@@ -136,7 +139,6 @@ class NERDA:
         self.tag_scheme = tag_scheme
         self.tag_outside = tag_outside
         self.transformer = transformer
-        self.max_len = max_len
         if dataset_training is None:
             dataset_training = get_dane_data('train')
         if dataset_validation is None:
@@ -148,6 +150,7 @@ class NERDA:
         self.tag_scheme = tag_scheme
         tag_complete = [tag_outside] + tag_scheme
         # fit encoder to _all_ possible tags.
+        self.max_len = max_len
         self.tag_encoder = preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
         self.transformer_model = AutoModel.from_pretrained(transformer)
@@ -255,7 +258,7 @@ class NERDA:
                             tag_outside = self.tag_outside,
                             **kwargs)
 
-    def evaluate_performance(self, dataset: dict, batch_size: int = 1) -> pd.DataFrame:
+    def evaluate_performance(self, dataset: dict, **kwargs) -> pd.DataFrame:
         """Evaluate Performance
 
         Evaluates the performance of the model on an arbitrary
@@ -264,14 +267,15 @@ class NERDA:
         Args:
             dataset (dict): Data set that must consist of
                 'sentences' and NER'tags'.
-            batch_size: batch size for dataloader.
+            kwargs: arbitrary keyword arguments for predict. For
+                instance 'batch_size' and 'num_workers'.
 
         Returns:
             DataFrame with performance numbers, F1-scores.
         """
         
         tags_predicted = self.predict(dataset.get('sentences'), 
-                                      batch_size = batch_size)
+                                      **kwargs)
         
         f1 = compute_f1_scores(y_pred = tags_predicted, 
                                y_true = dataset.get('tags'),

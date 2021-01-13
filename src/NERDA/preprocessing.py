@@ -42,7 +42,8 @@ class NERDADataSetReader():
         # Make room for adding special tokens (one for both 'CLS' and 'SEP' special tokens)
         # max_len includes _all_ tokens.
         if len(tokens) > self.max_len - 2:
-            warnings.warn('Sentence exceeds max_len and has been truncated')
+            msg = f'Sentence #{item} length {len(tokens)} exceeds max_len {self.max_len} and has been truncated'
+            warnings.warn(msg)
         tokens = tokens[:self.max_len - 2] 
         target_tags = target_tags[:self.max_len - 2]
         offsets = offsets[:self.max_len - 2]
@@ -71,7 +72,7 @@ class NERDADataSetReader():
                 'masks' : torch.tensor(masks, dtype = torch.long),
                 'token_type_ids' : torch.tensor(token_type_ids, dtype = torch.long),
                 'target_tags' : torch.tensor(target_tags, dtype = torch.long),
-                'offsets': offsets} 
+                'offsets': torch.tensor(offsets, dtype = torch.long)} 
       
 def create_dataloader(sentences, 
                       tags, 

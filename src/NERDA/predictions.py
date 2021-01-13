@@ -13,7 +13,7 @@ def predict(network = None,
             device = None,
             tag_encoder = None,
             tag_outside = None,
-            batch_size = 1,
+            batch_size = 8,
             num_workers = 1):
 
     # set network to appropriate mode.
@@ -40,21 +40,28 @@ def predict(network = None,
 
             outputs = network(**dl)   
 
-            preds = tag_encoder.inverse_transform(
-                    outputs.argmax(2).cpu().numpy().reshape(-1)
+            # conduct operations on sentence level.
+            for i in range(outputs.shape[0]):
+                
+                # extract prediction and transform.
+                preds = tag_encoder.inverse_transform(
+                    outputs[i].argmax(-1).cpu().numpy()
                 )
 
-            # subset predictions for original word tokens
-            preds = [prediction for prediction, offset in zip(preds.tolist(), dl.get('offsets')) if offset]
-            # Remove special tokens ('CLS' + 'SEP')
-            preds = preds[1:-1]
+                # subset predictions for original word tokens.
+                preds = [prediction for prediction, offset in zip(preds.tolist(), dl.get('offsets')[i]) if offset]
             
-            # make sure resulting predictions have same length as
-            # original sentence.
-            # TODO: relax assumption?
-            # assert len(preds) == len(sentences[i])            
+                # Remove special tokens ('CLS' + 'SEP').
+                preds = preds[1:-1]
+            
+                # make sure resulting predictions have same length as
+                # original sentence.
+            
+                # TODO: Move assert statement to unit tests. Does not work 
+                # in boundary.
+                # assert len(preds) == len(sentences[i])            
 
-            predictions.append(preds)
+                predictions.append(preds)
 
     return predictions
 
