@@ -84,6 +84,7 @@ model.evaluate_performance(test)
 #t = AutoTokenizer.from_pretrained('bert-base-multilingual-uncased')
 #valid = get_conll_data('valid')
 
+<<<<<<< HEAD:admin/sandbox.py
 
 transformer = "google/electra-small-discriminator"
 from transformers import AutoTokenizer, AutoModel, AutoConfig 
@@ -97,3 +98,12 @@ def tester():
         print("Oops!", sys.exc_info()[0], "occurred.")
 
     return model
+=======
+from NERDA.datasets import get_dane_data
+trn = get_conll_data('train', 5)
+valid = get_conll_data('dev', 5)
+transformer = 'bert-base-multilingual-uncased',
+model = NERDA(transformer = transformer,
+              dataset_training = trn,
+              dataset_validation = valid)
+>>>>>>> b5eea087ece5f61ec70aa3f99cd4c99b418ebb92:sandbox.py
