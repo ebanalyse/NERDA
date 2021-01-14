@@ -1,4 +1,7 @@
-"""Functionality for loading Named Entity Recognition data sets."""
+"""
+This section covers functionality for (down)loading Named Entity 
+Recognition data sets.
+"""
 
 import csv
 import os
@@ -38,7 +41,8 @@ def download_dane_data(dir: str = None) -> str:
     """Download DaNE data set.
 
     Downloads the 'DaNE' data set annotated for Named Entity
-    Recognition kindly hosted by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
+    Recognition developed and hosted by 
+    [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
 
     Args:
         dir (str, optional): Directory where DaNE datasets will be saved. If no directory is provided, data will be saved to a hidden folder '.dane' in your home directory.  
@@ -119,9 +123,9 @@ def get_dane_data(split: str = 'train',
     
 
 def download_conll_data(dir: str = None) -> str:
-    """Download CoNLL 2003 English data set.
+    """Download CoNLL-2003 English data set.
 
-    Downloads the [CoNLL 2003](https://www.clips.uantwerpen.be/conll2003/ner/) 
+    Downloads the [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) 
     English data set annotated for Named Entity Recognition.
 
     Args:
@@ -149,7 +153,9 @@ def get_conll_data(split: str = 'train',
                    dir: str = None) -> dict:
     """Load CoNLL-2003 (English) data split.
 
-    Loads a single data split from the CoNLL-2003 (English) data set.
+    Loads a single data split from the 
+    [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) 
+    (English) data set.
 
     Args:
         split (str, optional): Choose which split to load. Choose 

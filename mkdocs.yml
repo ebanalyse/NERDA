@@ -21,6 +21,8 @@ nav:
         - NERDA Models: nerda_models.md
         - Precooked NERDA Models: precooked_models.md
         - Datasets: datasets.md
-
+        - Predictions: predictions.md
+        - Networks: networks.md
+        - Performance: performance.md
 
 

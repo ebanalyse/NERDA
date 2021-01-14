@@ -23,6 +23,10 @@ max(lens)
 sents[3595]
 
 
+from transformers import AutoTokenizer, AutoModel, AutoConfig 
+t = 'google/electra-small-discriminator'
+cfg = AutoModel.from_pretrained(t)
+
 
 
 
@@ -79,3 +83,17 @@ model.evaluate_performance(test)
 #from transformers import AutoTokenizer
 #t = AutoTokenizer.from_pretrained('bert-base-multilingual-uncased')
 #valid = get_conll_data('valid')
+
+
+transformer = "google/electra-small-discriminator"
+from transformers import AutoTokenizer, AutoModel, AutoConfig 
+trans = AutoConfig.from_pretrained(transformer)
+
+def tester():
+
+    try:
+        model = AutoModel.from_pretrained('google/electra-small-discriminator')
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+
+    return model

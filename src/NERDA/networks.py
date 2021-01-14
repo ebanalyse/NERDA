@@ -1,5 +1,5 @@
-"""Networks for NERDA"""
-
+"""This section covers `torch` networks for `NERDA`"""
+import torch
 import torch.nn as nn
 from transformers import AutoConfig
 from .utils import match_kwargs
@@ -11,11 +11,18 @@ class NERDANetwork(nn.Module):
     [Hvingelby et al. 2020](http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf).
 
     Can be replaced with a custom user-defined network with 
-    the restriction, that it must take the arguments.
+    the restriction, that it must take the same arguments.
     """
 
-    def __init__(self, transformer, device, n_tags, dropout = 0.1) -> None:
-        """Initialize NERDA network"""
+    def __init__(self, transformer: nn.Module, device: str, n_tags: int, dropout: float = 0.1) -> None:
+        """Initialize a NERDA Network
+
+        Args:
+            transformer (nn.Module): huggingface `torch` transformer.
+            device (str): Computational device.
+            n_tags (int): Number of unique entity tags (incl. outside tag)
+            dropout (float, optional): Dropout probability. Defaults to 0.1.
+        """
         super(NERDANetwork, self).__init__()
         
         # extract transformer name
@@ -30,7 +37,26 @@ class NERDANetwork(nn.Module):
 
     # NOTE: offsets are not used in model as-is, but they are expected as output
     # down-stream. So _DON'T_ remove! :)
-    def forward(self, input_ids, masks, token_type_ids, target_tags, offsets):
+    def forward(self, 
+                input_ids: torch.Tensor, 
+                masks: torch.Tensor, 
+                token_type_ids: torch.Tensor, 
+                target_tags: torch.Tensor, 
+                offsets: torch.Tensor) -> torch.Tensor:
+        """Model Forward Iteration
+
+        Args:
+            input_ids (torch.Tensor): Input IDs.
+            masks (torch.Tensor): Attention Masks.
+            token_type_ids (torch.Tensor): Token Type IDs.
+            target_tags (torch.Tensor): Target tags.
+            offsets (torch.Tensor): Offsets to keep track of original
+                words. Are not used in model as-is, but they are 
+                expected as down-stream, so they can not be left out.
+
+        Returns:
+            torch.Tensor: predicted values.
+        """
 
         # TODO: can be improved with ** and move everything to device in a
         # single step.

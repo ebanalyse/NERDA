@@ -1,5 +1,8 @@
-"""Precooked NERDA Models"""
-from .datasets import get_dane_data
+"""
+This sections covers NERDA Models that have been 'precooked' by 
+Ekstra Bladet and are publicly available for download.
+"""
+from .datasets import get_dane_data, get_conll_data
 from .models import NERDA
 import os
 import urllib
@@ -90,15 +93,15 @@ class Precooked(NERDA):
         assert os.path.exists(file_path), "File does not exist! You can download network with download_network()"
         self.load_network_from_file(file_path)
         
-class BERT_ML_DaNE(Precooked):
+class DA_BERT_ML(Precooked):
     """NERDA [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) 
     for Danish Finetuned on [DaNE data set](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
     
     Inherits from [NERDA.precooked.Precooked][].
     
     Examples:
-        >>> from NERDA.precooked import BERT_ML_DaNE()
-        >>> model = BERT_ML_DaNE()
+        >>> from NERDA.precooked import DA_BERT_ML()
+        >>> model = DA_BERT_ML()
         >>> model.download_network()
         >>> model.load_network()
         >>> text = 'Jens Hansen har en bondegård'
@@ -130,18 +133,15 @@ class BERT_ML_DaNE(Precooked):
                                             'learning_rate': 0.0001},
                          tokenizer_parameters = {'do_lower_case' : True})
 
-class ELECTRA_DA_DaNE(Precooked):
+class DA_ELECTRA_DA(Precooked):
     """NERDA [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) 
     for Danish finetuned on [DaNE data set](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
-    
-    We have spent literally no time on actually finetuning the model,
-    so performance can very likely be improved.
 
     Inherits from [NERDA.precooked.Precooked][].
 
     Examples:
-        >>> from NERDA.precooked import ELECTRA_DA_DaNE()
-        >>> model = ELECTRA_DA_DaNE()
+        >>> from NERDA.precooked import DA_ELECTRA_DA()
+        >>> model = DA_ELECTRA_DA()
         >>> model.download_network()
         >>> model.load_network()
         >>> text = 'Jens Hansen har en bondegård'
@@ -172,3 +172,87 @@ class ELECTRA_DA_DaNE(Precooked):
                                             'train_batch_size': 13,
                                             'learning_rate': 0.0001},
                          tokenizer_parameters = {'do_lower_case' : True})
+
+class EN_ELECTRA_EN(Precooked):
+    """NERDA [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) 
+    for English finetuned on [CoNLL-2003 data set](https://www.clips.uantwerpen.be/conll2003/ner/).
+
+    Inherits from [NERDA.precooked.Precooked][].
+
+    Examples:
+        >>> from NERDA.precooked import EN_ELECTRA_EN()
+        >>> model = EN_ELECTRA_EN()
+        >>> model.download_network()
+        >>> model.load_network()
+        >>> text = 'Old MacDonald had a farm'
+        >>> model.predict_text(text)
+
+    """
+    def __init__(self) -> None:
+        """Initialize model"""
+        super().__init__(transformer = 'google/electra-small-discriminator',
+                         device = None,
+                         tag_scheme = [
+                            'B-PER',
+                            'I-PER', 
+                            'B-ORG', 
+                            'I-ORG', 
+                            'B-LOC', 
+                            'I-LOC', 
+                            'B-MISC', 
+                            'I-MISC'
+                            ],
+                         tag_outside = 'O',
+                         dataset_training = get_conll_data('train'),
+                         dataset_validation = get_conll_data('valid'),
+                         max_len = 128,
+                         dropout = 0.1,
+                         hyperparameters = {'epochs' : 5,
+                                            'warmup_steps' : 500,
+                                            'train_batch_size': 13,
+                                            'learning_rate': 0.0001},
+                         tokenizer_parameters = {'do_lower_case' : True})
+
+class EN_BERT_ML(Precooked):
+    """NERDA [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) 
+    for English finetuned on [CoNLL-2003 data set](https://www.clips.uantwerpen.be/conll2003/ner/).
+    
+    Inherits from [NERDA.precooked.Precooked][].
+    
+    Examples:
+        >>> from NERDA.precooked import EN_BERT_ML()
+        >>> model = EN_BERT_ML()
+        >>> model.download_network()
+        >>> model.load_network()
+        >>> text = 'Old MacDonald had a farm'
+        >>> model.predict_text(text)
+    
+    """
+    def __init__(self) -> None:
+        """Initialize model"""
+        super().__init__(transformer = 'bert-base-multilingual-uncased',
+                         device = None,
+                         tag_scheme = [
+                            'B-PER',
+                            'I-PER', 
+                            'B-ORG', 
+                            'I-ORG', 
+                            'B-LOC', 
+                            'I-LOC', 
+                            'B-MISC', 
+                            'I-MISC'
+                            ],
+                         tag_outside = 'O',
+                         dataset_training = get_conll_data('train'),
+                         dataset_validation = get_conll_data('dev'),
+                         max_len = 128,
+                         dropout = 0.1,
+                         hyperparameters = {'epochs' : 4,
+                                            'warmup_steps' : 500,
+                                            'train_batch_size': 13,
+                                            'learning_rate': 0.0001},
+                         tokenizer_parameters = {'do_lower_case' : True})
+
+
+
+

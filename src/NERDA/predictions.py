@@ -1,20 +1,54 @@
+"""
+This section covers functionality for computing predictions
+with a [NERDA.models.NERDA][NERDA] model.
+"""
+
 from .preprocessing import create_dataloader
 import torch
 import numpy as np
 from tqdm import tqdm 
 from nltk.tokenize import sent_tokenize, word_tokenize
+from typing import List, Callable
+import transformers
+import sklearn
 
-# TODO: add batch_size, num_workers (til dataloader) som args.
-def predict(network = None, 
-            sentences = None,
-            transformer_tokenizer = None,
-            transformer_config = None,
-            max_len = 128,
-            device = None,
-            tag_encoder = None,
-            tag_outside = None,
-            batch_size = 8,
-            num_workers = 1):
+def predict(network: torch.nn.Module, 
+            sentences: List[List[str]],
+            transformer_tokenizer: transformers.PreTrainedTokenizer,
+            transformer_config: transformers.PreTrainedTokenizer,
+            max_len: int,
+            device: str,
+            tag_encoder: sklearn.preprocessing.LabelEncoder,
+            tag_outside: str,
+            batch_size: int = 8,
+            num_workers: int = 1) -> List[List[str]]:
+    """Compute predictions.
+
+    Computes predictions for a list with word-tokenized sentences 
+    with a `NERDA` model.
+
+    Args:
+        network (torch.nn.Module): Network.
+        sentences (List[List[str]]): List of lists with word-tokenized
+            sentences.
+        transformer_tokenizer (transformers.PreTrainedTokenizer): 
+            tokenizer for transformer model.
+        transformer_config (transformers.PreTrainedTokenizer): [description]
+        max_len (int): Maximum length of sentence after applying 
+            transformer tokenizer.
+        device (str): Computational device.
+        tag_encoder (sklearn.preprocessing.LabelEncoder): Encoder
+            for Named-Entity tags.
+        tag_outside (str): Special 'outside' NER tag.
+        batch_size (int, optional): Batch Size for DataLoader. 
+            Defaults to 8.
+        num_workers (int, optional): Number of workers. Defaults
+            to 1.
+
+    Returns:
+        List[List[str]]: List of lists with predicted Entity
+        tags.
+    """
 
     # set network to appropriate mode.
     network.eval()
@@ -65,19 +99,46 @@ def predict(network = None,
 
     return predictions
 
-def predict_text(network, 
-                 text,
-                 transformer_tokenizer,
-                 transformer_config,
-                 max_len,
-                 device,
-                 tag_encoder,
-                 tag_outside,
-                 batch_size = 1,
-                 num_workers = 1,
-                 sent_tokenize = sent_tokenize,
-                 word_tokenize = word_tokenize):
+def predict_text(network: torch.nn.Module, 
+                 text: str,
+                 transformer_tokenizer: transformers.PreTrainedTokenizer,
+                 transformer_config: transformers.PreTrainedTokenizer,
+                 max_len: int,
+                 device: str,
+                 tag_encoder: sklearn.preprocessing.LabelEncoder,
+                 tag_outside: str,
+                 batch_size: int = 8,
+                 num_workers: int = 1,
+                 sent_tokenize: Callable = sent_tokenize,
+                 word_tokenize: Callable = word_tokenize) -> list:
+    """Compute Predictions for Text.
 
+    Computes predictions for a text with `NERDA` model. 
+    Text is tokenized into sentences before computing predictions.
+
+    Args:
+        network (torch.nn.Module): Network.
+        text (str): text to predict entities in.
+        sentences (List[List[str]]): List of lists with word-tokenized
+            sentences.
+        transformer_tokenizer (transformers.PreTrainedTokenizer): 
+        tokenizer for transformer model.
+        transformer_config (transformers.PreTrainedTokenizer): [description]
+        max_len (int): Maximum length of sentence after applying 
+            transformer tokenizer.
+        device (str): Computational device.
+        tag_encoder (sklearn.preprocessing.LabelEncoder): Encoder
+            for Named-Entity tags.
+        tag_outside (str): Special 'outside' NER tag.
+        batch_size (int, optional): Batch Size for DataLoader. 
+            Defaults to 8.
+        num_workers (int, optional): Number of workers. Defaults
+            to 1.
+
+    Returns:
+        list: sentence- and word-tokenized text with corresponding
+        predicted named-entity tags.
+    """
     sentences = sent_tokenize(text)
 
     sentences = [word_tokenize(sentence) for sentence in sentences]

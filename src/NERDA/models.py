@@ -1,6 +1,15 @@
-"""NERDA models"""
-from numpy.core.numeric import Infinity
-from .datasets import get_dane_data
+"""
+This section covers the interface for `NERDA` models, that is 
+implemented as its own Python class [NERDA.models.NERDA][NERDA].
+
+The interface enables you to easily 
+
+- specify your own [NERDA.models.NERDA][NERDA] model
+- train it
+- evaluate it
+- use it to predict entities in new texts.
+"""
+from .datasets import get_conll_data
 from .networks import NERDANetwork
 from .predictions import predict, predict_text
 from .performance import compute_f1_scores
@@ -9,6 +18,7 @@ import pandas as pd
 import numpy as np
 import torch
 import os
+import sys
 from sklearn import preprocessing
 from transformers import AutoModel, AutoTokenizer, AutoConfig
 from typing import List
@@ -19,13 +29,15 @@ class NERDA:
     A NERDA model object containing a complete model configuration.
     The model can be trained with the `train` method. Afterwards
     new observations can be predicted with the `predict` and
-    `predict_text` methods.
+    `predict_text` methods. The performance of the model can be
+    evaluated on a set of new observations with the 
+    `evaluate_performance` method.
 
     Examples:
-        Model for a VERY small subset (5 observations) of Danish NER data
-        >>> from NERDA.dataset import get_dane_data
-        >>> trn = get_dane_data('train', 5)
-        >>> valid = get_dane_data('dev', 5)
+        Model for a VERY small subset (5 observations) of English NER data
+        >>> from NERDA.dataset import get_conll_data
+        >>> trn = get_conll_data('train', 5)
+        >>> valid = get_conll_data('valid', 5)
         >>> tag_scheme = ['B-PER', 'I-PER' 'B-LOC', 'I-LOC',
                           'B-ORG', 'I-ORG', 'B-MISC, 'I-MISC']
         >>> tag_outside = 'O'
@@ -36,9 +48,9 @@ class NERDA:
                           dataset_training = trn,
                           dataset_validation = valid)
 
-        Model for complete Danish NER data (DaNE) with modified hyperparameters
-        >>> trn = get_dane_data('train')
-        >>> valid = get_dane_data('dev')
+        Model for complete English NER data set CoNLL-2003 with modified hyperparameters
+        >>> trn = get_conll_data('train')
+        >>> valid = get_conll_data('valid')
         >>> transformer = 'bert-base-multilingual-uncased',
         >>> hyperparameters = {'epochs' : 3,
                                'warmup_steps' : 400,
@@ -57,15 +69,15 @@ class NERDA:
             Recognition task.
         tag_encoder (sklearn.preprocessing.LabelEncoder): encoder for the
             NER labels/tags.
-        transformer_model (transformers.AutoModel): (Auto)Model derived from the
+        transformer_model (transformers.PretrainedModel): (Auto)Model derived from the
             transformer.
-        transformer_tokenizer (transformers.AutoTokenizer): (Auto)Tokenizer
+        transformer_tokenizer (transformers.PretrainedTokenizer): (Auto)Tokenizer
             derived from the transformer.
-        transformer_config (transformers.AutoConfig): (Auto)Config derived from
+        transformer_config (transformers.PretrainedConfig): (Auto)Config derived from
             the transformer. 
-        train_losses (list): holds training losses, when the model has been 
+        train_losses (list): holds training losses, once the model has been 
             trained.
-        valid_loss (float): holds validation loss, when the model has been trained.
+        valid_loss (float): holds validation loss, once the model has been trained.
     """
     def __init__(self, 
                  transformer: str = 'bert-base-multilingual-uncased',
@@ -83,7 +95,7 @@ class NERDA:
                  tag_outside: str = 'O',
                  dataset_training: dict = None,
                  dataset_validation: dict = None,
-                 max_len: int = 130,
+                 max_len: int = 128,
                  network: torch.nn.Module = NERDANetwork,
                  dropout: float = 0.1,
                  hyperparameters: dict = {'epochs' : 4,
@@ -107,16 +119,18 @@ class NERDA:
                 Defaults to 'O'.
             dataset_training (dict, optional): the training data. Must consist 
                 of 'sentences': word-tokenized sentences and 'tags': corresponding 
-                NER tags. Defaults to None, in which case the DaNE data set is used.
+                NER tags. Defaults to None, in which case the English CoNLL-2003 
+                data set is used.
             dataset_validation (dict, optional): the validation data. Must consist
                 of 'sentences': word-tokenized sentences and 'tags': corresponding 
-                NER tags. Defaults to None, in which case the DaNE data set is used.
+                NER tags. Defaults to None, in which case the English CoNLL-2003
+                data set is used.
             max_len (int, optional): the maximum sentence length (number of 
                 tokens after applying the transformer tokenizer) for the transformer. 
                 Sentences are truncated accordingly. Look at your data to get an 
                 impression of, what could be a meaningful setting. Also be aware 
                 that many transformers have a maximum accepted length. Defaults 
-                to 130. 
+                to 128. 
             network (torch.nn.module, optional): network to be trained. Defaults
                 to a default generic `NERDANetwork`. Can be replaced with your own 
                 customized network architecture. It must however take the same 
@@ -140,9 +154,9 @@ class NERDA:
         self.tag_outside = tag_outside
         self.transformer = transformer
         if dataset_training is None:
-            dataset_training = get_dane_data('train')
+            dataset_training = get_conll_data('train')
         if dataset_validation is None:
-            dataset_validation = get_dane_data('dev')     
+            dataset_validation = get_conll_data('valid')     
         self.dataset_training = dataset_training
         self.dataset_validation = dataset_validation
         self.hyperparameters = hyperparameters
@@ -171,8 +185,9 @@ class NERDA:
         Returns:
             str: a message saying if the model was trained succesfully.
             The network in the 'network' attribute is trained as a 
-            side-effect. Training losses are also saved in 'losses' 
-            attribute as a side-effect.
+            side-effect. Training losses and validation loss are saved 
+            in 'training_losses' and 'valid_loss' 
+            attributes respectively as side-effects.
         """
         network, train_losses, valid_loss = train_model(network = self.network,
                                                         tag_encoder = self.tag_encoder,

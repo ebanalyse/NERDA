@@ -50,7 +50,7 @@ Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_re
 
 ## Train Your Own `NERDA` Model
 
-*GOAL:* We want to fine-tune a [multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) model for NER in Danish.
+*GOAL:* We want to fine-tune an [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) model for NER in English.
 
 Load package.
 
@@ -59,13 +59,14 @@ from NERDA.models import NERDA
 ```
 
 Instantiate a `NERDA` model (*with default settings*) for the 
-[`DaNE`](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) 
-Danish NER data set.
+[`CoNLL-2003`](https://www.clips.uantwerpen.be/conll2003/ner/) 
+English NER data set.
 
 ```python
-model = NERDA(dataset_training = get_dane_data('train'),
-              dataset_validation = get_dane_data('dev'),
-              transformer = 'bert-base-multilingual-uncased')
+from NERDA.datasets import get_conll_data
+model = NERDA(dataset_training = get_conll_data('train'),
+              dataset_validation = get_conll_data('valid'),
+              transformer = 'google/electra-small-discriminator')
 ```
 
 The model can then be trained/fine-tuned by invoking the `train` method, e.g.
@@ -74,16 +75,16 @@ The model can then be trained/fine-tuned by invoking the `train` method, e.g.
 model.train()
 ````
 
-**Note**: this will take some time depending on the dimensions of your machine.
-With a decent AWS EC2 instance it will take below 15 minutes.
+**Note**: this will take some time depending on the dimensions of your machine. 
+If you want to skip training, you can use one of the models, that 
+have been precooked by us in stead!
 
 After the model has been trained, the model can be used for predicting 
 named entities in new texts.
 
 ```python
-# (Danish) text to identify named entities in.
-# = 'Old MacDonald had a farm'
-text = 'Jens Hansen har en bondegård'
+# text to identify named entities in.
+text = 'Old MacDonald had a farm'
 model.predict_text(text)
 ```
 .. It is as simple as that!
@@ -97,21 +98,21 @@ in a lot of ways:
 - Set all of the hyperparameters for the model
 - You can even apply your own Network Architecture 
 
-Read more about advanced usage of `NERDA` in the detailed documentation.
+Read more about advanced usage of `NERDA` in the [detailed documentation](https://ebanalyse.github.io/NERDA/workflow).
 
 ## Use a Precooked `NERDA` model ##
 
-We have precooked a number of `NERDA` models, that you can download 
+We have precooked a number of `NERDA` models for Danish and English, that you can download 
 and use right off the shelf. 
 
 Here is an example.
 
 Instantiate multingual BERT model, that has been finetuned for NER in Danish,
-`BERT_ML_DaNE`.
+`DA_BERT_ML`.
 
 ```python
-from NERDA.precooked import BERT_ML_DaNE()
-model = BERT_ML_DaNE()
+from NERDA.precooked import DA_BERT_ML()
+model = DA_BERT_ML()
 ```
 
 Down(load) network from web:
@@ -121,7 +122,7 @@ model.download_network()
 model.load_network()
 ```
 
-You can now predict named entities in new texts
+You can now predict named entities in new (Danish) texts
 
 ```python
 # (Danish) text to identify named entities in.
@@ -134,11 +135,16 @@ model.predict_text(text)
 
 The table below shows the precooked `NERDA` models publicly available for download.
 
-| **Model**       | **Language** | **Transformer**   | **F1-score** |  
-|-----------------|--------------|-------------------|--------------|
-| `DA_BERT_ML`    | Danish       | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) | xx.x       |
-| `DA_ELECTRA_DA` | Danish       | [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) | yy.y             |
-| `EN_BERT_ML`    | English      | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased)| zz.z              |
+| **Model**       | **Language** | **Transformer**   | **Dataset** | **F1-score** |  
+|-----------------|--------------|-------------------|---------|-----|
+| `DA_BERT_ML`    | Danish       | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) | [DaNE](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) | xx.x  | 
+`DA_ELECTRA_DA` | Danish       | [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) | [DaNE](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) |yy.y             |
+| `EN_BERT_ML`    | English      | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased)| [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) | zz.z              |
+| `EN_ELECTRA_EN` | Danish       | [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) | [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) | pp.p             |
+
+**F1-score** is the micro-averaged F1-score across entity tags and is 
+evaluated on the respective tests (that have not been used for training nor
+validation of the models).
 
 Note, that we have not spent a lot of time on actually fine-tuning the models,
 so there could be room for improvement. If you are able to improve the models,
@@ -165,13 +171,16 @@ The table below summarizes the performance as measured by F1-scores of the model
 ## 'NERDA'?
 '`NERDA`' originally stands for *'Named Entity Recognition for DAnish'*. However, this
 is somewhat misleading, since the functionality is no longer limited to Danish. 
-On the contrary it generalizes to all other languages, i.e. NERDA supports 
+On the contrary it generalizes to all other languages, i.e. `NERDA` supports 
 fine-tuning of transformer-based models for NER tasks for any arbitrary 
 language.
 
+## Background
+`NERDA` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `NERDA`.
+
 ## Read more
 The detailed documentation for `NERDA` including code references and
-examples can be accessed [here](https://ebanalyse.github.io/NERDA/).
+extended workflow examples can be accessed [here](https://ebanalyse.github.io/NERDA/).
 
 ## Contact
 We hope, that you will find `NERDA` useful.
