@@ -75,9 +75,9 @@ The model can then be trained/fine-tuned by invoking the `train` method, e.g.
 model.train()
 ````
 
-**Note**: this will take some time depending on the dimensions of your machine. 
-If you want to skip training, you can use one of the models, that 
-have been precooked by us in stead!
+**Note**: this will take some time depending on the dimensions of your machine
+(if you want to skip training, you can go ahead and use one of the models, 
+that we have already precooked for you in stead!).
 
 After the model has been trained, the model can be used for predicting 
 named entities in new texts.
@@ -100,7 +100,7 @@ in a lot of ways:
 
 Read more about advanced usage of `NERDA` in the [detailed documentation](https://ebanalyse.github.io/NERDA/workflow).
 
-## Use a Precooked `NERDA` model ##
+## Use a Precooked `NERDA` model
 
 We have precooked a number of `NERDA` models for Danish and English, that you can download 
 and use right off the shelf. 
@@ -150,7 +150,7 @@ Note, that we have not spent a lot of time on actually fine-tuning the models,
 so there could be room for improvement. If you are able to improve the models,
 we will be happy to hear from you and include your `NERDA` model.
 
-## Performance
+## Performance (Obsolete)
 
 The table below summarizes the performance as measured by F1-scores of the model
  configurations, that `NERDA` ships with. 

@@ -1,6 +1,6 @@
 """
 This section covers functionality for computing predictions
-with a [NERDA.models.NERDA][NERDA] model.
+with a [NERDA.models.NERDA][] model.
 """
 
 from .preprocessing import create_dataloader
@@ -119,10 +119,8 @@ def predict_text(network: torch.nn.Module,
     Args:
         network (torch.nn.Module): Network.
         text (str): text to predict entities in.
-        sentences (List[List[str]]): List of lists with word-tokenized
-            sentences.
         transformer_tokenizer (transformers.PreTrainedTokenizer): 
-        tokenizer for transformer model.
+            tokenizer for transformer model.
         transformer_config (transformers.PreTrainedTokenizer): [description]
         max_len (int): Maximum length of sentence after applying 
             transformer tokenizer.

@@ -1,8 +1,37 @@
 import torch
 import warnings
+import transformers
+import sklearn
 
 class NERDADataSetReader():
-    def __init__(self, sentences, tags, transformer_tokenizer, transformer_config, max_len, tag_encoder, tag_outside):
+    """Generic NERDA DataSetReader"""
+    
+    def __init__(self, 
+                sentences: list, 
+                tags: list, 
+                transformer_tokenizer: transformers.PreTrainedTokenizer, 
+                transformer_config: transformers.PretrainedConfig, 
+                max_len: int, 
+                tag_encoder: sklearn.preprocessing.LabelEncoder, 
+                tag_outside: str) -> None:
+        """Initialize DataSetReader
+
+        Initializes DataSetReader that prepares and preprocesses 
+        DataSet for Named-Entity Recognition Task and training.
+
+        Args:
+            sentences (list): Sentences.
+            tags (list): Named-Entity tags.
+            transformer_tokenizer (transformers.PreTrainedTokenizer): 
+                tokenizer for transformer.
+            transformer_config (transformers.PretrainedConfig): Config
+                for transformer model.
+            max_len (int): Maximum length of sentences after applying
+                transformer tokenizer.
+            tag_encoder (sklearn.preprocessing.LabelEncoder): Encoder
+                for Named-Entity tags.
+            tag_outside (str): Special Outside tag.
+        """
         self.sentences = sentences
         self.tags = tags
         self.transformer_tokenizer = transformer_tokenizer
@@ -10,7 +39,7 @@ class NERDADataSetReader():
         self.tag_encoder = tag_encoder
         self.pad_token_id = transformer_config.pad_token_id
         self.tag_outside_transformed = tag_encoder.transform([tag_outside])[0]
-
+    
     def __len__(self):
         return len(self.sentences)
 
