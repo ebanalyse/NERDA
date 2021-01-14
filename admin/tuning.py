@@ -32,4 +32,4 @@ def run_parameter_optimization(objective, number_of_evals = 3):
 
     return best_params
 
-best_params = run_parameter_optimization(objective = objective, number_of_evals=3)
+# best_params = run_parameter_optimization(objective = objective, number_of_evals=3)
