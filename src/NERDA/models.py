@@ -1,10 +1,10 @@
 """
 This section covers the interface for `NERDA` models, that is 
-implemented as its own Python class [NERDA.models.NERDA][NERDA].
+implemented as its own Python class [NERDA.models.NERDA][].
 
 The interface enables you to easily 
 
-- specify your own [NERDA.models.NERDA][NERDA] model
+- specify your own [NERDA.models.NERDA][] model
 - train it
 - evaluate it
 - use it to predict entities in new texts.
