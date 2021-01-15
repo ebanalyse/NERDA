@@ -50,7 +50,7 @@ Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_re
 
 ## Train Your Own `NERDA` Model
 
-*GOAL:* We want to fine-tune an [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) model for NER in English.
+Say, we want to fine-tune an [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) model for NER in English.
 
 Load package.
 
@@ -73,11 +73,11 @@ The model can then be trained/fine-tuned by invoking the `train` method, e.g.
 
 ```python
 model.train()
-````
+```
 
-**Note**: this will take some time depending on the dimensions of your machine
+**Note**: this will take some time depending on the dimensions of your machine 
 (if you want to skip training, you can go ahead and use one of the models, 
-that we have already precooked for you in stead!).
+that we have already precooked for you in stead).
 
 After the model has been trained, the model can be used for predicting 
 named entities in new texts.
@@ -93,7 +93,7 @@ Please note, that the `NERDA` model configuration above was instantiated
 with all default settings. You can however customize your `NERDA` model
 in a lot of ways:
 
-- Use your own data set (in whatever language you desire)
+- Use your own data set (finetune a transformer for any given language)
 - Choose whatever transformer you like
 - Set all of the hyperparameters for the model
 - You can even apply your own Network Architecture 
@@ -137,36 +137,35 @@ The table below shows the precooked `NERDA` models publicly available for downlo
 
 | **Model**       | **Language** | **Transformer**   | **Dataset** | **F1-score** |  
 |-----------------|--------------|-------------------|---------|-----|
-| `DA_BERT_ML`    | Danish       | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) | [DaNE](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) | xx.x  | 
-`DA_ELECTRA_DA` | Danish       | [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) | [DaNE](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) |yy.y             |
-| `EN_BERT_ML`    | English      | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased)| [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) | zz.z              |
-| `EN_ELECTRA_EN` | Danish       | [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) | [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) | pp.p             |
+| `DA_BERT_ML`    | Danish       | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) | [DaNE](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) | 82.8  | 
+`DA_ELECTRA_DA` | Danish       | [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) | [DaNE](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane) | 79.8             |
+| `EN_BERT_ML`    | English      | [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased)| [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) | 90.4              |
+| `EN_ELECTRA_EN` | English       | [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) | [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) | 89.1             |
 
 **F1-score** is the micro-averaged F1-score across entity tags and is 
-evaluated on the respective tests (that have not been used for training nor
+evaluated on the respective test sets (that have not been used for training nor
 validation of the models).
 
 Note, that we have not spent a lot of time on actually fine-tuning the models,
 so there could be room for improvement. If you are able to improve the models,
 we will be happy to hear from you and include your `NERDA` model.
 
-## Performance (Obsolete)
+### Model Performance
 
-The table below summarizes the performance as measured by F1-scores of the model
- configurations, that `NERDA` ships with. 
+The table below summarizes the performance (F1-scores) of the precooked `NERDA` models.
 
-| **Level**     | **MBERT** | **DABERT** | **ELECTRA** | **XLMROBERTA** | **DISTILMBERT** |
-|---------------|-----------|------------|-------------|----------------|-----------------|
-| B-PER         | 0.92      | 0.93       | 0.92        | 0.94           | 0.89            |      
-| I-PER         | 0.97      | 0.99       | 0.97        | 0.99           | 0.96            |   
-| B-ORG         | 0.68      | 0.79       | 0.65        | 0.78           | 0.66            |     
-| I-ORG         | 0.67      | 0.79       | 0.72        | 0.77           | 0.61            |   
-| B-LOC         | 0.86      | 0.85       | 0.79        | 0.87           | 0.80            |     
-| I-LOC         | 0.33      | 0.32       | 0.44        | 0.24           | 0.29            |     
-| B-MISC        | 0.73      | 0.74       | 0.61        | 0.77           | 0.70            |     
-| I-MISC        | 0.70      | 0.86       | 0.65        | 0.91           | 0.61            |   
-| **AVG_MICRO** | 0.81      | 0.85       | 0.79        | 0.86           | 0.78            |      
-| **AVG_MACRO** | 0.73      | 0.78       | 0.72        | 0.78           | 0.69            |
+| **Level**     | `DA_BERT_ML` | `DA_ELECTRA_DA` | `EN_BERT_ML` | `EN_ELECTRA_EN` |
+|---------------|--------------|-----------------|--------------|-----------------|
+| B-PER         | 93.8         | 92.0            | 96.0         | 95.1            |      
+| I-PER         | 97.8         | 97.1            | 98.5         | 97.9            |   
+| B-ORG         | 69.5         | 66.9            | 88.4         | 86.2            |     
+| I-ORG         | 69.9         | 70.7            | 85.7         | 83.1            |   
+| B-LOC         | 82.5         | 79.0            | 92.3         | 91.1            |     
+| I-LOC         | 31.6         | 44.4            | 83.9         | 80.5            |     
+| B-MISC        | 73.4         | 68.6            | 81.8         | 80.1            |     
+| I-MISC        | 86.1         | 63.6            | 63.4         | 68.4            |   
+| **AVG_MICRO** | 82.8         | 79.8            | 90.4         | 89.1            |      
+| **AVG_MACRO** | 75.6         | 72.8            | 86.3         | 85.3            |
 
 ## 'NERDA'?
 '`NERDA`' originally stands for *'Named Entity Recognition for DAnish'*. However, this
@@ -189,6 +188,4 @@ If you want to contribute (which we encourage you to), open a
 
 If you encounter a bug or want to suggest an enhancement, please 
 [open an issue](https://github.com/ebanalyse/NERDA/issues).
-
-
 

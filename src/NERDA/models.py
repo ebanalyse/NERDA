@@ -41,7 +41,7 @@ class NERDA:
         >>> tag_scheme = ['B-PER', 'I-PER' 'B-LOC', 'I-LOC',
                           'B-ORG', 'I-ORG', 'B-MISC, 'I-MISC']
         >>> tag_outside = 'O'
-        >>> transformer = 'bert-base-multilingual-uncased',
+        >>> transformer = 'bert-base-multilingual-uncased'
         >>> model = NERDA(transformer = transformer,
                           tag_scheme = tag_scheme,
                           tag_outside = tag_outside,
@@ -51,7 +51,7 @@ class NERDA:
         Model for complete English NER data set CoNLL-2003 with modified hyperparameters
         >>> trn = get_conll_data('train')
         >>> valid = get_conll_data('valid')
-        >>> transformer = 'bert-base-multilingual-uncased',
+        >>> transformer = 'bert-base-multilingual-uncased'
         >>> hyperparameters = {'epochs' : 3,
                                'warmup_steps' : 400,
                                'train_batch_size': 16,
