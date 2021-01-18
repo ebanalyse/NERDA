@@ -207,11 +207,12 @@ class EN_ELECTRA_EN(Precooked):
                          dataset_validation = get_conll_data('valid'),
                          max_len = 128,
                          dropout = 0.1,
-                         hyperparameters = {'epochs' : 5,
-                                            'warmup_steps' : 500,
+                         hyperparameters = {'epochs' : 4,
+                                            'warmup_steps' : 250,
                                             'train_batch_size': 13,
-                                            'learning_rate': 0.0001},
+                                            'learning_rate': 8e-05},
                          tokenizer_parameters = {'do_lower_case' : True})
+
 
 class EN_BERT_ML(Precooked):
     """NERDA [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) 
@@ -244,7 +245,7 @@ class EN_BERT_ML(Precooked):
                             ],
                          tag_outside = 'O',
                          dataset_training = get_conll_data('train'),
-                         dataset_validation = get_conll_data('dev'),
+                         dataset_validation = get_conll_data('valid'),
                          max_len = 128,
                          dropout = 0.1,
                          hyperparameters = {'epochs' : 4,
