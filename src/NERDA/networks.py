@@ -7,7 +7,7 @@ from .utils import match_kwargs
 class NERDANetwork(nn.Module):
     """A Generic Network for NERDA models.
 
-    The network has the same architecture as the models in
+    The network has an analogous architecture to the models in
     [Hvingelby et al. 2020](http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf).
 
     Can be replaced with a custom user-defined network with 
@@ -35,7 +35,7 @@ class NERDANetwork(nn.Module):
         self.tags = nn.Linear(transformer_config.hidden_size, n_tags)
         self.device = device
 
-    # NOTE: offsets are not used in model as-is, but they are expected as output
+    # NOTE: 'offsets 'are not used in model as-is, but they are expected as output
     # down-stream. So _DON'T_ remove! :)
     def forward(self, 
                 input_ids: torch.Tensor, 
@@ -49,7 +49,9 @@ class NERDANetwork(nn.Module):
             input_ids (torch.Tensor): Input IDs.
             masks (torch.Tensor): Attention Masks.
             token_type_ids (torch.Tensor): Token Type IDs.
-            target_tags (torch.Tensor): Target tags.
+            target_tags (torch.Tensor): Target tags. Are not used 
+                in model as-is, but they are expected downstream,
+                so they can not be left out.
             offsets (torch.Tensor): Offsets to keep track of original
                 words. Are not used in model as-is, but they are 
                 expected as down-stream, so they can not be left out.

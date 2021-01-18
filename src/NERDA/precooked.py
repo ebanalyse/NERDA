@@ -69,10 +69,12 @@ class Precooked(NERDA):
             
         file_path = os.path.join(dir, f'{model_name}.bin')
         
+        print("""Please make sure, that you're running the latest version of 'NERDA'
+                 otherwise the model is not guaranteed to work.""")
         print(f'Downloading {url_model} to {file_path}')
         urllib.request.urlretrieve(url_model, file_path, show_progress)
 
-        return "Network downloaded successfully."
+        return "Network downloaded successfully. Load network with 'load_network'."
 
     def load_network(self, file_path: str = None) -> None:
         """Load Pretrained Network
@@ -91,6 +93,10 @@ class Precooked(NERDA):
             file_path = os.path.join(str(Path.home()), '.nerda', f'{model_name}.bin')
 
         assert os.path.exists(file_path), "File does not exist! You can download network with download_network()"
+        print("""
+        Model loaded. Please make sure, that you're running the latest version 
+        of 'NERDA' otherwise the model is not guaranteed to work.
+        """)
         self.load_network_from_file(file_path)
         
 class DA_BERT_ML(Precooked):
@@ -106,6 +112,7 @@ class DA_BERT_ML(Precooked):
         >>> model.load_network()
         >>> text = 'Jens Hansen har en bondegård'
         >>> model.predict_text(text)
+        ([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
     
     """
     def __init__(self) -> None:
@@ -146,6 +153,7 @@ class DA_ELECTRA_DA(Precooked):
         >>> model.load_network()
         >>> text = 'Jens Hansen har en bondegård'
         >>> model.predict_text(text)
+        ([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 
     """
     def __init__(self) -> None:
@@ -186,6 +194,7 @@ class EN_ELECTRA_EN(Precooked):
         >>> model.load_network()
         >>> text = 'Old MacDonald had a farm'
         >>> model.predict_text(text)
+        ([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 
     """
     def __init__(self) -> None:
@@ -226,6 +235,7 @@ class EN_BERT_ML(Precooked):
         >>> model.load_network()
         >>> text = 'Old MacDonald had a farm'
         >>> model.predict_text(text)
+        ([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
     
     """
     def __init__(self) -> None:
@@ -244,7 +254,7 @@ class EN_BERT_ML(Precooked):
                             ],
                          tag_outside = 'O',
                          dataset_training = get_conll_data('train'),
-                         dataset_validation = get_conll_data('dev'),
+                         dataset_validation = get_conll_data('valid'),
                          max_len = 128,
                          dropout = 0.1,
                          hyperparameters = {'epochs' : 4,

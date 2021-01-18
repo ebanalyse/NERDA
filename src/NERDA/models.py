@@ -260,7 +260,7 @@ class NERDA:
                 'batch_size' and 'num_workers'.
 
         Returns:
-            List with word-tokenized sentences and predicted 
+            tuple: word-tokenized sentences and predicted 
             tags/entities.
         """
         return predict_text(network = self.network, 
