@@ -1,6 +1,6 @@
 """
 This section covers functionality for computing predictions
-with a [NERDA.models.NERDA][NERDA] model.
+with a [NERDA.models.NERDA][] model.
 """
 
 from .preprocessing import create_dataloader
@@ -10,7 +10,7 @@ from tqdm import tqdm
 from nltk.tokenize import sent_tokenize, word_tokenize
 from typing import List, Callable
 import transformers
-import sklearn
+import sklearn.preprocessing
 
 def predict(network: torch.nn.Module, 
             sentences: List[List[str]],
@@ -49,7 +49,11 @@ def predict(network: torch.nn.Module,
         List[List[str]]: List of lists with predicted Entity
         tags.
     """
-
+    # make sure, that input has the correct format. 
+    assert isinstance(sentences, list), "'sentences' must be a list of list of word-tokens"
+    assert isinstance(sentences[0], list), "'sentences' must be a list of list of word-tokens"
+    assert isinstance(sentences[0][0], str), "'sentences' must be a list of list of word-tokens"
+    
     # set network to appropriate mode.
     network.eval()
 
@@ -110,7 +114,7 @@ def predict_text(network: torch.nn.Module,
                  batch_size: int = 8,
                  num_workers: int = 1,
                  sent_tokenize: Callable = sent_tokenize,
-                 word_tokenize: Callable = word_tokenize) -> list:
+                 word_tokenize: Callable = word_tokenize) -> tuple:
     """Compute Predictions for Text.
 
     Computes predictions for a text with `NERDA` model. 
@@ -119,10 +123,8 @@ def predict_text(network: torch.nn.Module,
     Args:
         network (torch.nn.Module): Network.
         text (str): text to predict entities in.
-        sentences (List[List[str]]): List of lists with word-tokenized
-            sentences.
         transformer_tokenizer (transformers.PreTrainedTokenizer): 
-        tokenizer for transformer model.
+            tokenizer for transformer model.
         transformer_config (transformers.PreTrainedTokenizer): [description]
         max_len (int): Maximum length of sentence after applying 
             transformer tokenizer.
@@ -136,9 +138,10 @@ def predict_text(network: torch.nn.Module,
             to 1.
 
     Returns:
-        list: sentence- and word-tokenized text with corresponding
+        tuple: sentence- and word-tokenized text with corresponding
         predicted named-entity tags.
     """
+    assert isinstance(text, str), "'text' must be a string."
     sentences = sent_tokenize(text)
 
     sentences = [word_tokenize(sentence) for sentence in sentences]

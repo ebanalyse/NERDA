@@ -1,10 +1,10 @@
 """
 This section covers the interface for `NERDA` models, that is 
-implemented as its own Python class [NERDA.models.NERDA][NERDA].
+implemented as its own Python class [NERDA.models.NERDA][].
 
 The interface enables you to easily 
 
-- specify your own [NERDA.models.NERDA][NERDA] model
+- specify your own [NERDA.models.NERDA][] model
 - train it
 - evaluate it
 - use it to predict entities in new texts.
@@ -19,7 +19,7 @@ import numpy as np
 import torch
 import os
 import sys
-from sklearn import preprocessing
+import sklearn.preprocessing
 from transformers import AutoModel, AutoTokenizer, AutoConfig
 from typing import List
 
@@ -41,7 +41,7 @@ class NERDA:
         >>> tag_scheme = ['B-PER', 'I-PER' 'B-LOC', 'I-LOC',
                           'B-ORG', 'I-ORG', 'B-MISC, 'I-MISC']
         >>> tag_outside = 'O'
-        >>> transformer = 'bert-base-multilingual-uncased',
+        >>> transformer = 'bert-base-multilingual-uncased'
         >>> model = NERDA(transformer = transformer,
                           tag_scheme = tag_scheme,
                           tag_outside = tag_outside,
@@ -51,7 +51,7 @@ class NERDA:
         Model for complete English NER data set CoNLL-2003 with modified hyperparameters
         >>> trn = get_conll_data('train')
         >>> valid = get_conll_data('valid')
-        >>> transformer = 'bert-base-multilingual-uncased',
+        >>> transformer = 'bert-base-multilingual-uncased'
         >>> hyperparameters = {'epochs' : 3,
                                'warmup_steps' : 400,
                                'train_batch_size': 16,
@@ -119,12 +119,15 @@ class NERDA:
                 Defaults to 'O'.
             dataset_training (dict, optional): the training data. Must consist 
                 of 'sentences': word-tokenized sentences and 'tags': corresponding 
-                NER tags. Defaults to None, in which case the English CoNLL-2003 
-                data set is used.
+                NER tags. You can look at examples of, how the dataset should 
+                look like by invoking functions get_dane_data() or get_conll_data().
+                Defaults to None, in which case the English CoNLL-2003 data set is used. 
             dataset_validation (dict, optional): the validation data. Must consist
                 of 'sentences': word-tokenized sentences and 'tags': corresponding 
-                NER tags. Defaults to None, in which case the English CoNLL-2003
-                data set is used.
+                NER tags. You can look at examples of, how the dataset should 
+                look like by invoking functions get_dane_data() or get_conll_data().
+                Defaults to None, in which case the English CoNLL-2003 data set 
+                is used.
             max_len (int, optional): the maximum sentence length (number of 
                 tokens after applying the transformer tokenizer) for the transformer. 
                 Sentences are truncated accordingly. Look at your data to get an 
@@ -165,7 +168,7 @@ class NERDA:
         tag_complete = [tag_outside] + tag_scheme
         # fit encoder to _all_ possible tags.
         self.max_len = max_len
-        self.tag_encoder = preprocessing.LabelEncoder()
+        self.tag_encoder = sklearn.preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
         self.transformer_model = AutoModel.from_pretrained(transformer)
         self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)
@@ -260,7 +263,7 @@ class NERDA:
                 'batch_size' and 'num_workers'.
 
         Returns:
-            List with word-tokenized sentences and predicted 
+            tuple: word-tokenized sentences and predicted 
             tags/entities.
         """
         return predict_text(network = self.network, 
@@ -281,7 +284,9 @@ class NERDA:
 
         Args:
             dataset (dict): Data set that must consist of
-                'sentences' and NER'tags'.
+                'sentences' and NER'tags'. You can look at examples
+                 of, how the dataset should look like by invoking functions 
+                 get_dane_data() or get_conll_data().
             kwargs: arbitrary keyword arguments for predict. For
                 instance 'batch_size' and 'num_workers'.
 

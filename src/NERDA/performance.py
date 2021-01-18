@@ -1,6 +1,6 @@
 """
 This section covers functionality for computing performance
-for [NERDA.models.NERDA][NERDA] models.
+for [NERDA.models.NERDA][] models.
 """
 
 from typing import List

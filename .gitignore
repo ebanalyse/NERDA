@@ -9,6 +9,7 @@ __pycache__/
 src/*.pickle
 src/*.pkl
 *.csv
+*.pickle
 
 # C extensions
 *.so
