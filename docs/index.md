@@ -1,4 +1,4 @@
-# NERDA [**WIP**] <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
+# NERDA <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
 
 ![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX)](https://codecov.io/gh/ebanalyse/NERDA)
@@ -8,10 +8,13 @@
 
 Not only is `NERDA` a mesmerizing muppet-like character. `NERDA` is also
 a python package, that offers a slick easy-to-use interface for fine-tuning 
-pretrained transformers for Named Entity Recognition
+pretrained transformers for Named Entity Recognitions
  (=NER) tasks. 
 
-`NERDA`is built on `huggingface` `transformers` and the popular `pytorch`
+You can also utilize `NERDA` to access a selection of *precooked* `NERDA` models, 
+ that you can use right off the shelf for NER tasks.
+
+`NERDA` is built on `huggingface` `transformers` and the popular `pytorch`
  framework.
 
 ## Installation guide
@@ -50,7 +53,7 @@ Read more about NER on [Wikipedia](https://en.wikipedia.org/wiki/Named-entity_re
 
 ## Train Your Own `NERDA` Model
 
-Say, we want to fine-tune an [English ELECTRA](https://huggingface.co/google/electra-small-discriminator) model for NER in English.
+Say, we want to fine-tune a pretrained [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) transformer for NER in English.
 
 Load package.
 
@@ -60,14 +63,16 @@ from NERDA.models import NERDA
 
 Instantiate a `NERDA` model (*with default settings*) for the 
 [`CoNLL-2003`](https://www.clips.uantwerpen.be/conll2003/ner/) 
-English NER data set.
+English NER data set. 
 
 ```python
 from NERDA.datasets import get_conll_data
 model = NERDA(dataset_training = get_conll_data('train'),
               dataset_validation = get_conll_data('valid'),
-              transformer = 'google/electra-small-discriminator')
+              transformer = 'bert-base-multilingual-uncased')
 ```
+
+By default the network architecture is analogous to that of the models in [Hvingelby et al. 2020](http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf). 
 
 The model can then be trained/fine-tuned by invoking the `train` method, e.g.
 
@@ -86,8 +91,9 @@ named entities in new texts.
 # text to identify named entities in.
 text = 'Old MacDonald had a farm'
 model.predict_text(text)
+([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 ```
-.. It is as simple as that!
+This means, that the model identified 'Old MacDonald' as a *PER*son.
 
 Please note, that the `NERDA` model configuration above was instantiated 
 with all default settings. You can however customize your `NERDA` model
@@ -107,7 +113,7 @@ and use right off the shelf.
 
 Here is an example.
 
-Instantiate multingual BERT model, that has been finetuned for NER in Danish,
+Instantiate a multilingual BERT model, that has been finetuned for NER in Danish,
 `DA_BERT_ML`.
 
 ```python
@@ -125,10 +131,11 @@ model.load_network()
 You can now predict named entities in new (Danish) texts
 
 ```python
-# (Danish) text to identify named entities in.
-# = 'Old MacDonald had a farm'
+# (Danish) text to identify named entities in:
+# 'Jens Hansen har en bondegård' = 'Old MacDonald had a farm'
 text = 'Jens Hansen har en bondegård'
 model.predict_text(text)
+([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 ```
 
 ### List of Precooked Models
@@ -171,11 +178,15 @@ The table below summarizes the performance (F1-scores) of the precooked `NERDA` 
 '`NERDA`' originally stands for *'Named Entity Recognition for DAnish'*. However, this
 is somewhat misleading, since the functionality is no longer limited to Danish. 
 On the contrary it generalizes to all other languages, i.e. `NERDA` supports 
-fine-tuning of transformer-based models for NER tasks for any arbitrary 
+fine-tuning of transformers for NER tasks for any arbitrary 
 language.
 
 ## Background
 `NERDA` is developed as a part of [Ekstra Bladet](https://ekstrabladet.dk/)’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the [Technical University of Denmark](https://www.dtu.dk/), [University of Copenhagen](https://www.ku.dk/) and [Copenhagen Business School](https://www.cbs.dk/) with funding from [Innovation Fund Denmark](https://innovationsfonden.dk/). The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like `NERDA`.
+
+## Shout-outs
+- Thanks to [Alexandra Institute](https://alexandra.dk/) for with the [`danlp`](https://github.com/alexandrainst/danlp) package to have encouraged us to develop this package.
+- Thanks to [Malte Højmark-Bertelsen](https://www.linkedin.com/in/malte-h%C3%B8jmark-bertelsen-9a618017b/) and [Kasper Junge](https://www.linkedin.com/in/kasper-juunge/?originalSubdomain=dk) for giving feedback on `NERDA`.
 
 ## Contact
 We hope, that you will find `NERDA` useful.

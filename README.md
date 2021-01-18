@@ -1,4 +1,4 @@
-# NERDA [**WIP**] <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
+# NERDA <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/>
 
 ![Build status](https://github.com/ebanalyse/NERDA/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX)](https://codecov.io/gh/ebanalyse/NERDA)
@@ -11,7 +11,7 @@ a python package, that offers a slick easy-to-use interface for fine-tuning
 pretrained transformers for Named Entity Recognitions
  (=NER) tasks. 
 
-You can utilize also `NERDA` to load a selection of *precooked* `NERDA` models, 
+You can also utilize `NERDA` to access a selection of *precooked* `NERDA` models, 
  that you can use right off the shelf for NER tasks.
 
 `NERDA` is built on `huggingface` `transformers` and the popular `pytorch`
@@ -72,7 +72,7 @@ model = NERDA(dataset_training = get_conll_data('train'),
               transformer = 'bert-base-multilingual-uncased')
 ```
 
-By default the network architecture (built on top of the transformer) is analogous to the models in [Hvingelby et al. 2020](http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf). 
+By default the network architecture is analogous to that of the models in [Hvingelby et al. 2020](http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf). 
 
 The model can then be trained/fine-tuned by invoking the `train` method, e.g.
 
@@ -93,7 +93,7 @@ text = 'Old MacDonald had a farm'
 model.predict_text(text)
 ([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 ```
-.. It is as simple as that!
+This means, that the model identified 'Old MacDonald' as a *PER*son.
 
 Please note, that the `NERDA` model configuration above was instantiated 
 with all default settings. You can however customize your `NERDA` model
@@ -113,7 +113,7 @@ and use right off the shelf.
 
 Here is an example.
 
-Instantiate multingual BERT model, that has been finetuned for NER in Danish,
+Instantiate a multilingual BERT model, that has been finetuned for NER in Danish,
 `DA_BERT_ML`.
 
 ```python
