@@ -119,12 +119,15 @@ class NERDA:
                 Defaults to 'O'.
             dataset_training (dict, optional): the training data. Must consist 
                 of 'sentences': word-tokenized sentences and 'tags': corresponding 
-                NER tags. Defaults to None, in which case the English CoNLL-2003 
-                data set is used.
+                NER tags. You can look at examples of, how the dataset should 
+                look like by invoking functions get_dane_data() or get_conll_data().
+                Defaults to None, in which case the English CoNLL-2003 data set is used. 
             dataset_validation (dict, optional): the validation data. Must consist
                 of 'sentences': word-tokenized sentences and 'tags': corresponding 
-                NER tags. Defaults to None, in which case the English CoNLL-2003
-                data set is used.
+                NER tags. You can look at examples of, how the dataset should 
+                look like by invoking functions get_dane_data() or get_conll_data().
+                Defaults to None, in which case the English CoNLL-2003 data set 
+                is used.
             max_len (int, optional): the maximum sentence length (number of 
                 tokens after applying the transformer tokenizer) for the transformer. 
                 Sentences are truncated accordingly. Look at your data to get an 
@@ -281,7 +284,9 @@ class NERDA:
 
         Args:
             dataset (dict): Data set that must consist of
-                'sentences' and NER'tags'.
+                'sentences' and NER'tags'. You can look at examples
+                 of, how the dataset should look like by invoking functions 
+                 get_dane_data() or get_conll_data().
             kwargs: arbitrary keyword arguments for predict. For
                 instance 'batch_size' and 'num_workers'.
 
