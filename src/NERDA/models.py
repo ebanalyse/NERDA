@@ -69,7 +69,7 @@ class NERDA:
             Recognition task.
         tag_encoder (sklearn.preprocessing.LabelEncoder): encoder for the
             NER labels/tags.
-        transformer_model (transformers.PretrainedModel): (Auto)Model derived from the
+        transformer_model (transformers.PreTrainedModel): (Auto)Model derived from the
             transformer.
         transformer_tokenizer (transformers.PretrainedTokenizer): (Auto)Tokenizer
             derived from the transformer.
