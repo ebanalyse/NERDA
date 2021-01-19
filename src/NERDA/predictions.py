@@ -15,7 +15,7 @@ import sklearn
 def predict(network: torch.nn.Module, 
             sentences: List[List[str]],
             transformer_tokenizer: transformers.PreTrainedTokenizer,
-            transformer_config: transformers.PreTrainedTokenizer,
+            transformer_config: transformers.PreTrainedConfig,
             max_len: int,
             device: str,
             tag_encoder: sklearn.preprocessing.LabelEncoder,
@@ -33,7 +33,8 @@ def predict(network: torch.nn.Module,
             sentences.
         transformer_tokenizer (transformers.PreTrainedTokenizer): 
             tokenizer for transformer model.
-        transformer_config (transformers.PreTrainedTokenizer): [description]
+        transformer_config (transformers.PreTrainedConfig): config
+            for transformer model.
         max_len (int): Maximum length of sentence after applying 
             transformer tokenizer.
         device (str): Computational device.
@@ -106,7 +107,7 @@ def predict(network: torch.nn.Module,
 def predict_text(network: torch.nn.Module, 
                  text: str,
                  transformer_tokenizer: transformers.PreTrainedTokenizer,
-                 transformer_config: transformers.PreTrainedTokenizer,
+                 transformer_config: transformers.PreTrainedConfig,
                  max_len: int,
                  device: str,
                  tag_encoder: sklearn.preprocessing.LabelEncoder,
@@ -125,7 +126,8 @@ def predict_text(network: torch.nn.Module,
         text (str): text to predict entities in.
         transformer_tokenizer (transformers.PreTrainedTokenizer): 
             tokenizer for transformer model.
-        transformer_config (transformers.PreTrainedTokenizer): [description]
+        transformer_config (transformers.PreTrainedConfig): config
+            for transformer model.
         max_len (int): Maximum length of sentence after applying 
             transformer tokenizer.
         device (str): Computational device.

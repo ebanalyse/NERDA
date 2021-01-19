@@ -69,8 +69,12 @@ class Precooked(NERDA):
             
         file_path = os.path.join(dir, f'{model_name}.bin')
         
-        print("""Please make sure, that you're running the latest version of 'NERDA'
-                 otherwise the model is not guaranteed to work.""")
+        print(
+        """
+        Please make sure, that you're running the latest version of 'NERDA'
+        otherwise the model is not guaranteed to work.
+        """
+        )
         print(f'Downloading {url_model} to {file_path}')
         urllib.request.urlretrieve(url_model, file_path, show_progress)
 
@@ -93,10 +97,12 @@ class Precooked(NERDA):
             file_path = os.path.join(str(Path.home()), '.nerda', f'{model_name}.bin')
 
         assert os.path.exists(file_path), "File does not exist! You can download network with download_network()"
-        print("""
+        print(
+        """
         Model loaded. Please make sure, that you're running the latest version 
         of 'NERDA' otherwise the model is not guaranteed to work.
-        """)
+        """
+        )
         self.load_network_from_file(file_path)
         
 class DA_BERT_ML(Precooked):
