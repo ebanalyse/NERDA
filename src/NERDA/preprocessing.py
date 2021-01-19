@@ -1,7 +1,7 @@
 import torch
 import warnings
 import transformers
-import sklearn
+import sklearn.preprocessing
 
 class NERDADataSetReader():
     """Generic NERDA DataSetReader"""

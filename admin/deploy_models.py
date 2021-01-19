@@ -1,4 +1,4 @@
-from NERDA.datasets import get_dane_data
+from NERDA.datasets import get_conll_data, get_dane_data
 import pandas as pd
 import torch
 import boto3
@@ -40,8 +40,9 @@ def deploy_model_to_s3(model, test_set = get_dane_data('test')):
     return "Model deployed to S3 successfully." 
 
 if __name__ == '__main__':
-    from NERDA.precooked import ELECTRA_DA_DaNE
-    model = ELECTRA_DA_DaNE()
+    from NERDA.precooked import EN_ELECTRA_EN
+    model = EN_ELECTRA_EN()
     model.train()  
+
     deploy_model_to_s3(model)
 

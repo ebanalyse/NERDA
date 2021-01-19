@@ -19,7 +19,7 @@ import numpy as np
 import torch
 import os
 import sys
-from sklearn import preprocessing
+import sklearn.preprocessing
 from transformers import AutoModel, AutoTokenizer, AutoConfig
 from typing import List
 
@@ -168,7 +168,7 @@ class NERDA:
         tag_complete = [tag_outside] + tag_scheme
         # fit encoder to _all_ possible tags.
         self.max_len = max_len
-        self.tag_encoder = preprocessing.LabelEncoder()
+        self.tag_encoder = sklearn.preprocessing.LabelEncoder()
         self.tag_encoder.fit(tag_complete)
         self.transformer_model = AutoModel.from_pretrained(transformer)
         self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)

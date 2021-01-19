@@ -10,7 +10,7 @@ from tqdm import tqdm
 from nltk.tokenize import sent_tokenize, word_tokenize
 from typing import List, Callable
 import transformers
-import sklearn
+import sklearn.preprocessing
 
 def predict(network: torch.nn.Module, 
             sentences: List[List[str]],
