@@ -1,13 +1,6 @@
-
-from NERDA.datasets import get_dane_data, download_dane_data
-# TODO: should not be necesssary to download before importing NERDA.
-# Download necessary ressources
-download_dane_data()
+from NERDA.datasets import get_dane_data
 from NERDA.models import NERDA
-from NERDA.precooked import DA_ELECTRA_DA
-import pandas as pd
 import nltk
-nltk.download('punkt')
 
 # instantiate a minimal model.
 model = NERDA(dataset_training = get_dane_data('train', 5),
@@ -19,30 +12,8 @@ model = NERDA(dataset_training = get_dane_data('train', 5),
                                  'train_batch_size': 5,
                                  'learning_rate': 0.0001})
 
-def test_instantiate_NERDA():
-    """Test that model has the correct/expected class"""
-    assert isinstance(model, NERDA)
 
-#### TRAINING ####
-def test_training():
-    """Test if training runs successfully"""
-    model.train()
-
-def test_training_exceed_maxlen():
-    """Test if traning does not break even though MAX LEN is exceeded"""
-    m = NERDA(dataset_training = get_dane_data('train', 5),
-              dataset_validation = get_dane_data('dev', 5),
-              max_len = 3,
-              transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
-              hyperparameters = {'epochs' : 1,
-                                 'warmup_steps' : 10,
-                                 'train_batch_size': 5,
-                                 'learning_rate': 0.0001})
-    m.train()
-
-#### PREDICTIONS ####
-
-# set example tests.
+# set example texts to identify entities in.
 text_single = "Pernille Rosenkrantz-Theil kommer fra Vejle"
 # TODO: must work for a single sentence.
 sentences = [nltk.word_tokenize(text_single)]
@@ -50,7 +21,6 @@ sentences = [nltk.word_tokenize(text_single)]
 def test_predict():
     """Test that predict runs"""
     predictions = model.predict(sentences)
-
 
 predictions = model.predict(sentences)
 
@@ -98,34 +68,4 @@ def test_predict_text_multi_format():
     assert len(predictions_text_multi[1]) == 2
     assert len(predictions_text_multi[0][0]) == len(predictions_text_multi[1][0])
     assert len(predictions_text_multi[0][1]) == len(predictions_text_multi[1][1])
-
-#### PERFORMANCE ####
-
-def test_evaluate_performance():
-    test = get_dane_data('test')
-    f1 = model.evaluate_performance(test)
-    assert isinstance(f1, pd.DataFrame)
-
-#### PRECOOKED ####
-
-from NERDA.precooked import DA_ELECTRA_DA
-
-def test_load_precooked():
-    """Test that precooked model can be (down)loaded, instantiated and works end-to-end"""
-    m = DA_ELECTRA_DA()
-    m.download_network()
-    m.load_network()
-    m.predict_text("Jens Hansen har en bondegård. Det har han!")
-
-
-
-
-
-
-
-
-
-
-
-
 
