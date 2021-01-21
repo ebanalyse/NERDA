@@ -11,8 +11,11 @@ model = NERDA(dataset_training = get_dane_data('train', 5),
                                  'train_batch_size': 5,
                                  'learning_rate': 0.0001})
 
-def test_evaluate_performance():
-    test = get_dane_data('test')
-    f1 = model.evaluate_performance(test)
+test = get_dane_data('test')
+f1 = model.evaluate_performance(test)
+
+def test_performance_df():
     assert isinstance(f1, pd.DataFrame)
+
+def test_performance_len():
     assert len(f1) > 0

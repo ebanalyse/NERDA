@@ -5,7 +5,6 @@ import nltk
 # instantiate a minimal model.
 model = NERDA(dataset_training = get_dane_data('train', 5),
               dataset_validation = get_dane_data('dev', 5),
-              max_len = 128,
               transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
               hyperparameters = {'epochs' : 1,
                                  'warmup_steps' : 10,
@@ -15,7 +14,6 @@ model = NERDA(dataset_training = get_dane_data('train', 5),
 
 # set example texts to identify entities in.
 text_single = "Pernille Rosenkrantz-Theil kommer fra Vejle"
-# TODO: must work for a single sentence.
 sentences = [nltk.word_tokenize(text_single)]
 
 def test_predict():
@@ -47,6 +45,8 @@ predictions_text_single = model.predict_text(text_single)
 def test_predict_text_format():
     """Test text predictions"""
     assert isinstance(predictions_text_single, tuple)
+
+def test_predict_text_match_words_predictions():
     assert len(predictions_text_single[0][0]) == len(predictions_text_single[1][0])
 
 # multiple sentences.
@@ -62,10 +62,16 @@ def test_predict_text_multi():
 predictions_text_multi = model.predict_text(text_multi, batch_size = 2)
 
 def test_predict_text_multi_format():
-    """Test multi-sentence text predictions"""
+    """Test multi-sentence text predictions has expected format"""
     assert isinstance(predictions_text_multi, tuple)
-    assert len(predictions_text_multi[0]) == 2
-    assert len(predictions_text_multi[1]) == 2
-    assert len(predictions_text_multi[0][0]) == len(predictions_text_multi[1][0])
-    assert len(predictions_text_multi[0][1]) == len(predictions_text_multi[1][1])
+
+def test_predict_text_multi_elements_count():
+    """Test dimensions of multi-sentence text predictions"""
+    assert [len(predictions_text_multi[0]), len(predictions_text_multi[1])] == [2, 2]
+
+def test_predict_text_multi_lens():
+    """Test lengths of multi-sentence text predictions"""
+    s1 = len(predictions_text_multi[0][0]) == len(predictions_text_multi[1][0])
+    s2 = len(predictions_text_multi[0][1]) == len(predictions_text_multi[1][1])
+    assert all([s1, s2])
 
