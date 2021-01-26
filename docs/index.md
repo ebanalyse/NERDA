@@ -8,7 +8,7 @@
 
 Not only is `NERDA` a mesmerizing muppet-like character. `NERDA` is also
 a python package, that offers a slick easy-to-use interface for fine-tuning 
-pretrained transformers for Named Entity Recognitions
+pretrained transformers for Named Entity Recognition
  (=NER) tasks. 
 
 You can also utilize `NERDA` to access a selection of *precooked* `NERDA` models, 
