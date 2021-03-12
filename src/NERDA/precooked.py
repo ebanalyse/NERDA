@@ -136,8 +136,6 @@ class DA_BERT_ML(Precooked):
                             'I-MISC'
                             ],
                          tag_outside = 'O',
-                         dataset_training = get_dane_data('train'),
-                         dataset_validation = get_dane_data('dev'),
                          max_len = 128,
                          dropout = 0.1,
                          hyperparameters = {'epochs' : 4,
@@ -177,8 +175,6 @@ class DA_ELECTRA_DA(Precooked):
                             'I-MISC'
                             ],
                          tag_outside = 'O',
-                         dataset_training = get_dane_data('train'),
-                         dataset_validation = get_dane_data('dev'),
                          max_len = 128,
                          dropout = 0.1,
                          hyperparameters = {'epochs' : 5,
@@ -218,8 +214,6 @@ class EN_ELECTRA_EN(Precooked):
                             'I-MISC'
                             ],
                          tag_outside = 'O',
-                         dataset_training = get_conll_data('train'),
-                         dataset_validation = get_conll_data('valid'),
                          max_len = 128,
                          dropout = 0.1,
                          hyperparameters = {'epochs' : 4,
@@ -260,8 +254,6 @@ class EN_BERT_ML(Precooked):
                             'I-MISC'
                             ],
                          tag_outside = 'O',
-                         dataset_training = get_conll_data('train'),
-                         dataset_validation = get_conll_data('valid'),
                          max_len = 128,
                          dropout = 0.1,
                          hyperparameters = {'epochs' : 4,

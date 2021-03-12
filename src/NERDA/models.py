@@ -155,11 +155,7 @@ class NERDA:
             print("Device automatically set to:", self.device)
         self.tag_scheme = tag_scheme
         self.tag_outside = tag_outside
-        self.transformer = transformer
-        if dataset_training is None:
-            dataset_training = get_conll_data('train')
-        if dataset_validation is None:
-            dataset_validation = get_conll_data('valid')     
+        self.transformer = transformer  
         self.dataset_training = dataset_training
         self.dataset_validation = dataset_validation
         self.hyperparameters = hyperparameters
