@@ -4,7 +4,15 @@ from sklearn import preprocessing
 from transformers import AdamW, get_linear_schedule_with_warmup
 import random
 import torch
-from tqdm import tqdm
+
+try:
+  from IPython import get_ipython
+  if 'IPKernelApp' in get_ipython().config:
+    from tqdm.notebook import tqdm
+  else:
+    from tqdm import tqdm
+except:
+  from tqdm import tqdm
 
 def train(model, data_loader, optimizer, device, scheduler, n_tags):
     """One Iteration of Training"""
