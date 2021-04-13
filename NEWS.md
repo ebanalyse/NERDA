@@ -1,3 +1,7 @@
+# NERDA 0.8.8
+
+* 'device' bugfix.
+
 # NERDA 0.8.7
 
 * BUGFIX: Restrict torch version.
