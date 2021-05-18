@@ -192,6 +192,18 @@ language.
 The detailed documentation for `NERDA` including code references and
 extended workflow examples can be accessed [here](https://ebanalyse.github.io/NERDA/).
 
+## Cite this work
+
+```
+@inproceedings{nerda,
+  title = {NERDA},
+  author = {Kjeldgaard, Lars and Nielsen, Lukas},
+  year = {2020},
+  publisher = {{GitHub}},
+  url = {https://github.com/ebanalyse/NERDA}
+}
+```
+
 ## Contact
 We hope, that you will find `NERDA` useful.
 
