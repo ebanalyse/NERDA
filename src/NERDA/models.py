@@ -153,6 +153,9 @@ class NERDA:
         if device is None:
             self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
             print("Device automatically set to:", self.device)
+        else:
+            self.device = device
+            print("Device set to:", self.device)
         self.tag_scheme = tag_scheme
         self.tag_outside = tag_outside
         self.transformer = transformer  
