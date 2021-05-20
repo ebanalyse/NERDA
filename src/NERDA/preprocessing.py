@@ -63,8 +63,9 @@ class NERDADataSetReader():
             # bert tokenization
             wordpieces = self.transformer_tokenizer.tokenize(word)
             tokens.extend(wordpieces)
-            # make room for CLS
-            offsets.extend([1]+[0]*(len(wordpieces)-1))
+            # make room for CLS if there is an identified word piece
+            if len(wordpieces)>0:
+                offsets.extend([1]+[0]*(len(wordpieces)-1))
             # Extends the ner_tag if the word has been split by the wordpiece tokenizer
             target_tags.extend([tags[i]] * len(wordpieces)) 
         
