@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="NERDA", 
-    version="0.8.7",
+    version="0.8.8",
     author="Lars Kjeldgaard, Lukas Christian Nielsen",
     author_email="lars.kjeldgaard@eb.dk",
     description="A Framework for Finetuning Transformers for Named-Entity Recognition",
@@ -17,7 +17,7 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires=[
         'torch<=1.7.1',
-        'transformers<=3.5.1',
+        'transformers',
         'sklearn',
         'nltk',
         'pandas',
