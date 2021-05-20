@@ -1,3 +1,7 @@
+# NERDA 0.8.9
+
+* Do not restrict `torch` version.
+
 # NERDA 0.8.8
 
 * Bugfix: set use_fast=True for tokenizer (default) in order to ensure compatibility with new versions of `transformers`.
