@@ -85,6 +85,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       if: github.ref == 'refs/heads/main'
       run: |
+        python setup.py sdist bdist_wheel
         twine upload dist/*
  
     
