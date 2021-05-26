@@ -1,4 +1,4 @@
-# NERDA 0.8.8
+# NERDA 0.9.0
 
 * Support new versions of `transformers` (4.x) and `torch` 
 
