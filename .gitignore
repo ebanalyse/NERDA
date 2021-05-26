@@ -11,6 +11,9 @@ src/*.pkl
 *.csv
 *.pickle
 
+# playground
+tester.py
+
 # C extensions
 *.so
 

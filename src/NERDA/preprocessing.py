@@ -67,18 +67,20 @@ class NERDADataSetReader():
             offsets.extend([1]+[0]*(len(wordpieces)-1))
             # Extends the ner_tag if the word has been split by the wordpiece tokenizer
             target_tags.extend([tags[i]] * len(wordpieces)) 
-        
+               
         # Make room for adding special tokens (one for both 'CLS' and 'SEP' special tokens)
         # max_len includes _all_ tokens.
-        if len(tokens) > self.max_len - 2:
+        if len(tokens) > self.max_len-2:
             msg = f'Sentence #{item} length {len(tokens)} exceeds max_len {self.max_len} and has been truncated'
             warnings.warn(msg)
-        tokens = tokens[:self.max_len - 2] 
-        target_tags = target_tags[:self.max_len - 2]
-        offsets = offsets[:self.max_len - 2]
+        tokens = tokens[:self.max_len-2] 
+        target_tags = target_tags[:self.max_len-2]
+        offsets = offsets[:self.max_len-2]
 
         # encode tokens for BERT
-        input_ids = self.transformer_tokenizer.encode(tokens)
+        # TO DO: prettify this.
+        input_ids = self.transformer_tokenizer.convert_tokens_to_ids(tokens)
+        input_ids = [self.transformer_tokenizer.cls_token_id] + input_ids + [self.transformer_tokenizer.sep_token_id]
         
         # fill out other inputs for model.    
         target_tags = [self.tag_outside_transformed] + target_tags + [self.tag_outside_transformed] 
@@ -96,7 +98,7 @@ class NERDADataSetReader():
         offsets = offsets + ([0] * padding_len)
         token_type_ids = token_type_ids + ([0] * padding_len)
         target_tags = target_tags + ([self.tag_outside_transformed] * padding_len)  
-
+    
         return {'input_ids' : torch.tensor(input_ids, dtype = torch.long),
                 'masks' : torch.tensor(masks, dtype = torch.long),
                 'token_type_ids' : torch.tensor(token_type_ids, dtype = torch.long),

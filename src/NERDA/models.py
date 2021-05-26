@@ -102,7 +102,7 @@ class NERDA:
                                           'warmup_steps' : 500,
                                           'train_batch_size': 13,
                                           'learning_rate': 0.0001},
-                 tokenizer_parameters: dict = {'do_lower_case' : True, 'use_fast' : False},
+                 tokenizer_parameters: dict = {'do_lower_case' : True},
                  validation_batch_size: int = 8,
                  num_workers: int = 1) -> None:
         """Initialize NERDA model
