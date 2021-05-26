@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Union, List, Dict
 from urllib.request import urlopen
 from zipfile import ZipFile
+import ssl
 
 def download_unzip(url_zip: str,
                    dir_extract: str) -> str:
@@ -30,8 +31,13 @@ def download_unzip(url_zip: str,
         extracted to the desired directory as a side-effect.
     """
     
+    # suppress ssl certification
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
     print(f'Reading {url_zip}')
-    with urlopen(url_zip) as zipresp:
+    with urlopen(url_zip, context=ctx) as zipresp:
         with ZipFile(BytesIO(zipresp.read())) as zfile:
             zfile.extractall(dir_extract)
 
