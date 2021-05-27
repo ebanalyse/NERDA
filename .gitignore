@@ -13,6 +13,7 @@ src/*.pkl
 
 # playground
 tester.py
+tester2.py
 
 # C extensions
 *.so

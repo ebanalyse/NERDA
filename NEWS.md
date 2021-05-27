@@ -1,3 +1,7 @@
+# NERDA 0.9.1
+
+* include 16 bit FP precooked DA_BERT_ML_16BIT.
+
 # NERDA 0.9.0
 
 * Support new versions of `transformers` (4.x) and `torch` 
