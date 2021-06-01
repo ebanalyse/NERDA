@@ -21,7 +21,8 @@ def predict(network: torch.nn.Module,
             tag_encoder: sklearn.preprocessing.LabelEncoder,
             tag_outside: str,
             batch_size: int = 8,
-            num_workers: int = 1) -> List[List[str]]:
+            num_workers: int = 1,
+            return_tensors: bool = False) -> List[List[str]]:
     """Compute predictions.
 
     Computes predictions for a list with word-tokenized sentences 
@@ -45,6 +46,7 @@ def predict(network: torch.nn.Module,
             Defaults to 8.
         num_workers (int, optional): Number of workers. Defaults
             to 1.
+        return_tensors (bool, optional): if True, return tensors.
 
     Returns:
         List[List[str]]: List of lists with predicted Entity
@@ -73,9 +75,10 @@ def predict(network: torch.nn.Module,
                            num_workers = num_workers)
 
     predictions = []
+    tensors = []
     
     with torch.no_grad():
-        for i, dl in enumerate(dl): 
+        for _, dl in enumerate(dl): 
 
             outputs = network(**dl)   
 
@@ -86,6 +89,9 @@ def predict(network: torch.nn.Module,
                 preds = tag_encoder.inverse_transform(
                     outputs[i].argmax(-1).cpu().numpy()
                 )
+
+                if return_tensors:
+                    tensors.append(outputs)    
 
                 # subset predictions for original word tokens.
                 preds = [prediction for prediction, offset in zip(preds.tolist(), dl.get('offsets')[i]) if offset]
@@ -101,6 +107,9 @@ def predict(network: torch.nn.Module,
                 # assert len(preds) == len(sentences[i])            
 
                 predictions.append(preds)
+
+            if return_tensors:
+                return tensors
 
     return predictions
 

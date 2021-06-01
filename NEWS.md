@@ -1,3 +1,7 @@
+# NERDA 0.9.2
+
+* remove precooked DA_BERT_ML_16BIT, include precooked DA_DISTILBERT_ML.
+
 # NERDA 0.9.1
 
 * include 16 bit FP precooked DA_BERT_ML_16BIT.

@@ -144,17 +144,15 @@ class DA_BERT_ML(Precooked):
                                             'learning_rate': 0.0001},
                          tokenizer_parameters = {'do_lower_case' : True})
 
-class DA_BERT_ML_16BIT(Precooked):
-    """NERDA [Multilingual BERT](https://huggingface.co/bert-base-multilingual-uncased) 
+class DA_DISTILBERT_ML(Precooked):
+    """NERDA [Multilingual BERT](https://huggingface.co/distilbert-base-multilingual-cased) 
     for Danish Finetuned on [DaNE data set](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).
-    
-    Model uses 16 bit floating points.
 
     Inherits from [NERDA.precooked.Precooked][].
     
     Examples:
-        >>> from NERDA.precooked import DA_BERT_ML()
-        >>> model = DA_BERT_ML()
+        >>> from NERDA.precooked import DA_DISTILBERT_ML()
+        >>> model = DA_DISTILBERT_ML()
         >>> model.download_network()
         >>> model.load_network()
         >>> text = 'Jens Hansen har en bondegård'
@@ -164,7 +162,7 @@ class DA_BERT_ML_16BIT(Precooked):
     """
     def __init__(self) -> None:
         """Initialize model"""
-        super().__init__(transformer = 'bert-base-multilingual-uncased',
+        super().__init__(transformer = 'distilbert-base-multilingual-cased',
                          device = None,
                          tag_scheme = [
                             'B-PER',
@@ -183,7 +181,7 @@ class DA_BERT_ML_16BIT(Precooked):
                                             'warmup_steps' : 500,
                                             'train_batch_size': 13,
                                             'learning_rate': 0.0001},
-                         tokenizer_parameters = {'do_lower_case' : True})
+                         tokenizer_parameters = {'do_lower_case' : False})
 
 class DA_ELECTRA_DA(Precooked):
     """NERDA [Danish ELECTRA](https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased) 
