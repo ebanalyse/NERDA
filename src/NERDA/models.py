@@ -178,7 +178,6 @@ class NERDA:
         self.num_workers = num_workers
         self.train_losses = []
         self.valid_loss = np.nan
-
         self.quantized = False
         self.halved = False
 
@@ -238,9 +237,12 @@ class NERDA:
         Quantization and half precision inference are mutually exclusive.
 
         Read more: https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html
+
+        Returns:
+            Nothing. Applies dynamic quantization to Network as a side-effect.
         """
-        assert self.quantized, "Dynamic quantization already applied"
-        assert self.halved, "Can't run both quantization and half precision"
+        assert not (self.quantized), "Dynamic quantization already applied"
+        assert not (self.halved), "Can't run both quantization and half precision"
 
         self.network = torch.quantization.quantize_dynamic(
             self.network, {torch.nn.Linear}, dtype=torch.qint8
@@ -253,12 +255,15 @@ class NERDA:
         Quantization and half precision inference are mutually exclusive.
 
         Read more: https://pytorch.org/docs/master/generated/torch.nn.Module.html?highlight=half#torch.nn.Module.half
+
+        Returns: 
+            Nothing. Model is "halved" as a side-effect.
         """
-        assert self.halved, "Half precision already applied"
-        assert self.quantized, "Can't run both quantization and half precision"
+        assert not (self.halved), "Half precision already applied"
+        assert not (self.quantized), "Can't run both quantization and half precision"
 
         self.network.half()
-        self.havled = True
+        self.halved = True
 
     def predict(self, sentences: List[List[str]], **kwargs) -> List[List[str]]:
         """Predict Named Entities in Word-Tokenized Sentences

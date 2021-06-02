@@ -1,3 +1,7 @@
+# NERDA 0.9.4
+
+* functionality for dynamic quantization, fp32 to fp16, padding parametrized.
+
 # NERDA 0.9.2
 
 * remove precooked DA_BERT_ML_16BIT, include precooked DA_DISTILBERT_ML.

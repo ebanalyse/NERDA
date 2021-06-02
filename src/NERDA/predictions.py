@@ -22,7 +22,8 @@ def predict(network: torch.nn.Module,
             tag_outside: str,
             batch_size: int = 8,
             num_workers: int = 1,
-            return_tensors: bool = False) -> List[List[str]]:
+            return_tensors: bool = False,
+            pad_sequences: bool = True) -> List[List[str]]:
     """Compute predictions.
 
     Computes predictions for a list with word-tokenized sentences 
@@ -47,6 +48,8 @@ def predict(network: torch.nn.Module,
         num_workers (int, optional): Number of workers. Defaults
             to 1.
         return_tensors (bool, optional): if True, return tensors.
+        pad_sequences (bool, optional): if True, pad sequences. 
+            Defaults to True.
 
     Returns:
         List[List[str]]: List of lists with predicted Entity
@@ -72,7 +75,8 @@ def predict(network: torch.nn.Module,
                            batch_size = batch_size, 
                            tag_encoder = tag_encoder,
                            tag_outside = tag_outside,
-                           num_workers = num_workers)
+                           num_workers = num_workers,
+                           pad_sequences = pad_sequences)
 
     predictions = []
     tensors = []

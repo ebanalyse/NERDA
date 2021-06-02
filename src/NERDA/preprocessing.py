@@ -14,7 +14,7 @@ class NERDADataSetReader():
                 max_len: int, 
                 tag_encoder: sklearn.preprocessing.LabelEncoder, 
                 tag_outside: str,
-                pad_sequences : bool) -> None:
+                pad_sequences : bool = True) -> None:
         """Initialize DataSetReader
 
         Initializes DataSetReader that prepares and preprocesses 
@@ -32,6 +32,8 @@ class NERDADataSetReader():
             tag_encoder (sklearn.preprocessing.LabelEncoder): Encoder
                 for Named-Entity tags.
             tag_outside (str): Special Outside tag.
+            pad_sequences (bool): Pad sequences to max_len. Defaults
+                to True.
         """
         self.sentences = sentences
         self.tags = tags
@@ -117,8 +119,13 @@ def create_dataloader(sentences,
                       tag_encoder, 
                       tag_outside,
                       batch_size = 1,
-                      num_workers = 1):
-    
+                      num_workers = 1,
+                      pad_sequences = True):
+
+    if pad_sequences and batch_size > 1:
+        print("setting pad_sequences to True, because batch_size is more than one.")
+        pad_sequences = False
+
     data_reader = NERDADataSetReader(
         sentences = sentences, 
         tags = tags,
@@ -127,7 +134,7 @@ def create_dataloader(sentences,
         max_len = max_len,
         tag_encoder = tag_encoder,
         tag_outside = tag_outside,
-        pad_sequences = batch_size > 1)
+        pad_sequences = pad_sequences)
         # Don't pad sequences if batch size == 1. This improves performance.
 
     data_loader = torch.utils.data.DataLoader(
