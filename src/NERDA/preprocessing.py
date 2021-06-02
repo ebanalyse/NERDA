@@ -122,9 +122,9 @@ def create_dataloader(sentences,
                       num_workers = 1,
                       pad_sequences = True):
 
-    if pad_sequences and batch_size > 1:
+    if not pad_sequences and batch_size > 1:
         print("setting pad_sequences to True, because batch_size is more than one.")
-        pad_sequences = False
+        pad_sequences = True
 
     data_reader = NERDADataSetReader(
         sentences = sentences, 
