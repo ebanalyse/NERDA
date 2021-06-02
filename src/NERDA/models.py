@@ -179,6 +179,9 @@ class NERDA:
         self.train_losses = []
         self.valid_loss = np.nan
 
+        self.quantized = False
+        self.halved = False
+
     def train(self) -> str:
         """Train Network
 
@@ -228,6 +231,34 @@ class NERDA:
         assert os.path.exists(model_path), "File does not exist. You can download network with download_network()"
         self.network.load_state_dict(torch.load(model_path, map_location = torch.device(self.device)))
         return f'Weights for network loaded from {model_path}'
+
+    def quantize(self):
+        """Apply dynamic quantization to increase performance.
+
+        Quantization and half precision inference are mutually exclusive.
+
+        Read more: https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html
+        """
+        assert self.quantized, "Dynamic quantization already applied"
+        assert self.halved, "Can't run both quantization and half precision"
+
+        self.network = torch.quantization.quantize_dynamic(
+            self.network, {torch.nn.Linear}, dtype=torch.qint8
+        )
+        self.quantized = True
+
+    def half(self):
+        """Convert weights from Float32 to Float16 to increase performance
+
+        Quantization and half precision inference are mutually exclusive.
+
+        Read more: https://pytorch.org/docs/master/generated/torch.nn.Module.html?highlight=half#torch.nn.Module.half
+        """
+        assert self.halved, "Half precision already applied"
+        assert self.quantized, "Can't run both quantization and half precision"
+
+        self.network.half()
+        self.havled = True
 
     def predict(self, sentences: List[List[str]], **kwargs) -> List[List[str]]:
         """Predict Named Entities in Word-Tokenized Sentences

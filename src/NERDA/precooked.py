@@ -121,10 +121,10 @@ class DA_BERT_ML(Precooked):
         ([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
     
     """
-    def __init__(self) -> None:
+    def __init__(self, device: str = None) -> None:
         """Initialize model"""
         super().__init__(transformer = 'bert-base-multilingual-uncased',
-                         device = None,
+                         device = device,
                          tag_scheme = [
                             'B-PER',
                             'I-PER', 
@@ -160,10 +160,10 @@ class DA_DISTILBERT_ML(Precooked):
         ([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
     
     """
-    def __init__(self) -> None:
+    def __init__(self, device: str = None) -> None:
         """Initialize model"""
         super().__init__(transformer = 'distilbert-base-multilingual-cased',
-                         device = None,
+                         device = device,
                          tag_scheme = [
                             'B-PER',
                             'I-PER', 
@@ -199,10 +199,10 @@ class DA_ELECTRA_DA(Precooked):
         ([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 
     """
-    def __init__(self) -> None:
+    def __init__(self, device: str = None) -> None:
         """Initialize model"""
         super().__init__(transformer = 'Maltehb/-l-ctra-danish-electra-small-uncased',
-                         device = None,
+                         device = device,
                          tag_scheme = [
                             'B-PER',
                             'I-PER', 
@@ -238,10 +238,10 @@ class EN_ELECTRA_EN(Precooked):
         ([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
 
     """
-    def __init__(self) -> None:
+    def __init__(self, device: str = None) -> None:
         """Initialize model"""
         super().__init__(transformer = 'google/electra-small-discriminator',
-                         device = None,
+                         device = device,
                          tag_scheme = [
                             'B-PER',
                             'I-PER', 
@@ -278,10 +278,10 @@ class EN_BERT_ML(Precooked):
         ([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
     
     """
-    def __init__(self) -> None:
+    def __init__(self, device: str = None) -> None:
         """Initialize model"""
         super().__init__(transformer = 'bert-base-multilingual-uncased',
-                         device = None,
+                         device = device,
                          tag_scheme = [
                             'B-PER',
                             'I-PER', 
