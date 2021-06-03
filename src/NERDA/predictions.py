@@ -127,6 +127,7 @@ def predict_text(network: torch.nn.Module,
                  tag_outside: str,
                  batch_size: int = 8,
                  num_workers: int = 1,
+                 pad_sequences: bool = True,
                  sent_tokenize: Callable = sent_tokenize,
                  word_tokenize: Callable = word_tokenize) -> tuple:
     """Compute Predictions for Text.
@@ -151,6 +152,8 @@ def predict_text(network: torch.nn.Module,
             Defaults to 8.
         num_workers (int, optional): Number of workers. Defaults
             to 1.
+        pad_sequences (bool, optional): if True, pad sequences. 
+            Defaults to True.
 
     Returns:
         tuple: sentence- and word-tokenized text with corresponding
@@ -169,6 +172,7 @@ def predict_text(network: torch.nn.Module,
                           device = device,
                           batch_size = batch_size,
                           num_workers = num_workers,
+                          pad_sequences = pad_sequences,
                           tag_encoder = tag_encoder,
                           tag_outside = tag_outside)
 
