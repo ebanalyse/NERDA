@@ -117,7 +117,7 @@ Instantiate a multilingual BERT model, that has been finetuned for NER in Danish
 `DA_BERT_ML`.
 
 ```python
-from NERDA.precooked import DA_BERT_ML()
+from NERDA.precooked import DA_BERT_ML
 model = DA_BERT_ML()
 ```
 
