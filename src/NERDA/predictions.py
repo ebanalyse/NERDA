@@ -6,11 +6,19 @@ with a [NERDA.models.NERDA][] model.
 from .preprocessing import create_dataloader
 import torch
 import numpy as np
-from tqdm import tqdm 
 from nltk.tokenize import sent_tokenize, word_tokenize
 from typing import List, Callable
 import transformers
 import sklearn.preprocessing
+
+try:
+  from IPython import get_ipython
+  if 'IPKernelApp' in get_ipython().config:
+    from tqdm.notebook import tqdm
+  else:
+    from tqdm import tqdm
+except:
+  from tqdm import tqdm
 
 def predict(network: torch.nn.Module, 
             sentences: List[List[str]],
