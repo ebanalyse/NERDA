@@ -9,17 +9,18 @@ The interface enables you to easily
 - evaluate it
 - use it to predict entities in new texts.
 """
-from .datasets import get_conll_data
-from .networks import NERDANetwork
-from .predictions import predict, predict_text
-from .performance import compute_f1_scores
-from .training import train_model
+from NERDA.datasets import get_conll_data
+from NERDA.networks import NERDANetwork
+from NERDA.predictions import predict, predict_text
+from NERDA.performance import compute_f1_scores, flatten
+from NERDA.training import train_model
 import pandas as pd
 import numpy as np
 import torch
 import os
 import sys
 import sklearn.preprocessing
+from sklearn.metrics import accuracy_score
 from transformers import AutoModel, AutoTokenizer, AutoConfig
 from typing import List
 
@@ -35,11 +36,11 @@ class NERDA:
 
     Examples:
         Model for a VERY small subset (5 observations) of English NER data
-        >>> from NERDA.dataset import get_conll_data
+        >>> from NERDA.datasets import get_conll_data
         >>> trn = get_conll_data('train', 5)
         >>> valid = get_conll_data('valid', 5)
-        >>> tag_scheme = ['B-PER', 'I-PER' 'B-LOC', 'I-LOC',
-                          'B-ORG', 'I-ORG', 'B-MISC, 'I-MISC']
+        >>> tag_scheme = ['B-PER', 'I-PER', 'B-LOC', 'I-LOC',
+                          'B-ORG', 'I-ORG', 'B-MISC', 'I-MISC']
         >>> tag_outside = 'O'
         >>> transformer = 'bert-base-multilingual-uncased'
         >>> model = NERDA(transformer = transformer,
@@ -311,7 +312,9 @@ class NERDA:
                             tag_outside = self.tag_outside,
                             **kwargs)
 
-    def evaluate_performance(self, dataset: dict, **kwargs) -> pd.DataFrame:
+    def evaluate_performance(self, dataset: dict, 
+                             return_accuracy: bool=False,
+                             **kwargs) -> pd.DataFrame:
         """Evaluate Performance
 
         Evaluates the performance of the model on an arbitrary
@@ -324,29 +327,39 @@ class NERDA:
                  get_dane_data() or get_conll_data().
             kwargs: arbitrary keyword arguments for predict. For
                 instance 'batch_size' and 'num_workers'.
+            return_accuracy (bool): Return accuracy
+                as well? Defaults to False.
 
+            
         Returns:
-            DataFrame with performance numbers, F1-scores.
+            DataFrame with performance numbers, F1-scores,
+            Precision and Recall. Returns dictionary with
+            this AND accuracy, if return_accuracy is set to
+            True.
         """
         
         tags_predicted = self.predict(dataset.get('sentences'), 
                                       **kwargs)
         
+        # compute F1 scores by entity type
         f1 = compute_f1_scores(y_pred = tags_predicted, 
                                y_true = dataset.get('tags'),
                                labels = self.tag_scheme,
                                average = None)
         
         # create DataFrame with performance scores (=F1)
-        df = list(zip(self.tag_scheme, f1[2]))
-        df = pd.DataFrame(df, columns = ['Level', 'F1-Score'])    
+        df = list(zip(self.tag_scheme, f1[2], f1[0], f1[1]))
+        df = pd.DataFrame(df, columns = ['Level', 'F1-Score', 'Precision', 'Recall'])    
         
         # compute MICRO-averaged F1-scores and add to table.
         f1_micro = compute_f1_scores(y_pred = tags_predicted, 
                                      y_true = dataset.get('tags'),
                                      labels = self.tag_scheme,
                                      average = 'micro')
-        f1_micro = pd.DataFrame({'Level' : ['AVG_MICRO'], 'F1-Score': [f1_micro[2]]})
+        f1_micro = pd.DataFrame({'Level' : ['AVG_MICRO'], 
+                                 'F1-Score': [f1_micro[2]],
+                                 'Precision': [np.nan],
+                                 'Recall': [np.nan]})
         df = df.append(f1_micro)
 
         # compute MACRO-averaged F1-scores and add to table.
@@ -354,8 +367,17 @@ class NERDA:
                                      y_true = dataset.get('tags'),
                                      labels = self.tag_scheme,
                                      average = 'macro')
-        f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 'F1-Score': [f1_macro[2]]})
+        f1_macro = pd.DataFrame({'Level' : ['AVG_MICRO'], 
+                                 'F1-Score': [f1_macro[2]],
+                                 'Precision': [np.nan],
+                                 'Recall': [np.nan]})
         df = df.append(f1_macro)
+
+        # compute and return accuracy if desired
+        if return_accuracy:
+            accuracy = accuracy_score(y_pred = flatten(tags_predicted), 
+                                      y_true = flatten(dataset.get('tags')))
+            return {'f1':df, 'accuracy': accuracy}
       
         return df
 
