@@ -1,3 +1,7 @@
+# NERDA 0.9.7
+
+* return confidence scores for predictions of all tokens, e.g. model.predict(x, return_confidence=True).
+
 # NERDA 0.9.6
 
 * compute Precision, Recall and Accuracy (optional) with evaluate_performance().

@@ -40,6 +40,12 @@ def test_predict_maxlen_exceed():
     sentences = [nltk.word_tokenize(text)]
     model.predict(sentences)
 
+# test confidence scores
+words, preds = model.predict_text(text_single, return_confidence=True)
+
+def test_confs_len():
+    assert len(preds[0])==len(preds[1])
+
 predictions_text_single = model.predict_text(text_single)
 
 def test_predict_text_format():
