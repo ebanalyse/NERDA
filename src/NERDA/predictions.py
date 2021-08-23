@@ -3,7 +3,7 @@ This section covers functionality for computing predictions
 with a [NERDA.models.NERDA][] model.
 """
 
-from .preprocessing import create_dataloader
+from NERDA.preprocessing import create_dataloader
 import torch
 import numpy as np
 from tqdm import tqdm 

@@ -2,8 +2,8 @@
 This sections covers NERDA Models that have been 'precooked' by 
 Ekstra Bladet and are publicly available for download.
 """
-from .datasets import get_dane_data, get_conll_data
-from .models import NERDA
+from NERDA.datasets import get_dane_data, get_conll_data
+from NERDA.models import NERDA
 import os
 import urllib
 from pathlib import Path

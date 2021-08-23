@@ -1,3 +1,12 @@
+# NERDA 0.9.6
+
+* compute Precision, Recall and Accuracy (optional) with evaluate_performance().
+* improve relative imports inside package.
+
+# NERDA 0.9.5
+
+* ... bugfixes.
+
 # NERDA 0.9.4
 
 * functionality for dynamic quantization, fp32 to fp16, padding parametrized.

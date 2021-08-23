@@ -12,10 +12,19 @@ model = NERDA(dataset_training = get_dane_data('train', 5),
                                  'learning_rate': 0.0001})
 
 test = get_dane_data('test')
-f1 = model.evaluate_performance(test)
+perf = model.evaluate_performance(test)
 
 def test_performance_df():
-    assert isinstance(f1, pd.DataFrame)
+    assert isinstance(perf, pd.DataFrame)
 
 def test_performance_len():
-    assert len(f1) > 0
+    assert len(perf) > 0
+
+def test_includes_relevant_metrics():
+    metrics = ['F1-Score', 'Precision', 'Recall']
+    assert all([x in perf.columns for x in metrics])
+
+def test_metrics_dtype():
+    metrics = ['F1-Score', 'Precision', 'Recall']
+    assert all([perf.dtypes[x] == 'float' for x in metrics])
+
