@@ -266,7 +266,9 @@ class NERDA:
         self.network.half()
         self.halved = True
 
-    def predict(self, sentences: List[List[str]], **kwargs) -> List[List[str]]:
+    def predict(self, sentences: List[List[str]],
+                return_confidence: bool = False,
+                **kwargs) -> List[List[str]]:
         """Predict Named Entities in Word-Tokenized Sentences
 
         Predicts word-tokenized sentences with trained model.
@@ -275,6 +277,9 @@ class NERDA:
             sentences (List[List[str]]): word-tokenized sentences.
             kwargs: arbitrary keyword arguments. For instance
                 'batch_size' and 'num_workers'.
+            return_confidence (bool, optional): if True, return
+                confidence scores for all predicted tokens. Defaults
+                to False.
 
         Returns:
             List[List[str]]: Predicted tags for sentences - one
@@ -288,15 +293,20 @@ class NERDA:
                        device = self.device,
                        tag_encoder = self.tag_encoder,
                        tag_outside = self.tag_outside,
+                       return_confidence = return_confidence,
                        **kwargs)
 
-    def predict_text(self, text: str, **kwargs) -> list:
+    def predict_text(self, text: str, 
+                     return_confidence:bool = False, **kwargs) -> list:
         """Predict Named Entities in a Text
 
         Args:
             text (str): text to predict entities in.
             kwargs: arbitrary keyword arguments. For instance
                 'batch_size' and 'num_workers'.
+            return_confidence (bool, optional): if True, return
+                confidence scores for all predicted tokens. Defaults
+                to False.
 
         Returns:
             tuple: word-tokenized sentences and predicted 
@@ -310,6 +320,7 @@ class NERDA:
                             device = self.device,
                             tag_encoder = self.tag_encoder,
                             tag_outside = self.tag_outside,
+                            return_confidence=return_confidence,
                             **kwargs)
 
     def evaluate_performance(self, dataset: dict, 
