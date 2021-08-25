@@ -230,7 +230,23 @@ class NERDA:
         # TODO: change assert to Raise.
         assert os.path.exists(model_path), "File does not exist. You can download network with download_network()"
         self.network.load_state_dict(torch.load(model_path, map_location = torch.device(self.device)))
+        self.network.device = self.device
         return f'Weights for network loaded from {model_path}'
+
+    def save_network(self, model_path:str = "model.bin") -> None:
+        """Save Weights of NERDA Network
+
+        Saves weights for a fine-tuned NERDA Network to file.
+
+        Args:
+            model_path (str, optional): Path for model file. 
+                Defaults to "model.bin".
+
+        Returns:
+            Nothing. Saves model to file as a side-effect.
+        """
+        torch.save(self.network.state_dict(), model_path)
+        print(f"Network written to file {model_path}")
 
     def quantize(self):
         """Apply dynamic quantization to increase performance.

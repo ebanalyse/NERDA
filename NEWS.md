@@ -1,3 +1,7 @@
+# NERDA 1.0.0
+
+* NERDA model class is now equipped with functions for saving (loading) weights for a fine-tuned NERDA Network to (from) file. See functions model.save_network() and model.load_network_from_file()
+
 # NERDA 0.9.7
 
 * return confidence scores for predictions of all tokens, e.g. model.predict(x, return_confidence=True).
