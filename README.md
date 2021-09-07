@@ -198,7 +198,7 @@ extended workflow examples can be accessed [here](https://ebanalyse.github.io/NE
 @inproceedings{nerda,
   title = {NERDA},
   author = {Kjeldgaard, Lars and Nielsen, Lukas},
-  year = {2020},
+  year = {2021},
   publisher = {{GitHub}},
   url = {https://github.com/ebanalyse/NERDA}
 }
