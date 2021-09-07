@@ -1,0 +1,1718 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
+    
+    
+      
+        <title>NERDA Models - NERDA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.802231af.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../css/pandas-dataframe.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nerda-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="NERDA" class="md-header__button md-logo" aria-label="NERDA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NERDA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NERDA Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="NERDA" class="md-nav__button md-logo" aria-label="NERDA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    NERDA
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflow/" class="md-nav__link">
+        Workflow Examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Code Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Code Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          NERDA Models
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        NERDA Models
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.models" class="md-nav__link">
+    NERDA.models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA" class="md-nav__link">
+    NERDA
+  </a>
+  
+    <nav class="md-nav" aria-label="NERDA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.evaluate_performance" class="md-nav__link">
+    evaluate_performance()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.half" class="md-nav__link">
+    half()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.load_network_from_file" class="md-nav__link">
+    load_network_from_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.predict" class="md-nav__link">
+    predict()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.predict_text" class="md-nav__link">
+    predict_text()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.quantize" class="md-nav__link">
+    quantize()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.save_network" class="md-nav__link">
+    save_network()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../precooked_models/" class="md-nav__link">
+        Precooked NERDA Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets/" class="md-nav__link">
+        Datasets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../predictions/" class="md-nav__link">
+        Predictions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networks/" class="md-nav__link">
+        Networks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.models" class="md-nav__link">
+    NERDA.models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA" class="md-nav__link">
+    NERDA
+  </a>
+  
+    <nav class="md-nav" aria-label="NERDA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.evaluate_performance" class="md-nav__link">
+    evaluate_performance()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.half" class="md-nav__link">
+    half()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.load_network_from_file" class="md-nav__link">
+    load_network_from_file()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.predict" class="md-nav__link">
+    predict()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.predict_text" class="md-nav__link">
+    predict_text()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.quantize" class="md-nav__link">
+    quantize()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.save_network" class="md-nav__link">
+    save_network()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#NERDA.models.NERDA.train" class="md-nav__link">
+    train()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="nerda-models">NERDA Models</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="NERDA.models"></a>
+    <div class="doc doc-contents first">
+
+      <p>This section covers the interface for <code>NERDA</code> models, that is 
+implemented as its own Python class <a href="#NERDA.models.NERDA">NERDA.models.NERDA</a>.</p>
+<p>The interface enables you to easily </p>
+<ul>
+<li>specify your own <a href="#NERDA.models.NERDA">NERDA.models.NERDA</a> model</li>
+<li>train it</li>
+<li>evaluate it</li>
+<li>use it to predict entities in new texts.</li>
+</ul>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="NERDA.models.NERDA">
+        <code>NERDA</code>
+
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>NERDA model</p>
+<p>A NERDA model object containing a complete model configuration.
+The model can be trained with the <code>train</code> method. Afterwards
+new observations can be predicted with the <code>predict</code> and
+<code>predict_text</code> methods. The performance of the model can be
+evaluated on a set of new observations with the 
+<code>evaluate_performance</code> method.</p>
+
+<p><strong>Examples:</strong></p>
+    <p>Model for a VERY small subset (5 observations) of English NER data</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">NERDA.datasets</span> <span class="kn">import</span> <span class="n">get_conll_data</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">trn</span> <span class="o">=</span> <span class="n">get_conll_data</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">get_conll_data</span><span class="p">(</span><span class="s1">&#39;valid&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tag_scheme</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B-PER&#39;</span><span class="p">,</span> <span class="s1">&#39;I-PER&#39;</span><span class="p">,</span> <span class="s1">&#39;B-LOC&#39;</span><span class="p">,</span> <span class="s1">&#39;I-LOC&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;B-ORG&#39;</span><span class="p">,</span> <span class="s1">&#39;I-ORG&#39;</span><span class="p">,</span> <span class="s1">&#39;B-MISC&#39;</span><span class="p">,</span> <span class="s1">&#39;I-MISC&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">tag_outside</span> <span class="o">=</span> <span class="s1">&#39;O&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">transformer</span> <span class="o">=</span> <span class="s1">&#39;bert-base-multilingual-uncased&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">model</span> <span class="o">=</span> <span class="n">NERDA</span><span class="p">(</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">,</span>
+                  <span class="n">tag_scheme</span> <span class="o">=</span> <span class="n">tag_scheme</span><span class="p">,</span>
+                  <span class="n">tag_outside</span> <span class="o">=</span> <span class="n">tag_outside</span><span class="p">,</span>
+                  <span class="n">dataset_training</span> <span class="o">=</span> <span class="n">trn</span><span class="p">,</span>
+                  <span class="n">dataset_validation</span> <span class="o">=</span> <span class="n">valid</span><span class="p">)</span>
+</code></pre></div>
+    <p>Model for complete English NER data set CoNLL-2003 with modified hyperparameters</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">trn</span> <span class="o">=</span> <span class="n">get_conll_data</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">get_conll_data</span><span class="p">(</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">transformer</span> <span class="o">=</span> <span class="s1">&#39;bert-base-multilingual-uncased&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                       <span class="s1">&#39;warmup_steps&#39;</span> <span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+                       <span class="s1">&#39;train_batch_size&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+                       <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">},</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">model</span> <span class="o">=</span> <span class="n">NERDA</span><span class="p">(</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">transformer</span><span class="p">,</span>
+                  <span class="n">dataset_training</span> <span class="o">=</span> <span class="n">trn</span><span class="p">,</span>
+                  <span class="n">dataset_validation</span> <span class="o">=</span> <span class="n">valid</span><span class="p">,</span>
+                  <span class="n">tag_scheme</span> <span class="o">=</span> <span class="n">tag_scheme</span><span class="p">,</span>
+                  <span class="n">tag_outside</span> <span class="o">=</span> <span class="n">tag_outside</span><span class="p">,</span>
+                  <span class="n">dropout</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                  <span class="n">hyperparameters</span> <span class="o">=</span> <span class="n">hyperparameters</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Attributes:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>network</code></td>
+        <td><code>torch.nn.Module</code></td>
+        <td><p>network for Named Entity 
+Recognition task.</p></td>
+      </tr>
+      <tr>
+        <td><code>tag_encoder</code></td>
+        <td><code>sklearn.preprocessing.LabelEncoder</code></td>
+        <td><p>encoder for the
+NER labels/tags.</p></td>
+      </tr>
+      <tr>
+        <td><code>transformer_model</code></td>
+        <td><code>transformers.PreTrainedModel</code></td>
+        <td><p>(Auto)Model derived from the
+transformer.</p></td>
+      </tr>
+      <tr>
+        <td><code>transformer_tokenizer</code></td>
+        <td><code>transformers.PretrainedTokenizer</code></td>
+        <td><p>(Auto)Tokenizer
+derived from the transformer.</p></td>
+      </tr>
+      <tr>
+        <td><code>transformer_config</code></td>
+        <td><code>transformers.PretrainedConfig</code></td>
+        <td><p>(Auto)Config derived from
+the transformer. </p></td>
+      </tr>
+      <tr>
+        <td><code>train_losses</code></td>
+        <td><code>list</code></td>
+        <td><p>holds training losses, once the model has been 
+trained.</p></td>
+      </tr>
+      <tr>
+        <td><code>valid_loss</code></td>
+        <td><code>float</code></td>
+        <td><p>holds validation loss, once the model has been trained.</p></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.__init__">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformer</span><span class="o">=</span><span class="s1">&#39;bert-base-multilingual-uncased&#39;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag_scheme</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;B-PER&#39;</span><span class="p">,</span> <span class="s1">&#39;I-PER&#39;</span><span class="p">,</span> <span class="s1">&#39;B-ORG&#39;</span><span class="p">,</span> <span class="s1">&#39;I-ORG&#39;</span><span class="p">,</span> <span class="s1">&#39;B-LOC&#39;</span><span class="p">,</span> <span class="s1">&#39;I-LOC&#39;</span><span class="p">,</span> <span class="s1">&#39;B-MISC&#39;</span><span class="p">,</span> <span class="s1">&#39;I-MISC&#39;</span><span class="p">],</span> <span class="n">tag_outside</span><span class="o">=</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="n">dataset_training</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_validation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_len</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">network</span><span class="o">=&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">NERDA</span><span class="o">.</span><span class="n">networks</span><span class="o">.</span><span class="n">NERDANetwork</span><span class="s1">&#39;&gt;, dropout=0.1, hyperparameters={&#39;</span><span class="n">epochs</span><span class="s1">&#39;: 4, &#39;</span><span class="n">warmup_steps</span><span class="s1">&#39;: 500, &#39;</span><span class="n">train_batch_size</span><span class="s1">&#39;: 13, &#39;</span><span class="n">learning_rate</span><span class="s1">&#39;: 0.0001}, tokenizer_parameters={&#39;</span><span class="n">do_lower_case</span><span class="s1">&#39;: True}, validation_batch_size=8, num_workers=1)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Initialize NERDA model</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>transformer</code></td>
+        <td><code>str</code></td>
+        <td><p>which pretrained 'huggingface' 
+transformer to use. </p></td>
+        <td><code>&#39;bert-base-multilingual-uncased&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>device</code></td>
+        <td><code>str</code></td>
+        <td><p>the desired device to use for computation. 
+If not provided by the user, we take a guess.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>tag_scheme</code></td>
+        <td><code>List[str]</code></td>
+        <td><p>All available NER 
+tags for the given data set EXCLUDING the special outside tag, 
+that is handled separately.</p></td>
+        <td><code>[&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;B-ORG&#39;, &#39;I-ORG&#39;, &#39;B-LOC&#39;, &#39;I-LOC&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;]</code></td>
+      </tr>
+      <tr>
+        <td><code>tag_outside</code></td>
+        <td><code>str</code></td>
+        <td><p>the value of the special outside tag. 
+Defaults to 'O'.</p></td>
+        <td><code>&#39;O&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>dataset_training</code></td>
+        <td><code>dict</code></td>
+        <td><p>the training data. Must consist 
+of 'sentences': word-tokenized sentences and 'tags': corresponding 
+NER tags. You can look at examples of, how the dataset should 
+look like by invoking functions get_dane_data() or get_conll_data().
+Defaults to None, in which case the English CoNLL-2003 data set is used. </p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>dataset_validation</code></td>
+        <td><code>dict</code></td>
+        <td><p>the validation data. Must consist
+of 'sentences': word-tokenized sentences and 'tags': corresponding 
+NER tags. You can look at examples of, how the dataset should 
+look like by invoking functions get_dane_data() or get_conll_data().
+Defaults to None, in which case the English CoNLL-2003 data set 
+is used.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>max_len</code></td>
+        <td><code>int</code></td>
+        <td><p>the maximum sentence length (number of 
+tokens after applying the transformer tokenizer) for the transformer. 
+Sentences are truncated accordingly. Look at your data to get an 
+impression of, what could be a meaningful setting. Also be aware 
+that many transformers have a maximum accepted length. Defaults 
+to 128. </p></td>
+        <td><code>128</code></td>
+      </tr>
+      <tr>
+        <td><code>network</code></td>
+        <td><code>Module</code></td>
+        <td><p>network to be trained. Defaults
+to a default generic <code>NERDANetwork</code>. Can be replaced with your own 
+customized network architecture. It must however take the same 
+arguments as <code>NERDANetwork</code>.</p></td>
+        <td><code>&lt;class &#39;NERDA.networks.NERDANetwork&#39;&gt;</code></td>
+      </tr>
+      <tr>
+        <td><code>dropout</code></td>
+        <td><code>float</code></td>
+        <td><p>dropout probability. Defaults to 0.1.</p></td>
+        <td><code>0.1</code></td>
+      </tr>
+      <tr>
+        <td><code>hyperparameters</code></td>
+        <td><code>dict</code></td>
+        <td><p>Hyperparameters for the model. Defaults
+to {'epochs' : 3, 'warmup_steps' : 500, 'train_batch_size': 16, 
+'learning_rate': 0.0001}.</p></td>
+        <td><code>{&#39;epochs&#39;: 4, &#39;warmup_steps&#39;: 500, &#39;train_batch_size&#39;: 13, &#39;learning_rate&#39;: 0.0001}</code></td>
+      </tr>
+      <tr>
+        <td><code>tokenizer_parameters</code></td>
+        <td><code>dict</code></td>
+        <td><p>parameters for the transformer 
+tokenizer. Defaults to {'do_lower_case' : True}.</p></td>
+        <td><code>{&#39;do_lower_case&#39;: True}</code></td>
+      </tr>
+      <tr>
+        <td><code>validation_batch_size</code></td>
+        <td><code>int</code></td>
+        <td><p>batch size for validation. Defaults
+to 8.</p></td>
+        <td><code>8</code></td>
+      </tr>
+      <tr>
+        <td><code>num_workers</code></td>
+        <td><code>int</code></td>
+        <td><p>number of workers for data loader.</p></td>
+        <td><code>1</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+             <span class="n">transformer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;bert-base-multilingual-uncased&#39;</span><span class="p">,</span>
+             <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+             <span class="n">tag_scheme</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="s1">&#39;B-PER&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;I-PER&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;B-ORG&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;I-ORG&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;B-LOC&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;I-LOC&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;B-MISC&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;I-MISC&#39;</span>
+                        <span class="p">],</span>
+             <span class="n">tag_outside</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span>
+             <span class="n">dataset_training</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">dataset_validation</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">max_len</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+             <span class="n">network</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">=</span> <span class="n">NERDANetwork</span><span class="p">,</span>
+             <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+             <span class="n">hyperparameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                                      <span class="s1">&#39;warmup_steps&#39;</span> <span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+                                      <span class="s1">&#39;train_batch_size&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+                                      <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">},</span>
+             <span class="n">tokenizer_parameters</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;do_lower_case&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+             <span class="n">validation_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+             <span class="n">num_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Initialize NERDA model</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        transformer (str, optional): which pretrained &#39;huggingface&#39; </span>
+<span class="sd">            transformer to use. </span>
+<span class="sd">        device (str, optional): the desired device to use for computation. </span>
+<span class="sd">            If not provided by the user, we take a guess.</span>
+<span class="sd">        tag_scheme (List[str], optional): All available NER </span>
+<span class="sd">            tags for the given data set EXCLUDING the special outside tag, </span>
+<span class="sd">            that is handled separately.</span>
+<span class="sd">        tag_outside (str, optional): the value of the special outside tag. </span>
+<span class="sd">            Defaults to &#39;O&#39;.</span>
+<span class="sd">        dataset_training (dict, optional): the training data. Must consist </span>
+<span class="sd">            of &#39;sentences&#39;: word-tokenized sentences and &#39;tags&#39;: corresponding </span>
+<span class="sd">            NER tags. You can look at examples of, how the dataset should </span>
+<span class="sd">            look like by invoking functions get_dane_data() or get_conll_data().</span>
+<span class="sd">            Defaults to None, in which case the English CoNLL-2003 data set is used. </span>
+<span class="sd">        dataset_validation (dict, optional): the validation data. Must consist</span>
+<span class="sd">            of &#39;sentences&#39;: word-tokenized sentences and &#39;tags&#39;: corresponding </span>
+<span class="sd">            NER tags. You can look at examples of, how the dataset should </span>
+<span class="sd">            look like by invoking functions get_dane_data() or get_conll_data().</span>
+<span class="sd">            Defaults to None, in which case the English CoNLL-2003 data set </span>
+<span class="sd">            is used.</span>
+<span class="sd">        max_len (int, optional): the maximum sentence length (number of </span>
+<span class="sd">            tokens after applying the transformer tokenizer) for the transformer. </span>
+<span class="sd">            Sentences are truncated accordingly. Look at your data to get an </span>
+<span class="sd">            impression of, what could be a meaningful setting. Also be aware </span>
+<span class="sd">            that many transformers have a maximum accepted length. Defaults </span>
+<span class="sd">            to 128. </span>
+<span class="sd">        network (torch.nn.module, optional): network to be trained. Defaults</span>
+<span class="sd">            to a default generic `NERDANetwork`. Can be replaced with your own </span>
+<span class="sd">            customized network architecture. It must however take the same </span>
+<span class="sd">            arguments as `NERDANetwork`.</span>
+<span class="sd">        dropout (float, optional): dropout probability. Defaults to 0.1.</span>
+<span class="sd">        hyperparameters (dict, optional): Hyperparameters for the model. Defaults</span>
+<span class="sd">            to {&#39;epochs&#39; : 3, &#39;warmup_steps&#39; : 500, &#39;train_batch_size&#39;: 16, </span>
+<span class="sd">            &#39;learning_rate&#39;: 0.0001}.</span>
+<span class="sd">        tokenizer_parameters (dict, optional): parameters for the transformer </span>
+<span class="sd">            tokenizer. Defaults to {&#39;do_lower_case&#39; : True}.</span>
+<span class="sd">        validation_batch_size (int, optional): batch size for validation. Defaults</span>
+<span class="sd">            to 8.</span>
+<span class="sd">        num_workers (int, optional): number of workers for data loader.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># set device automatically if not provided by user.</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Device automatically set to:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Device set to:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tag_scheme</span> <span class="o">=</span> <span class="n">tag_scheme</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tag_outside</span> <span class="o">=</span> <span class="n">tag_outside</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transformer</span> <span class="o">=</span> <span class="n">transformer</span>  
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset_training</span> <span class="o">=</span> <span class="n">dataset_training</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dataset_validation</span> <span class="o">=</span> <span class="n">dataset_validation</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span> <span class="o">=</span> <span class="n">hyperparameters</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tag_outside</span> <span class="o">=</span> <span class="n">tag_outside</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tag_scheme</span> <span class="o">=</span> <span class="n">tag_scheme</span>
+    <span class="n">tag_complete</span> <span class="o">=</span> <span class="p">[</span><span class="n">tag_outside</span><span class="p">]</span> <span class="o">+</span> <span class="n">tag_scheme</span>
+    <span class="c1"># fit encoder to _all_ possible tags.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="n">max_len</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tag_encoder</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">LabelEncoder</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">tag_encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tag_complete</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transformer_model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transformer_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="o">**</span><span class="n">tokenizer_parameters</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transformer_config</span> <span class="o">=</span> <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span>  
+    <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">NERDANetwork</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transformer_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tag_complete</span><span class="p">),</span> <span class="n">dropout</span> <span class="o">=</span> <span class="n">dropout</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">validation_batch_size</span> <span class="o">=</span> <span class="n">validation_batch_size</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span> <span class="o">=</span> <span class="n">num_workers</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">train_losses</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">valid_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">quantized</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">halved</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.evaluate_performance">
+<code class="highlight language-python"><span class="n">evaluate_performance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">return_accuracy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Evaluate Performance</p>
+<p>Evaluates the performance of the model on an arbitrary
+data set.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>dataset</code></td>
+        <td><code>dict</code></td>
+        <td><p>Data set that must consist of
+'sentences' and NER'tags'. You can look at examples
+ of, how the dataset should look like by invoking functions 
+ get_dane_data() or get_conll_data().</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td><code></code></td>
+        <td><p>arbitrary keyword arguments for predict. For
+instance 'batch_size' and 'num_workers'.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+      <tr>
+        <td><code>return_accuracy</code></td>
+        <td><code>bool</code></td>
+        <td><p>Return accuracy
+as well? Defaults to False.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>DataFrame</code></td>
+      <td><p>DataFrame with performance numbers, F1-scores,
+Precision and Recall. Returns dictionary with
+this AND accuracy, if return_accuracy is set to
+True.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_performance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
+                         <span class="n">return_accuracy</span><span class="p">:</span> <span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Evaluate Performance</span>
+
+<span class="sd">    Evaluates the performance of the model on an arbitrary</span>
+<span class="sd">    data set.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dataset (dict): Data set that must consist of</span>
+<span class="sd">            &#39;sentences&#39; and NER&#39;tags&#39;. You can look at examples</span>
+<span class="sd">             of, how the dataset should look like by invoking functions </span>
+<span class="sd">             get_dane_data() or get_conll_data().</span>
+<span class="sd">        kwargs: arbitrary keyword arguments for predict. For</span>
+<span class="sd">            instance &#39;batch_size&#39; and &#39;num_workers&#39;.</span>
+<span class="sd">        return_accuracy (bool): Return accuracy</span>
+<span class="sd">            as well? Defaults to False.</span>
+
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame with performance numbers, F1-scores,</span>
+<span class="sd">        Precision and Recall. Returns dictionary with</span>
+<span class="sd">        this AND accuracy, if return_accuracy is set to</span>
+<span class="sd">        True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">tags_predicted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sentences&#39;</span><span class="p">),</span> 
+                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># compute F1 scores by entity type</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">compute_f1_scores</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">tags_predicted</span><span class="p">,</span> 
+                           <span class="n">y_true</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">),</span>
+                           <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_scheme</span><span class="p">,</span>
+                           <span class="n">average</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># create DataFrame with performance scores (=F1)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag_scheme</span><span class="p">,</span> <span class="n">f1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">f1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f1</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Level&#39;</span><span class="p">,</span> <span class="s1">&#39;F1-Score&#39;</span><span class="p">,</span> <span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="s1">&#39;Recall&#39;</span><span class="p">])</span>    
+
+    <span class="c1"># compute MICRO-averaged F1-scores and add to table.</span>
+    <span class="n">f1_micro</span> <span class="o">=</span> <span class="n">compute_f1_scores</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">tags_predicted</span><span class="p">,</span> 
+                                 <span class="n">y_true</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">),</span>
+                                 <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_scheme</span><span class="p">,</span>
+                                 <span class="n">average</span> <span class="o">=</span> <span class="s1">&#39;micro&#39;</span><span class="p">)</span>
+    <span class="n">f1_micro</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Level&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;AVG_MICRO&#39;</span><span class="p">],</span> 
+                             <span class="s1">&#39;F1-Score&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">f1_micro</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                             <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+                             <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f1_micro</span><span class="p">)</span>
+
+    <span class="c1"># compute MACRO-averaged F1-scores and add to table.</span>
+    <span class="n">f1_macro</span> <span class="o">=</span> <span class="n">compute_f1_scores</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">tags_predicted</span><span class="p">,</span> 
+                                 <span class="n">y_true</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">),</span>
+                                 <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_scheme</span><span class="p">,</span>
+                                 <span class="n">average</span> <span class="o">=</span> <span class="s1">&#39;macro&#39;</span><span class="p">)</span>
+    <span class="n">f1_macro</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Level&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;AVG_MICRO&#39;</span><span class="p">],</span> 
+                             <span class="s1">&#39;F1-Score&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">f1_macro</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                             <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+                             <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]})</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f1_macro</span><span class="p">)</span>
+
+    <span class="c1"># compute and return accuracy if desired</span>
+    <span class="k">if</span> <span class="n">return_accuracy</span><span class="p">:</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">tags_predicted</span><span class="p">),</span> 
+                                  <span class="n">y_true</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tags&#39;</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;f1&#39;</span><span class="p">:</span><span class="n">df</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.half">
+<code class="highlight language-python"><span class="n">half</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Convert weights from Float32 to Float16 to increase performance</p>
+<p>Quantization and half precision inference are mutually exclusive.</p>
+<p>Read more: https://pytorch.org/docs/master/generated/torch.nn.Module.html?highlight=half#torch.nn.Module.half</p>
+<p>Returns: 
+    Nothing. Model is "halved" as a side-effect.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">half</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert weights from Float32 to Float16 to increase performance</span>
+
+<span class="sd">    Quantization and half precision inference are mutually exclusive.</span>
+
+<span class="sd">    Read more: https://pytorch.org/docs/master/generated/torch.nn.Module.html?highlight=half#torch.nn.Module.half</span>
+
+<span class="sd">    Returns: </span>
+<span class="sd">        Nothing. Model is &quot;halved&quot; as a side-effect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">halved</span><span class="p">),</span> <span class="s2">&quot;Half precision already applied&quot;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quantized</span><span class="p">),</span> <span class="s2">&quot;Can&#39;t run both quantization and half precision&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">half</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">halved</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.load_network_from_file">
+<code class="highlight language-python"><span class="n">load_network_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;model.bin&#39;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Load Pretrained NERDA Network from file</p>
+<p>Loads weights for a pretrained NERDA Network from file.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>model_path</code></td>
+        <td><code>str</code></td>
+        <td><p>Path for model file. 
+Defaults to "model.bin".</p></td>
+        <td><code>&#39;model.bin&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>str: message telling if weights for network were
+loaded succesfully.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_network_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;model.bin&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Load Pretrained NERDA Network from file</span>
+
+<span class="sd">    Loads weights for a pretrained NERDA Network from file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_path (str, optional): Path for model file. </span>
+<span class="sd">            Defaults to &quot;model.bin&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: message telling if weights for network were</span>
+<span class="sd">        loaded succesfully.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: change assert to Raise.</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">),</span> <span class="s2">&quot;File does not exist. You can download network with download_network()&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">map_location</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Weights for network loaded from </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.predict">
+<code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">,</span> <span class="n">return_confidence</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Predict Named Entities in Word-Tokenized Sentences</p>
+<p>Predicts word-tokenized sentences with trained model.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>sentences</code></td>
+        <td><code>List[List[str]]</code></td>
+        <td><p>word-tokenized sentences.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td><code></code></td>
+        <td><p>arbitrary keyword arguments. For instance
+'batch_size' and 'num_workers'.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+      <tr>
+        <td><code>return_confidence</code></td>
+        <td><code>bool</code></td>
+        <td><p>if True, return
+confidence scores for all predicted tokens. Defaults
+to False.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>List[List[str]]</code></td>
+      <td><p>List[List[str]]: Predicted tags for sentences - one
+predicted tag/entity per word token.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+            <span class="n">return_confidence</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;Predict Named Entities in Word-Tokenized Sentences</span>
+
+<span class="sd">    Predicts word-tokenized sentences with trained model.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sentences (List[List[str]]): word-tokenized sentences.</span>
+<span class="sd">        kwargs: arbitrary keyword arguments. For instance</span>
+<span class="sd">            &#39;batch_size&#39; and &#39;num_workers&#39;.</span>
+<span class="sd">        return_confidence (bool, optional): if True, return</span>
+<span class="sd">            confidence scores for all predicted tokens. Defaults</span>
+<span class="sd">            to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[List[str]]: Predicted tags for sentences - one</span>
+<span class="sd">        predicted tag/entity per word token.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">predict</span><span class="p">(</span><span class="n">network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">,</span> 
+                   <span class="n">sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">,</span>
+                   <span class="n">transformer_tokenizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_tokenizer</span><span class="p">,</span>
+                   <span class="n">transformer_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_config</span><span class="p">,</span>
+                   <span class="n">max_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span>
+                   <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                   <span class="n">tag_encoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_encoder</span><span class="p">,</span>
+                   <span class="n">tag_outside</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_outside</span><span class="p">,</span>
+                   <span class="n">return_confidence</span> <span class="o">=</span> <span class="n">return_confidence</span><span class="p">,</span>
+                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.predict_text">
+<code class="highlight language-python"><span class="n">predict_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">return_confidence</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Predict Named Entities in a Text</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>text</code></td>
+        <td><code>str</code></td>
+        <td><p>text to predict entities in.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td><code></code></td>
+        <td><p>arbitrary keyword arguments. For instance
+'batch_size' and 'num_workers'.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+      <tr>
+        <td><code>return_confidence</code></td>
+        <td><code>bool</code></td>
+        <td><p>if True, return
+confidence scores for all predicted tokens. Defaults
+to False.</p></td>
+        <td><code>False</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>list</code></td>
+      <td><p>tuple: word-tokenized sentences and predicted 
+tags/entities.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">predict_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                 <span class="n">return_confidence</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Predict Named Entities in a Text</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (str): text to predict entities in.</span>
+<span class="sd">        kwargs: arbitrary keyword arguments. For instance</span>
+<span class="sd">            &#39;batch_size&#39; and &#39;num_workers&#39;.</span>
+<span class="sd">        return_confidence (bool, optional): if True, return</span>
+<span class="sd">            confidence scores for all predicted tokens. Defaults</span>
+<span class="sd">            to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: word-tokenized sentences and predicted </span>
+<span class="sd">        tags/entities.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">predict_text</span><span class="p">(</span><span class="n">network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">,</span> 
+                        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">,</span>
+                        <span class="n">transformer_tokenizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_tokenizer</span><span class="p">,</span>
+                        <span class="n">transformer_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_config</span><span class="p">,</span>
+                        <span class="n">max_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span>
+                        <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                        <span class="n">tag_encoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_encoder</span><span class="p">,</span>
+                        <span class="n">tag_outside</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_outside</span><span class="p">,</span>
+                        <span class="n">return_confidence</span><span class="o">=</span><span class="n">return_confidence</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.quantize">
+<code class="highlight language-python"><span class="n">quantize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Apply dynamic quantization to increase performance.</p>
+<p>Quantization and half precision inference are mutually exclusive.</p>
+<p>Read more: https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code></code></td>
+      <td><p>Nothing. Applies dynamic quantization to Network as a side-effect.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">quantize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply dynamic quantization to increase performance.</span>
+
+<span class="sd">    Quantization and half precision inference are mutually exclusive.</span>
+
+<span class="sd">    Read more: https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Nothing. Applies dynamic quantization to Network as a side-effect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quantized</span><span class="p">),</span> <span class="s2">&quot;Dynamic quantization already applied&quot;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">halved</span><span class="p">),</span> <span class="s2">&quot;Can&#39;t run both quantization and half precision&quot;</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">quantize_dynamic</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">,</span> <span class="p">{</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">qint8</span>
+    <span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">quantized</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.save_network">
+<code class="highlight language-python"><span class="n">save_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="o">=</span><span class="s1">&#39;model.bin&#39;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Save Weights of NERDA Network</p>
+<p>Saves weights for a fine-tuned NERDA Network to file.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>model_path</code></td>
+        <td><code>str</code></td>
+        <td><p>Path for model file. 
+Defaults to "model.bin".</p></td>
+        <td><code>&#39;model.bin&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>None</code></td>
+      <td><p>Nothing. Saves model to file as a side-effect.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">save_network</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;model.bin&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Save Weights of NERDA Network</span>
+
+<span class="sd">    Saves weights for a fine-tuned NERDA Network to file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_path (str, optional): Path for model file. </span>
+<span class="sd">            Defaults to &quot;model.bin&quot;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Nothing. Saves model to file as a side-effect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">model_path</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Network written to file </span><span class="si">{</span><span class="n">model_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="NERDA.models.NERDA.train">
+<code class="highlight language-python"><span class="n">train</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Train Network</p>
+<p>Trains the network from the NERDA model specification.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>str: a message saying if the model was trained succesfully.
+The network in the 'network' attribute is trained as a 
+side-effect. Training losses and validation loss are saved 
+in 'training_losses' and 'valid_loss' 
+attributes respectively as side-effects.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/models.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Train Network</span>
+
+<span class="sd">    Trains the network from the NERDA model specification.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: a message saying if the model was trained succesfully.</span>
+<span class="sd">        The network in the &#39;network&#39; attribute is trained as a </span>
+<span class="sd">        side-effect. Training losses and validation loss are saved </span>
+<span class="sd">        in &#39;training_losses&#39; and &#39;valid_loss&#39; </span>
+<span class="sd">        attributes respectively as side-effects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">network</span><span class="p">,</span> <span class="n">train_losses</span><span class="p">,</span> <span class="n">valid_loss</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span><span class="n">network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">,</span>
+                                                    <span class="n">tag_encoder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_encoder</span><span class="p">,</span>
+                                                    <span class="n">tag_outside</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_outside</span><span class="p">,</span>
+                                                    <span class="n">transformer_tokenizer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_tokenizer</span><span class="p">,</span>
+                                                    <span class="n">transformer_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_config</span><span class="p">,</span>
+                                                    <span class="n">dataset_training</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_training</span><span class="p">,</span>
+                                                    <span class="n">dataset_validation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_validation</span><span class="p">,</span>
+                                                    <span class="n">validation_batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_batch_size</span><span class="p">,</span>
+                                                    <span class="n">max_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span><span class="p">,</span>
+                                                    <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                                                    <span class="n">num_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_workers</span><span class="p">,</span>
+                                                    <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">hyperparameters</span><span class="p">)</span>
+
+    <span class="c1"># attach as attributes to class</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;network&quot;</span><span class="p">,</span> <span class="n">network</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;train_losses&quot;</span><span class="p">,</span> <span class="n">train_losses</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;valid_loss&quot;</span><span class="p">,</span> <span class="n">valid_loss</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s2">&quot;Model trained successfully&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../workflow/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Workflow Examples" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Workflow Examples
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../precooked_models/" class="md-footer__link md-footer__link--next" aria-label="Next: Precooked NERDA Models" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Precooked NERDA Models
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.756773cc.min.js"></script>
+      
+    
+  </body>
+</html>

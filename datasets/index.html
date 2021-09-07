@@ -1,0 +1,1162 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
+    
+    
+      
+        <title>Datasets - NERDA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.802231af.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../css/pandas-dataframe.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#datasets" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="NERDA" class="md-header__button md-logo" aria-label="NERDA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NERDA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Datasets
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="NERDA" class="md-nav__button md-logo" aria-label="NERDA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    NERDA
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflow/" class="md-nav__link">
+        Workflow Examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Code Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Code Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nerda_models/" class="md-nav__link">
+        NERDA Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../precooked_models/" class="md-nav__link">
+        Precooked NERDA Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Datasets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Datasets
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets" class="md-nav__link">
+    NERDA.datasets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.download_conll_data" class="md-nav__link">
+    download_conll_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.download_dane_data" class="md-nav__link">
+    download_dane_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.download_unzip" class="md-nav__link">
+    download_unzip()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.get_conll_data" class="md-nav__link">
+    get_conll_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.get_dane_data" class="md-nav__link">
+    get_dane_data()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../predictions/" class="md-nav__link">
+        Predictions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networks/" class="md-nav__link">
+        Networks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets" class="md-nav__link">
+    NERDA.datasets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.download_conll_data" class="md-nav__link">
+    download_conll_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.download_dane_data" class="md-nav__link">
+    download_dane_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.download_unzip" class="md-nav__link">
+    download_unzip()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.get_conll_data" class="md-nav__link">
+    get_conll_data()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#NERDA.datasets.get_dane_data" class="md-nav__link">
+    get_dane_data()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="datasets">Datasets</h1>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="NERDA.datasets"></a>
+    <div class="doc doc-contents first">
+
+      <p>This section covers functionality for (down)loading Named Entity 
+Recognition data sets.</p>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="NERDA.datasets.download_conll_data">
+<code class="highlight language-python"><span class="n">download_conll_data</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Download CoNLL-2003 English data set.</p>
+<p>Downloads the <a href="https://www.clips.uantwerpen.be/conll2003/ner/">CoNLL-2003</a> 
+English data set annotated for Named Entity Recognition.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>dir</code></td>
+        <td><code>str</code></td>
+        <td><p>Directory where CoNLL-2003 datasets will be saved. If no directory is provided, data will be saved to a hidden folder '.dane' in your home directory.  </p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>str: a message telling, if the archive was in fact 
+succesfully extracted. Obviously the CoNLL datasets are
+extracted to the desired directory as a side-effect.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">download_conll_data</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">download_conll_data</span><span class="p">(</span><span class="nb">dir</span> <span class="o">=</span> <span class="s1">&#39;conll&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>NERDA/datasets.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">download_conll_data</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Download CoNLL-2003 English data set.</span>
+
+<span class="sd">    Downloads the [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) </span>
+<span class="sd">    English data set annotated for Named Entity Recognition.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dir (str, optional): Directory where CoNLL-2003 datasets will be saved. If no directory is provided, data will be saved to a hidden folder &#39;.dane&#39; in your home directory.  </span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: a message telling, if the archive was in fact </span>
+<span class="sd">        succesfully extracted. Obviously the CoNLL datasets are</span>
+<span class="sd">        extracted to the desired directory as a side-effect.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; download_conll_data()</span>
+<span class="sd">        &gt;&gt;&gt; download_conll_data(dir = &#39;conll&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># set to default directory if nothing else has been provided by user.</span>
+    <span class="k">if</span> <span class="nb">dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()),</span> <span class="s1">&#39;.conll&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">download_unzip</span><span class="p">(</span><span class="n">url_zip</span> <span class="o">=</span> <span class="s1">&#39;https://data.deepai.org/conll2003.zip&#39;</span><span class="p">,</span>
+                          <span class="n">dir_extract</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="NERDA.datasets.download_dane_data">
+<code class="highlight language-python"><span class="n">download_dane_data</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Download DaNE data set.</p>
+<p>Downloads the 'DaNE' data set annotated for Named Entity
+Recognition developed and hosted by 
+<a href="https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane">Alexandra Institute</a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>dir</code></td>
+        <td><code>str</code></td>
+        <td><p>Directory where DaNE datasets will be saved. If no directory is provided, data will be saved to a hidden folder '.dane' in your home directory.  </p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>str: a message telling, if the archive was in fact 
+succesfully extracted. Obviously the DaNE datasets are
+extracted to the desired directory as a side-effect.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">download_dane_data</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">download_dane_data</span><span class="p">(</span><span class="nb">dir</span> <span class="o">=</span> <span class="s1">&#39;DaNE&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>NERDA/datasets.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">download_dane_data</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Download DaNE data set.</span>
+
+<span class="sd">    Downloads the &#39;DaNE&#39; data set annotated for Named Entity</span>
+<span class="sd">    Recognition developed and hosted by </span>
+<span class="sd">    [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dir (str, optional): Directory where DaNE datasets will be saved. If no directory is provided, data will be saved to a hidden folder &#39;.dane&#39; in your home directory.  </span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: a message telling, if the archive was in fact </span>
+<span class="sd">        succesfully extracted. Obviously the DaNE datasets are</span>
+<span class="sd">        extracted to the desired directory as a side-effect.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; download_dane_data()</span>
+<span class="sd">        &gt;&gt;&gt; download_dane_data(dir = &#39;DaNE&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># set to default directory if nothing else has been provided by user.</span>
+    <span class="k">if</span> <span class="nb">dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()),</span> <span class="s1">&#39;.dane&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">download_unzip</span><span class="p">(</span><span class="n">url_zip</span> <span class="o">=</span> <span class="s1">&#39;http://danlp-downloads.alexandra.dk/datasets/ddt.zip&#39;</span><span class="p">,</span>
+                          <span class="n">dir_extract</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="NERDA.datasets.download_unzip">
+<code class="highlight language-python"><span class="n">download_unzip</span><span class="p">(</span><span class="n">url_zip</span><span class="p">,</span> <span class="n">dir_extract</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Download and unzip a ZIP archive to folder.</p>
+<p>Loads a ZIP file from URL and extracts all of the files to a 
+given folder. Does not save the ZIP file itself.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>url_zip</code></td>
+        <td><code>str</code></td>
+        <td><p>URL to ZIP file.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>dir_extract</code></td>
+        <td><code>str</code></td>
+        <td><p>Directory where files are extracted.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>str</code></td>
+      <td><p>str: a message telling, if the archive was succesfully
+extracted. Obviously the files in the ZIP archive are
+extracted to the desired directory as a side-effect.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>NERDA/datasets.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">download_unzip</span><span class="p">(</span><span class="n">url_zip</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                   <span class="n">dir_extract</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Download and unzip a ZIP archive to folder.</span>
+
+<span class="sd">    Loads a ZIP file from URL and extracts all of the files to a </span>
+<span class="sd">    given folder. Does not save the ZIP file itself.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url_zip (str): URL to ZIP file.</span>
+<span class="sd">        dir_extract (str): Directory where files are extracted.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: a message telling, if the archive was succesfully</span>
+<span class="sd">        extracted. Obviously the files in the ZIP archive are</span>
+<span class="sd">        extracted to the desired directory as a side-effect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># suppress ssl certification</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">()</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">check_hostname</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">verify_mode</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">CERT_NONE</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Reading </span><span class="si">{</span><span class="n">url_zip</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">url_zip</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span> <span class="k">as</span> <span class="n">zipresp</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">zipresp</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span> <span class="k">as</span> <span class="n">zfile</span><span class="p">:</span>
+            <span class="n">zfile</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">dir_extract</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;archive extracted to </span><span class="si">{</span><span class="n">dir_extract</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="NERDA.datasets.get_conll_data">
+<code class="highlight language-python"><span class="n">get_conll_data</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Load CoNLL-2003 (English) data split.</p>
+<p>Loads a single data split from the 
+<a href="https://www.clips.uantwerpen.be/conll2003/ner/">CoNLL-2003</a> 
+(English) data set.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>split</code></td>
+        <td><code>str</code></td>
+        <td><p>Choose which split to load. Choose 
+from 'train', 'valid' and 'test'. Defaults to 'train'.</p></td>
+        <td><code>&#39;train&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>limit</code></td>
+        <td><code>int</code></td>
+        <td><p>Limit the number of observations to be 
+returned from a given split. Defaults to None, which implies 
+that the entire data split is returned.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>dir</code></td>
+        <td><code>str</code></td>
+        <td><p>Directory where data is cached. If set to 
+None, the function will try to look for files in '.conll' folder in home directory.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>dict: Dictionary with word-tokenized 'sentences' and named 
+entity 'tags' in IOB format.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    <p>Get test split</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">get_conll_data</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</code></pre></div>
+    <p>Get first 5 observations from training split</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">get_conll_data</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>NERDA/datasets.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_conll_data</span><span class="p">(</span><span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+                   <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                   <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Load CoNLL-2003 (English) data split.</span>
+
+<span class="sd">    Loads a single data split from the </span>
+<span class="sd">    [CoNLL-2003](https://www.clips.uantwerpen.be/conll2003/ner/) </span>
+<span class="sd">    (English) data set.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        split (str, optional): Choose which split to load. Choose </span>
+<span class="sd">            from &#39;train&#39;, &#39;valid&#39; and &#39;test&#39;. Defaults to &#39;train&#39;.</span>
+<span class="sd">        limit (int, optional): Limit the number of observations to be </span>
+<span class="sd">            returned from a given split. Defaults to None, which implies </span>
+<span class="sd">            that the entire data split is returned.</span>
+<span class="sd">        dir (str, optional): Directory where data is cached. If set to </span>
+<span class="sd">            None, the function will try to look for files in &#39;.conll&#39; folder in home directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary with word-tokenized &#39;sentences&#39; and named </span>
+<span class="sd">        entity &#39;tags&#39; in IOB format.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        Get test split</span>
+<span class="sd">        &gt;&gt;&gt; get_conll_data(&#39;test&#39;)</span>
+
+<span class="sd">        Get first 5 observations from training split</span>
+<span class="sd">        &gt;&gt;&gt; get_conll_data(&#39;train&#39;, limit = 5)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;valid&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Choose between the following splits: </span><span class="si">{</span><span class="n">splits</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="c1"># set to default directory if nothing else has been provided by user.</span>
+    <span class="k">if</span> <span class="nb">dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()),</span> <span class="s1">&#39;.conll&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;Directory </span><span class="si">{</span><span class="nb">dir</span><span class="si">}</span><span class="s1"> does not exist. Try downloading CoNLL-2003 data with download_conll_data()&#39;</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s1">.txt&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;File </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s1"> does not exist. Try downloading CoNLL-2003 data with download_conll_data()&#39;</span>
+
+    <span class="c1"># read data from file.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="p">])</span>
+
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">sentence</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">entities</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="c1"># extract first element of list.</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># TO DO: move to data reader.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-DOCSTART-&#39;</span><span class="p">:</span>
+            <span class="n">sentence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># clean up sentence/tags.</span>
+            <span class="c1"># remove white spaces.</span>
+            <span class="n">selector</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="o">!=</span> <span class="s1">&#39; &#39;</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">]</span>
+            <span class="n">sentence</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">compress</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">selector</span><span class="p">))</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">compress</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="n">selector</span><span class="p">))</span>
+            <span class="c1"># append if sentence length is still greater than zero..</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+                <span class="n">entities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+            <span class="n">sentence</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+    <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+        <span class="n">entities</span> <span class="o">=</span> <span class="n">entities</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sentences&#39;</span><span class="p">:</span> <span class="n">sentences</span><span class="p">,</span> <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">entities</span><span class="p">}</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="NERDA.datasets.get_dane_data">
+<code class="highlight language-python"><span class="n">get_dane_data</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Load DaNE data split.</p>
+<p>Loads a single data split from the DaNE data set kindly hosted
+by <a href="https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane">Alexandra Institute</a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>split</code></td>
+        <td><code>str</code></td>
+        <td><p>Choose which split to load. Choose 
+from 'train', 'dev' and 'test'. Defaults to 'train'.</p></td>
+        <td><code>&#39;train&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>limit</code></td>
+        <td><code>int</code></td>
+        <td><p>Limit the number of observations to be 
+returned from a given split. Defaults to None, which implies 
+that the entire data split is returned.</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>dir</code></td>
+        <td><code>str</code></td>
+        <td><p>Directory where data is cached. If set to 
+None, the function will try to look for files in '.dane' folder in home directory.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>dict: Dictionary with word-tokenized 'sentences' and named 
+entity 'tags' in IOB format.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Examples:</strong></p>
+    <p>Get test split</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">get_dane_data</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</code></pre></div>
+    <p>Get first 5 observations from training split</p>
+    <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">get_dane_data</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+
+        <details class="quote">
+          <summary>Source code in <code>NERDA/datasets.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_dane_data</span><span class="p">(</span><span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> 
+                  <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                  <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Load DaNE data split.</span>
+
+<span class="sd">    Loads a single data split from the DaNE data set kindly hosted</span>
+<span class="sd">    by [Alexandra Institute](https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        split (str, optional): Choose which split to load. Choose </span>
+<span class="sd">            from &#39;train&#39;, &#39;dev&#39; and &#39;test&#39;. Defaults to &#39;train&#39;.</span>
+<span class="sd">        limit (int, optional): Limit the number of observations to be </span>
+<span class="sd">            returned from a given split. Defaults to None, which implies </span>
+<span class="sd">            that the entire data split is returned.</span>
+<span class="sd">        dir (str, optional): Directory where data is cached. If set to </span>
+<span class="sd">            None, the function will try to look for files in &#39;.dane&#39; folder in home directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary with word-tokenized &#39;sentences&#39; and named </span>
+<span class="sd">        entity &#39;tags&#39; in IOB format.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        Get test split</span>
+<span class="sd">        &gt;&gt;&gt; get_dane_data(&#39;test&#39;)</span>
+
+<span class="sd">        Get first 5 observations from training split</span>
+<span class="sd">        &gt;&gt;&gt; get_dane_data(&#39;train&#39;, limit = 5)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Choose between the following splits: </span><span class="si">{</span><span class="n">splits</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="c1"># set to default directory if nothing else has been provided by user.</span>
+    <span class="k">if</span> <span class="nb">dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()),</span> <span class="s1">&#39;.dane&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;Directory </span><span class="si">{</span><span class="nb">dir</span><span class="si">}</span><span class="s1"> does not exist. Try downloading DaNE data with download_dane_data()&#39;</span>
+
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;ddt.</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s1">.conllu&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;File </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s1"> does not exist. Try downloading DaNE data with download_dane_data()&#39;</span>
+
+    <span class="n">split</span> <span class="o">=</span> <span class="n">pyconll</span><span class="o">.</span><span class="n">load_from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">entities</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">split</span><span class="p">:</span>
+        <span class="n">sentences</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">token</span><span class="o">.</span><span class="n">form</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sent</span><span class="o">.</span><span class="n">_tokens</span><span class="p">])</span>
+        <span class="n">entities</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">token</span><span class="o">.</span><span class="n">misc</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sent</span><span class="o">.</span><span class="n">_tokens</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sentences</span> <span class="o">=</span> <span class="n">sentences</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+        <span class="n">entities</span> <span class="o">=</span> <span class="n">entities</span><span class="p">[:</span><span class="n">limit</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sentences&#39;</span><span class="p">:</span> <span class="n">sentences</span><span class="p">,</span> <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">entities</span><span class="p">}</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../precooked_models/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Precooked NERDA Models" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Precooked NERDA Models
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../predictions/" class="md-footer__link md-footer__link--next" aria-label="Next: Predictions" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Predictions
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.756773cc.min.js"></script>
+      
+    
+  </body>
+</html>

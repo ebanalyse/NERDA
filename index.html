@@ -1,0 +1,882 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
+    
+    
+      
+        <title>NERDA</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.802231af.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="css/pandas-dataframe.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nerda" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="NERDA" class="md-header__button md-logo" aria-label="NERDA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NERDA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="NERDA" class="md-nav__button md-logo" aria-label="NERDA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    NERDA
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        Home
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-guide" class="md-nav__link">
+    Installation guide
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#named-entity-recogntion-tasks" class="md-nav__link">
+    Named-Entity Recogntion tasks
+  </a>
+  
+    <nav class="md-nav" aria-label="Named-Entity Recogntion tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-task" class="md-nav__link">
+    Example Task:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#train-your-own-nerda-model" class="md-nav__link">
+    Train Your Own NERDA Model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-a-precooked-nerda-model" class="md-nav__link">
+    Use a Precooked NERDA model
+  </a>
+  
+    <nav class="md-nav" aria-label="Use a Precooked NERDA model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-of-precooked-models" class="md-nav__link">
+    List of Precooked Models
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-performance" class="md-nav__link">
+    Model Performance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nerda_1" class="md-nav__link">
+    'NERDA'?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shout-outs" class="md-nav__link">
+    Shout-outs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    Contact
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="workflow/" class="md-nav__link">
+        Workflow Examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Code Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Code Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nerda_models/" class="md-nav__link">
+        NERDA Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="precooked_models/" class="md-nav__link">
+        Precooked NERDA Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="datasets/" class="md-nav__link">
+        Datasets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="predictions/" class="md-nav__link">
+        Predictions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="networks/" class="md-nav__link">
+        Networks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="performance/" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-guide" class="md-nav__link">
+    Installation guide
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#named-entity-recogntion-tasks" class="md-nav__link">
+    Named-Entity Recogntion tasks
+  </a>
+  
+    <nav class="md-nav" aria-label="Named-Entity Recogntion tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-task" class="md-nav__link">
+    Example Task:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#train-your-own-nerda-model" class="md-nav__link">
+    Train Your Own NERDA Model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-a-precooked-nerda-model" class="md-nav__link">
+    Use a Precooked NERDA model
+  </a>
+  
+    <nav class="md-nav" aria-label="Use a Precooked NERDA model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-of-precooked-models" class="md-nav__link">
+    List of Precooked Models
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-performance" class="md-nav__link">
+    Model Performance
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nerda_1" class="md-nav__link">
+    'NERDA'?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shout-outs" class="md-nav__link">
+    Shout-outs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    Contact
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="nerda">NERDA <img src="https://raw.githubusercontent.com/ebanalyse/NERDA/main/logo.png" align="right" height=250/></h1>
+<p><img alt="Build status" src="https://github.com/ebanalyse/NERDA/workflows/build/badge.svg" />
+<a href="https://codecov.io/gh/ebanalyse/NERDA"><img alt="codecov" src="https://codecov.io/gh/ebanalyse/NERDA/branch/main/graph/badge.svg?token=OB6LGFQZYX" /></a>
+<img alt="PyPI" src="https://img.shields.io/pypi/v/NERDA.svg" />
+<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/NERDA?color=green" />
+<img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" /></p>
+<p>Not only is <code>NERDA</code> a mesmerizing muppet-like character. <code>NERDA</code> is also
+a python package, that offers a slick easy-to-use interface for fine-tuning 
+pretrained transformers for Named Entity Recognition
+ (=NER) tasks. </p>
+<p>You can also utilize <code>NERDA</code> to access a selection of <em>precooked</em> <code>NERDA</code> models, 
+ that you can use right off the shelf for NER tasks.</p>
+<p><code>NERDA</code> is built on <code>huggingface</code> <code>transformers</code> and the popular <code>pytorch</code>
+ framework.</p>
+<h2 id="installation-guide">Installation guide</h2>
+<p><code>NERDA</code> can be installed from <a href="https://pypi.org/project/NERDA/">PyPI</a> with </p>
+<pre><code>pip install NERDA
+</code></pre>
+<p>If you want the development version then install directly from <a href="https://github.com/ebanalyse/NERDA">GitHub</a>.</p>
+<h2 id="named-entity-recogntion-tasks">Named-Entity Recogntion tasks</h2>
+<p>Named-entity recognition (NER) (also known as (named) entity identification, 
+entity chunking, and entity extraction) is a subtask of information extraction
+that seeks to locate and classify named entities mentioned in unstructured 
+text into pre-defined categories such as person names, organizations, locations, medical codes, time expressions, quantities, monetary values, percentages, etc.<sup><a href="https://en.wikipedia.org/wiki/Named-entity_recognition">1</a></sup></p>
+<h3 id="example-task">Example Task:</h3>
+<p><strong>Task</strong> </p>
+<p>Identify person names and organizations in text:</p>
+<p><em>Jim bought 300 shares of Acme Corp.</em></p>
+<p><strong>Solution</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Named Entity</strong></th>
+<th><strong>Type</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>'Jim'</td>
+<td>Person</td>
+</tr>
+<tr>
+<td>'Acme Corp.'</td>
+<td>Organization</td>
+</tr>
+</tbody>
+</table>
+<p>Read more about NER on <a href="https://en.wikipedia.org/wiki/Named-entity_recognition">Wikipedia</a>.</p>
+<h2 id="train-your-own-nerda-model">Train Your Own <code>NERDA</code> Model</h2>
+<p>Say, we want to fine-tune a pretrained <a href="https://huggingface.co/bert-base-multilingual-uncased">Multilingual BERT</a> transformer for NER in English.</p>
+<p>Load package.</p>
+<pre><code class="language-python">from NERDA.models import NERDA
+</code></pre>
+<p>Instantiate a <code>NERDA</code> model (<em>with default settings</em>) for the 
+<a href="https://www.clips.uantwerpen.be/conll2003/ner/"><code>CoNLL-2003</code></a> 
+English NER data set. </p>
+<pre><code class="language-python">from NERDA.datasets import get_conll_data
+model = NERDA(dataset_training = get_conll_data('train'),
+              dataset_validation = get_conll_data('valid'),
+              transformer = 'bert-base-multilingual-uncased')
+</code></pre>
+<p>By default the network architecture is analogous to that of the models in <a href="http://www.lrec-conf.org/proceedings/lrec2020/pdf/2020.lrec-1.565.pdf">Hvingelby et al. 2020</a>. </p>
+<p>The model can then be trained/fine-tuned by invoking the <code>train</code> method, e.g.</p>
+<pre><code class="language-python">model.train()
+</code></pre>
+<p><strong>Note</strong>: this will take some time depending on the dimensions of your machine 
+(if you want to skip training, you can go ahead and use one of the models, 
+that we have already precooked for you in stead).</p>
+<p>After the model has been trained, the model can be used for predicting 
+named entities in new texts.</p>
+<pre><code class="language-python"># text to identify named entities in.
+text = 'Old MacDonald had a farm'
+model.predict_text(text)
+([['Old', 'MacDonald', 'had', 'a', 'farm']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
+</code></pre>
+<p>This means, that the model identified 'Old MacDonald' as a <em>PER</em>son.</p>
+<p>Please note, that the <code>NERDA</code> model configuration above was instantiated 
+with all default settings. You can however customize your <code>NERDA</code> model
+in a lot of ways:</p>
+<ul>
+<li>Use your own data set (finetune a transformer for any given language)</li>
+<li>Choose whatever transformer you like</li>
+<li>Set all of the hyperparameters for the model</li>
+<li>You can even apply your own Network Architecture </li>
+</ul>
+<p>Read more about advanced usage of <code>NERDA</code> in the <a href="https://ebanalyse.github.io/NERDA/workflow">detailed documentation</a>.</p>
+<h2 id="use-a-precooked-nerda-model">Use a Precooked <code>NERDA</code> model</h2>
+<p>We have precooked a number of <code>NERDA</code> models for Danish and English, that you can download 
+and use right off the shelf. </p>
+<p>Here is an example.</p>
+<p>Instantiate a multilingual BERT model, that has been finetuned for NER in Danish,
+<code>DA_BERT_ML</code>.</p>
+<pre><code class="language-python">from NERDA.precooked import DA_BERT_ML()
+model = DA_BERT_ML()
+</code></pre>
+<p>Down(load) network from web:</p>
+<pre><code class="language-python">model.download_network()
+model.load_network()
+</code></pre>
+<p>You can now predict named entities in new (Danish) texts</p>
+<pre><code class="language-python"># (Danish) text to identify named entities in:
+# 'Jens Hansen har en bondegård' = 'Old MacDonald had a farm'
+text = 'Jens Hansen har en bondegård'
+model.predict_text(text)
+([['Jens', 'Hansen', 'har', 'en', 'bondegård']], [['B-PER', 'I-PER', 'O', 'O', 'O']])
+</code></pre>
+<h3 id="list-of-precooked-models">List of Precooked Models</h3>
+<p>The table below shows the precooked <code>NERDA</code> models publicly available for download.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Model</strong></th>
+<th><strong>Language</strong></th>
+<th><strong>Transformer</strong></th>
+<th><strong>Dataset</strong></th>
+<th><strong>F1-score</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DA_BERT_ML</code></td>
+<td>Danish</td>
+<td><a href="https://huggingface.co/bert-base-multilingual-uncased">Multilingual BERT</a></td>
+<td><a href="https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane">DaNE</a></td>
+<td>82.8</td>
+</tr>
+<tr>
+<td><code>DA_ELECTRA_DA</code></td>
+<td>Danish</td>
+<td><a href="https://huggingface.co/Maltehb/-l-ctra-danish-electra-small-uncased">Danish ELECTRA</a></td>
+<td><a href="https://github.com/alexandrainst/danlp/blob/master/docs/docs/datasets.md#dane">DaNE</a></td>
+<td>79.8</td>
+</tr>
+<tr>
+<td><code>EN_BERT_ML</code></td>
+<td>English</td>
+<td><a href="https://huggingface.co/bert-base-multilingual-uncased">Multilingual BERT</a></td>
+<td><a href="https://www.clips.uantwerpen.be/conll2003/ner/">CoNLL-2003</a></td>
+<td>90.4</td>
+</tr>
+<tr>
+<td><code>EN_ELECTRA_EN</code></td>
+<td>English</td>
+<td><a href="https://huggingface.co/google/electra-small-discriminator">English ELECTRA</a></td>
+<td><a href="https://www.clips.uantwerpen.be/conll2003/ner/">CoNLL-2003</a></td>
+<td>89.1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>F1-score</strong> is the micro-averaged F1-score across entity tags and is 
+evaluated on the respective test sets (that have not been used for training nor
+validation of the models).</p>
+<p>Note, that we have not spent a lot of time on actually fine-tuning the models,
+so there could be room for improvement. If you are able to improve the models,
+we will be happy to hear from you and include your <code>NERDA</code> model.</p>
+<h3 id="model-performance">Model Performance</h3>
+<p>The table below summarizes the performance (F1-scores) of the precooked <code>NERDA</code> models.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Level</strong></th>
+<th><code>DA_BERT_ML</code></th>
+<th><code>DA_ELECTRA_DA</code></th>
+<th><code>EN_BERT_ML</code></th>
+<th><code>EN_ELECTRA_EN</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B-PER</td>
+<td>93.8</td>
+<td>92.0</td>
+<td>96.0</td>
+<td>95.1</td>
+</tr>
+<tr>
+<td>I-PER</td>
+<td>97.8</td>
+<td>97.1</td>
+<td>98.5</td>
+<td>97.9</td>
+</tr>
+<tr>
+<td>B-ORG</td>
+<td>69.5</td>
+<td>66.9</td>
+<td>88.4</td>
+<td>86.2</td>
+</tr>
+<tr>
+<td>I-ORG</td>
+<td>69.9</td>
+<td>70.7</td>
+<td>85.7</td>
+<td>83.1</td>
+</tr>
+<tr>
+<td>B-LOC</td>
+<td>82.5</td>
+<td>79.0</td>
+<td>92.3</td>
+<td>91.1</td>
+</tr>
+<tr>
+<td>I-LOC</td>
+<td>31.6</td>
+<td>44.4</td>
+<td>83.9</td>
+<td>80.5</td>
+</tr>
+<tr>
+<td>B-MISC</td>
+<td>73.4</td>
+<td>68.6</td>
+<td>81.8</td>
+<td>80.1</td>
+</tr>
+<tr>
+<td>I-MISC</td>
+<td>86.1</td>
+<td>63.6</td>
+<td>63.4</td>
+<td>68.4</td>
+</tr>
+<tr>
+<td><strong>AVG_MICRO</strong></td>
+<td>82.8</td>
+<td>79.8</td>
+<td>90.4</td>
+<td>89.1</td>
+</tr>
+<tr>
+<td><strong>AVG_MACRO</strong></td>
+<td>75.6</td>
+<td>72.8</td>
+<td>86.3</td>
+<td>85.3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nerda_1">'NERDA'?</h2>
+<p>'<code>NERDA</code>' originally stands for <em>'Named Entity Recognition for DAnish'</em>. However, this
+is somewhat misleading, since the functionality is no longer limited to Danish. 
+On the contrary it generalizes to all other languages, i.e. <code>NERDA</code> supports 
+fine-tuning of transformers for NER tasks for any arbitrary 
+language.</p>
+<h2 id="background">Background</h2>
+<p><code>NERDA</code> is developed as a part of <a href="https://ekstrabladet.dk/">Ekstra Bladet</a>’s activities on Platform Intelligence in News (PIN). PIN is an industrial research project that is carried out in collaboration between the <a href="https://www.dtu.dk/">Technical University of Denmark</a>, <a href="https://www.ku.dk/">University of Copenhagen</a> and <a href="https://www.cbs.dk/">Copenhagen Business School</a> with funding from <a href="https://innovationsfonden.dk/">Innovation Fund Denmark</a>. The project runs from 2020-2023 and develops recommender systems and natural language processing systems geared for news publishing, some of which are open sourced like <code>NERDA</code>.</p>
+<h2 id="shout-outs">Shout-outs</h2>
+<ul>
+<li>Thanks to <a href="https://alexandra.dk/">Alexandra Institute</a> for with the <a href="https://github.com/alexandrainst/danlp"><code>danlp</code></a> package to have encouraged us to develop this package.</li>
+<li>Thanks to <a href="https://www.linkedin.com/in/malte-h%C3%B8jmark-bertelsen-9a618017b/">Malte Højmark-Bertelsen</a> and <a href="https://www.linkedin.com/in/kasper-juunge/?originalSubdomain=dk">Kasper Junge</a> for giving feedback on <code>NERDA</code>.</li>
+</ul>
+<h2 id="contact">Contact</h2>
+<p>We hope, that you will find <code>NERDA</code> useful.</p>
+<p>Please direct any questions and feedbacks to
+<a href="mailto:lars.kjeldgaard@eb.dk">us</a>!</p>
+<p>If you want to contribute (which we encourage you to), open a
+<a href="https://github.com/ebanalyse/NERDA/pulls">PR</a>.</p>
+<p>If you encounter a bug or want to suggest an enhancement, please 
+<a href="https://github.com/ebanalyse/NERDA/issues">open an issue</a>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        
+        <a href="workflow/" class="md-footer__link md-footer__link--next" aria-label="Next: Workflow Examples" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Workflow Examples
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.756773cc.min.js"></script>
+      
+    
+  </body>
+</html>
