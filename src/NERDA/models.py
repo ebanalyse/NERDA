@@ -394,7 +394,7 @@ class NERDA:
                                      y_true = dataset.get('tags'),
                                      labels = self.tag_scheme,
                                      average = 'macro')
-        f1_macro = pd.DataFrame({'Level' : ['AVG_MICRO'], 
+        f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 
                                  'F1-Score': [f1_macro[2]],
                                  'Precision': [np.nan],
                                  'Recall': [np.nan]})
