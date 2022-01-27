@@ -3,9 +3,15 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open("src/NERDA/about.py") as f:
+    v = f.read()
+    for l in v.split("\n"):
+        if l.startswith("__version__"):
+            __version__ = l.split('"')[-2]
+
 setuptools.setup(
     name="NERDA", 
-    version="1.0.0",
+    version=__version__,
     author="Lars Kjeldgaard, Lukas Christian Nielsen",
     author_email="lars.kjeldgaard@eb.dk",
     description="A Framework for Finetuning Transformers for Named-Entity Recognition",
