@@ -4,7 +4,7 @@ for [NERDA.models.NERDA][] models.
 """
 
 from typing import List
-from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import precision_recall_fscore_support, roc_auc_score
 import warnings
 
 def flatten(l: list):
@@ -52,3 +52,24 @@ def compute_f1_scores(y_pred: List[List[str]],
                                                 **kwargs) 
 
     return f1_scores                                                                
+
+def compute_roc_auc_score(y_pred: List[List[str]], 
+                      y_true: List[List[str]], 
+                      labels: List[str],
+                      **kwargs) -> list:
+    # check inputs.
+    assert sum([len(t) < len(p) for t, p in zip(y_true, y_pred)]) == 0, "Length of predictions must not exceed length of observed values"
+
+    # check, if some lengths of observed values exceed predicted values.
+    n_exceeds = sum([len(t) > len(p) for t, p in zip(y_true, y_pred)])
+    if n_exceeds > 0:
+        warnings.warn(f'length of observed values exceeded lengths of predicted values in {n_exceeds} cases and were truncated. _Consider_ increasing max_len parameter for your model.')
+
+    # truncate observed values dimensions to match predicted values,
+    # this is needed if predictions have been truncated earlier in 
+    # the flow.
+    roc_auc = roc_auc_score(y_true = y_true, 
+                            y_pred = y_pred,
+                            multi_class ='ovr',
+                            **kwargs)
+    return roc_auc

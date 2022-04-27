@@ -4,6 +4,7 @@ from sklearn import preprocessing
 from transformers import AdamW, get_linear_schedule_with_warmup
 import random
 import torch
+from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
 def train(model, data_loader, optimizer, device, scheduler, n_tags):
@@ -11,7 +12,7 @@ def train(model, data_loader, optimizer, device, scheduler, n_tags):
 
     model.train()    
     final_loss = 0.0
-    
+    writer = SummaryWriter()
     for dl in tqdm(data_loader, total=len(data_loader)):
 
         optimizer.zero_grad()
@@ -25,6 +26,8 @@ def train(model, data_loader, optimizer, device, scheduler, n_tags):
         optimizer.step()
         scheduler.step()
         final_loss += loss.item()
+        writer.add_scalar('Loss/train', final_loss, dl)
+        
 
     # Return average loss
     return final_loss / len(data_loader)
