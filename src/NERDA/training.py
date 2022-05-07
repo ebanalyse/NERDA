@@ -1,7 +1,6 @@
 import numpy as np
 from .preprocessing import create_dataloader
-from sklearn import preprocessing
-from transformers import AdamW, get_linear_schedule_with_warmup
+from transformers import get_linear_schedule_with_warmup
 import random
 import torch
 from tqdm import tqdm
@@ -141,7 +140,7 @@ def train_model(network,
 
     num_train_steps = int(len(dataset_training.get('sentences')) / train_batch_size * epochs)
     
-    optimizer = AdamW(optimizer_parameters, lr = learning_rate)
+    optimizer = torch.optim.AdamW(optimizer_parameters, lr=learning_rate)
     scheduler = get_linear_schedule_with_warmup(
         optimizer, num_warmup_steps = warmup_steps, num_training_steps = num_train_steps
     )
