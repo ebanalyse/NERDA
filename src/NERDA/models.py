@@ -163,6 +163,7 @@ class NERDA:
         self.dataset_training = dataset_training
         self.dataset_validation = dataset_validation
         self.hyperparameters = hyperparameters
+        self.tokenizer_parameters = tokenizer_parameters
         self.tag_outside = tag_outside
         self.tag_scheme = tag_scheme
         tag_complete = [tag_outside] + tag_scheme
@@ -214,7 +215,7 @@ class NERDA:
 
         return "Model trained successfully"
 
-    def load_network_from_file(self, model_path = "model.bin") -> str:
+    def load_network_from_file(self, model_path = "model.bin", tokenizer_path = "./tokenizer/") -> str:
         """Load Pretrained NERDA Network from file
 
         Loads weights for a pretrained NERDA Network from file.
@@ -230,10 +231,17 @@ class NERDA:
         # TODO: change assert to Raise.
         assert os.path.exists(model_path), "File does not exist. You can download network with download_network()"
         self.network.load_state_dict(torch.load(model_path, map_location = torch.device(self.device)))
+
+        if(os.path.exists(tokenizer_path)):
+            self.transformer_tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+        else:
+            self.transformer_tokenizer = AutoTokenizer.from_pretrained(
+            self.transformer, **self.tokenizer_parameters)
+        
         self.network.device = self.device
         return f'Weights for network loaded from {model_path}'
 
-    def save_network(self, model_path:str = "model.bin") -> None:
+    def save_network(self, output_dir:str = "./output_dir") -> None:
         """Save Weights of NERDA Network
 
         Saves weights for a fine-tuned NERDA Network to file.
@@ -245,8 +253,12 @@ class NERDA:
         Returns:
             Nothing. Saves model to file as a side-effect.
         """
-        torch.save(self.network.state_dict(), model_path)
-        print(f"Network written to file {model_path}")
+        if(not os.path.exists(output_dir)):
+            os.makedirs(os.path.join(output_dir, "tokenizer"))
+
+        torch.save(self.network.state_dict(), os.path.join(output_dir, "model.bin"))
+        self.transformer_tokenizer.save_pretrained(os.path.join(output_dir, "tokenizer"))
+        print(f"Network written to file {output_dir}")
 
     def quantize(self):
         """Apply dynamic quantization to increase performance.
@@ -387,18 +399,18 @@ class NERDA:
                                  'F1-Score': [f1_micro[2]],
                                  'Precision': [np.nan],
                                  'Recall': [np.nan]})
-        df = df.append(f1_micro)
+        df = pd.concat([df, f1_micro])
 
         # compute MACRO-averaged F1-scores and add to table.
         f1_macro = compute_f1_scores(y_pred = tags_predicted, 
                                      y_true = dataset.get('tags'),
                                      labels = self.tag_scheme,
                                      average = 'macro')
-        f1_macro = pd.DataFrame({'Level' : ['AVG_MICRO'], 
+        f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 
                                  'F1-Score': [f1_macro[2]],
                                  'Precision': [np.nan],
                                  'Recall': [np.nan]})
-        df = df.append(f1_macro)
+        df = pd.concat([df, f1_macro])
 
         # compute and return accuracy if desired
         if return_accuracy:
