@@ -380,43 +380,47 @@ class NERDA:
         tags_predicted = self.predict(dataset.get('sentences'), 
                                       **kwargs)
         
-        # compute F1 scores by entity type
-        f1 = compute_f1_scores(y_pred = tags_predicted, 
+        # # compute F1 scores by entity type
+        # f1 = compute_f1_scores(y_pred = tags_predicted, 
+        #                        y_true = dataset.get('tags'),
+        #                        labels = self.tag_scheme,
+        #                        average = None)
+        
+        # # create DataFrame with performance scores (=F1)
+        # df = list(zip(self.tag_scheme, f1[2], f1[0], f1[1]))
+        # df = pd.DataFrame(df, columns = ['Level', 'F1-Score', 'Precision', 'Recall'])    
+        
+        # # compute MICRO-averaged F1-scores and add to table.
+        # f1_micro = compute_f1_scores(y_pred = tags_predicted, 
+        #                              y_true = dataset.get('tags'),
+        #                              labels = self.tag_scheme,
+        #                              average = 'micro')
+        # f1_micro = pd.DataFrame({'Level' : ['AVG_MICRO'], 
+        #                          'F1-Score': [f1_micro[2]],
+        #                          'Precision': [np.nan],
+        #                          'Recall': [np.nan]})
+        # df = pd.concat([df, f1_micro])
+
+        # # compute MACRO-averaged F1-scores and add to table.
+        # f1_macro = compute_f1_scores(y_pred = tags_predicted, 
+        #                              y_true = dataset.get('tags'),
+        #                              labels = self.tag_scheme,
+        #                              average = 'macro')
+        # f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 
+        #                          'F1-Score': [f1_macro[2]],
+        #                          'Precision': [np.nan],
+        #                          'Recall': [np.nan]})
+        # df = pd.concat([df, f1_macro])
+
+        # # compute and return accuracy if desired
+        # if return_accuracy:
+        #     accuracy = accuracy_score(y_pred = flatten(tags_predicted), 
+        #                               y_true = flatten(dataset.get('tags')))
+        #     return {'f1':df, 'accuracy': accuracy}
+        # # compute F1 scores by entity type
+        f1 = compute_f1_scores(y_pred = tags_predicted,
                                y_true = dataset.get('tags'),
-                               labels = self.tag_scheme,
-                               average = None)
-        
-        # create DataFrame with performance scores (=F1)
-        df = list(zip(self.tag_scheme, f1[2], f1[0], f1[1]))
-        df = pd.DataFrame(df, columns = ['Level', 'F1-Score', 'Precision', 'Recall'])    
-        
-        # compute MICRO-averaged F1-scores and add to table.
-        f1_micro = compute_f1_scores(y_pred = tags_predicted, 
-                                     y_true = dataset.get('tags'),
-                                     labels = self.tag_scheme,
-                                     average = 'micro')
-        f1_micro = pd.DataFrame({'Level' : ['AVG_MICRO'], 
-                                 'F1-Score': [f1_micro[2]],
-                                 'Precision': [np.nan],
-                                 'Recall': [np.nan]})
-        df = pd.concat([df, f1_micro])
+                               labels = self.tag_scheme)
 
-        # compute MACRO-averaged F1-scores and add to table.
-        f1_macro = compute_f1_scores(y_pred = tags_predicted, 
-                                     y_true = dataset.get('tags'),
-                                     labels = self.tag_scheme,
-                                     average = 'macro')
-        f1_macro = pd.DataFrame({'Level' : ['AVG_MACRO'], 
-                                 'F1-Score': [f1_macro[2]],
-                                 'Precision': [np.nan],
-                                 'Recall': [np.nan]})
-        df = pd.concat([df, f1_macro])
-
-        # compute and return accuracy if desired
-        if return_accuracy:
-            accuracy = accuracy_score(y_pred = flatten(tags_predicted), 
-                                      y_true = flatten(dataset.get('tags')))
-            return {'f1':df, 'accuracy': accuracy}
-      
-        return df
+        return f1
 
