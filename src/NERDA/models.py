@@ -412,15 +412,17 @@ class NERDA:
         #                          'Recall': [np.nan]})
         # df = pd.concat([df, f1_macro])
 
-        # # compute and return accuracy if desired
-        # if return_accuracy:
-        #     accuracy = accuracy_score(y_pred = flatten(tags_predicted), 
-        #                               y_true = flatten(dataset.get('tags')))
-        #     return {'f1':df, 'accuracy': accuracy}
-        # # compute F1 scores by entity type
+        # compute F1 scores by entity type
         f1 = compute_f1_scores(y_pred = tags_predicted,
                                y_true = dataset.get('tags'),
                                labels = self.tag_scheme)
+
+        # compute and return accuracy if desired
+        if return_accuracy:
+            accuracy = accuracy_score(y_pred = flatten(tags_predicted), 
+                                      y_true = flatten(dataset.get('tags')))
+            return {'f1':f1, 'accuracy': accuracy}
+
 
         return f1
 
