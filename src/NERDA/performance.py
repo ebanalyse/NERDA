@@ -49,6 +49,6 @@ def compute_f1_scores(y_pred: List[List[str]],
     # f1_scores = precision_recall_fscore_support(y_true = y_true,
     #                                             y_pred = y_pred,
     #                                             labels = labels, **kwargs) 
-    f1_scores = classification_report(y_true, y_pred, labels=labels)
+    f1_scores = classification_report(y_true, y_pred, labels=labels, digits=4)
 
     return f1_scores                                                                
