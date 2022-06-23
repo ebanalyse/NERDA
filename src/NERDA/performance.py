@@ -53,6 +53,7 @@ def compute_f1_scores(tag_scheme,
     #                                             labels = labels, **kwargs) 
     f1_scores = classification_report(
         y_true, y_pred, labels=labels, digits=4, output_dict=True)
+    print(f1_scores)
 
     precision = []
     recall = []
