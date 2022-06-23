@@ -51,27 +51,28 @@ def compute_f1_scores(tag_scheme,
     # f1_scores = precision_recall_fscore_support(y_true = y_true,
     #                                             y_pred = y_pred,
     #                                             labels = labels, **kwargs) 
-    f1_scores = classification_report(
-        y_true, y_pred, labels=labels, digits=4, output_dict=True)
+    # f1_scores = classification_report(
+    #     y_true, y_pred, labels=labels, digits=4, output_dict=True)
 
-    precision = []
-    recall = []
-    f1_score = []
-    support = []
+    # precision = []
+    # recall = []
+    # f1_score = []
+    # support = []
 
-    for tag in tag_scheme:
-        precision.append(f1_scores[tag]["precision"])
-        recall.append(f1_scores[tag]["recall"])
-        f1_score.append(f1_scores[tag]["f1-score"])
-        support.append(f1_scores[tag]["support"])
+    # for tag in tag_scheme:
+    #     precision.append(f1_scores[tag]["precision"])
+    #     recall.append(f1_scores[tag]["recall"])
+    #     f1_score.append(f1_scores[tag]["f1-score"])
+    #     support.append(f1_scores[tag]["support"])
 
-    for metric in ["micro avg", "macro avg", "weighted avg"]:
-        precision.append(f1_scores[metric]["precision"])
-        recall.append(f1_scores[metric]["recall"])
-        f1_score.append(f1_scores[metric]["f1-score"])
-        support.append(f1_scores[metric]["support"])
+    # for metric in ["micro avg", "macro avg", "weighted avg"]:
+    #     precision.append(f1_scores[metric]["precision"])
+    #     recall.append(f1_scores[metric]["recall"])
+    #     f1_score.append(f1_scores[metric]["f1-score"])
+    #     support.append(f1_scores[metric]["support"])
 
-    df = pd.DataFrame({"": tag_scheme+["micro avg", "macro avg", "weighted avg"],
-                      "Precision": precision, "Recall": recall, "F1-Score": f1_score, "Support": support})
+    # df = pd.DataFrame({"": tag_scheme+["micro avg", "macro avg", "weighted avg"],
+    #                   "Precision": precision, "Recall": recall, "F1-Score": f1_score, "Support": support})
 
-    return df
+    f1_scores = classification_report(y_true, y_pred, labels=labels, digits=4)
+    return f1_scores
