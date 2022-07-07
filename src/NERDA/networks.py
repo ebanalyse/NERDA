@@ -104,7 +104,7 @@ class TransformerLstmCRF(nn.Module):
         self.classifier = nn.Linear(
             transformer_config.hidden_size, num_labels)
         self.crf = CRF(num_tags=num_labels, batch_first=True)
-        self.init_weights()
+        # self.init_weights()
 
     def forward(
         self,
