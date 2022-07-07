@@ -174,7 +174,10 @@ class NERDA:
         self.transformer_model = AutoModel.from_pretrained(transformer)
         self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)
         self.transformer_config = AutoConfig.from_pretrained(transformer)  
+        
+        
         if(network == "bilstm-crf"):
+            print("bilstm-crf")
             self.network = TransformerLstmCRF(
                 self.transformer_model, len(tag_complete), dropout=dropout)
         else:
