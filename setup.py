@@ -28,7 +28,8 @@ setuptools.setup(
         'nltk',
         'pandas',
         'progressbar',
-        'pyconll'
+        'pyconll',
+        'torchcrf'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest',
