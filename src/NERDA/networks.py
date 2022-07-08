@@ -181,5 +181,5 @@ class BiLSTMCRF(nn.Module):
             outputs = (loss,) + outputs
 
         # contain: (loss), scores
-        print(outputs)
-        return outputs
+        print(outputs[1])
+        return outputs[1]
