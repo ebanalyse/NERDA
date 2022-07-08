@@ -164,9 +164,9 @@ class BiLSTMCRF(nn.Module):
         # match args with transformer
         transformer_inputs = match_kwargs(self.transformer.forward, **transformer_inputs)
            
-        outputs = self.transformer(**transformer_inputs)[0]
+        padded_sequence_output = self.transformer(**transformer_inputs)[0]
 
-        padded_sequence_output = self.dropout(outputs)
+        padded_sequence_output = self.dropout(padded_sequence_output)
         
         lstm_output, _ = self.bilstm(padded_sequence_output)
 
