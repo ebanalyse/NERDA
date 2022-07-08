@@ -10,7 +10,7 @@ The interface enables you to easily
 - use it to predict entities in new texts.
 """
 from NERDA.datasets import get_conll_data
-from NERDA.networks import NERDANetwork
+from NERDA.networks import BiLSTMCRF, NERDANetwork
 from NERDA.predictions import predict, predict_text
 from NERDA.performance import compute_f1_scores, flatten
 from NERDA.training import train_model
@@ -97,7 +97,7 @@ class NERDA:
                  dataset_training: dict = None,
                  dataset_validation: dict = None,
                  max_len: int = 128,
-                 network: torch.nn.Module = NERDANetwork,
+                 network: str = "baseline",
                  dropout: float = 0.1,
                  hyperparameters: dict = {'epochs' : 4,
                                           'warmup_steps' : 500,
@@ -174,7 +174,12 @@ class NERDA:
         self.transformer_model = AutoModel.from_pretrained(transformer)
         self.transformer_tokenizer = AutoTokenizer.from_pretrained(transformer, **tokenizer_parameters)
         self.transformer_config = AutoConfig.from_pretrained(transformer)  
-        self.network = NERDANetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
+        
+        if(network == "baseline"):
+            self.network = NERDANetwork(self.transformer_model, self.device, len(tag_complete), dropout = dropout)
+        elif (network == "bilstm-crf"):
+            self.network = BiLSTMCRF(
+                self.transformer_model, self.device, len(tag_complete), dropout=dropout)
         self.network.to(self.device)
         self.validation_batch_size = validation_batch_size
         self.num_workers = num_workers
