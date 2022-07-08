@@ -129,41 +129,44 @@ class BiLSTMCRF(nn.Module):
 
     # NOTE: 'offsets 'are not used in model as-is, but they are expected as output
     # down-stream. So _DON'T_ remove! :)
-    def forward(self, input_data, token_type_ids=None, attention_mask=None, labels=None,
-                position_ids=None, inputs_embeds=None, head_mask=None):
-        input_ids, input_token_starts = input_data
-        
+    def forward(self, 
+                input_ids: torch.Tensor, 
+                masks: torch.Tensor, 
+                token_type_ids: torch.Tensor, 
+                labels: torch.Tensor, 
+                offsets: torch.Tensor) -> torch.Tensor:
+        print(offsets)
+        """Model Forward Iteration
+
+        Args:
+            input_ids (torch.Tensor): Input IDs.
+            masks (torch.Tensor): Attention Masks.
+            token_type_ids (torch.Tensor): Token Type IDs.
+            target_tags (torch.Tensor): Target tags. Are not used 
+                in model as-is, but they are expected downstream,
+                so they can not be left out.
+            offsets (torch.Tensor): Offsets to keep track of original
+                words. Are not used in model as-is, but they are 
+                expected as down-stream, so they can not be left out.
+
+        Returns:
+            torch.Tensor: predicted values.
+        """
+
+        # TODO: can be improved with ** and move everything to device in a
         # single step.
         transformer_inputs = {
             'input_ids': input_ids.to(self.device),
-            'attention_mask': attention_mask.to(self.device),
-            'token_type_ids': token_type_ids.to(self.device),
-            'position_ids': position_ids.to(self.device),
-            'head_mask': head_mask.to(self.device),
-            'inputs_embeds': inputs_embeds.to(self.device)
-        }
-
+            'masks': masks.to(self.device),
+            'token_type_ids': token_type_ids.to(self.device)
+            }
+        
         # match args with transformer
-        transformer_inputs = match_kwargs(
-            self.transformer.forward, **transformer_inputs)
+        transformer_inputs = match_kwargs(self.transformer.forward, **transformer_inputs)
+           
+        outputs = self.transformer(**transformer_inputs)[0]
 
-        sequence_output = self.transformer(**transformer_inputs)[0]
-
-        # outputs = self.transformer(input_ids,
-        #                     attention_mask=attention_mask,
-        #                     token_type_ids=token_type_ids,
-        #                     position_ids=position_ids,
-        #                     head_mask=head_mask,
-        #                     inputs_embeds=inputs_embeds)
-        # sequence_output = outputs[0]
-
-        origin_sequence_output = [layer[starts.nonzero().squeeze(1)]
-                                  for layer, starts in zip(sequence_output, input_token_starts)]
-
-        padded_sequence_output = pad_sequence(
-            origin_sequence_output, batch_first=True)
-
-        padded_sequence_output = self.dropout(padded_sequence_output)
+        padded_sequence_output = self.dropout(outputs)
         
         lstm_output, _ = self.bilstm(padded_sequence_output)
 
