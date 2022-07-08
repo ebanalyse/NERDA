@@ -132,7 +132,7 @@ class BiLSTMCRF(nn.Module):
     def forward(self, input_data, token_type_ids=None, attention_mask=None, labels=None,
                 position_ids=None, inputs_embeds=None, head_mask=None):
         input_ids, input_token_starts = input_data
-        outputs = self.bert(input_ids,
+        outputs = self.transformer(input_ids,
                             attention_mask=attention_mask,
                             token_type_ids=token_type_ids,
                             position_ids=position_ids,
@@ -147,6 +147,7 @@ class BiLSTMCRF(nn.Module):
             origin_sequence_output, batch_first=True)
 
         padded_sequence_output = self.dropout(padded_sequence_output)
+        
         lstm_output, _ = self.bilstm(padded_sequence_output)
 
         logits = self.classifier(lstm_output)
