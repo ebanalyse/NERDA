@@ -81,6 +81,7 @@ class NERDANetwork(nn.Module):
 
         # outputs for all labels/tags
         outputs = self.tags(outputs)
+        print(outputs)
 
         return outputs
 
@@ -180,4 +181,5 @@ class BiLSTMCRF(nn.Module):
             outputs = (loss,) + outputs
 
         # contain: (loss), scores
+        print(outputs)
         return outputs
