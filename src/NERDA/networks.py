@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 from transformers import AutoConfig
 from NERDA.utils import match_kwargs
-from transformers.modeling_bert import *
+# from transformers.modeling_bert import *
 from torch.nn.utils.rnn import pad_sequence
 from torchcrf import CRF
 
