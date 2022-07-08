@@ -132,13 +132,30 @@ class BiLSTMCRF(nn.Module):
     def forward(self, input_data, token_type_ids=None, attention_mask=None, labels=None,
                 position_ids=None, inputs_embeds=None, head_mask=None):
         input_ids, input_token_starts = input_data
-        outputs = self.transformer(input_ids,
-                            attention_mask=attention_mask,
-                            token_type_ids=token_type_ids,
-                            position_ids=position_ids,
-                            head_mask=head_mask,
-                            inputs_embeds=inputs_embeds)
-        sequence_output = outputs[0]
+        
+        # single step.
+        transformer_inputs = {
+            'input_ids': input_ids.to(self.device),
+            'attention_mask': attention_mask.to(self.device),
+            'token_type_ids': token_type_ids.to(self.device),
+            'position_ids': position_ids.to(self.device),
+            'head_mask': head_mask.to(self.device),
+            'inputs_embeds': inputs_embeds.to(self.device)
+        }
+
+        # match args with transformer
+        transformer_inputs = match_kwargs(
+            self.transformer.forward, **transformer_inputs)
+
+        sequence_output = self.transformer(**transformer_inputs)[0]
+
+        # outputs = self.transformer(input_ids,
+        #                     attention_mask=attention_mask,
+        #                     token_type_ids=token_type_ids,
+        #                     position_ids=position_ids,
+        #                     head_mask=head_mask,
+        #                     inputs_embeds=inputs_embeds)
+        # sequence_output = outputs[0]
 
         origin_sequence_output = [layer[starts.nonzero().squeeze(1)]
                                   for layer, starts in zip(sequence_output, input_token_starts)]
