@@ -133,7 +133,7 @@ class BiLSTMCRF(nn.Module):
                 input_ids: torch.Tensor, 
                 masks: torch.Tensor, 
                 token_type_ids: torch.Tensor, 
-                labels: torch.Tensor, 
+                target_tags: torch.Tensor,
                 offsets: torch.Tensor) -> torch.Tensor:
         print(offsets)
         """Model Forward Iteration
@@ -173,9 +173,9 @@ class BiLSTMCRF(nn.Module):
         logits = self.classifier(lstm_output)
 
         outputs = (logits,)
-        if labels is not None:
-            loss_mask = labels.gt(-1)
-            loss = self.crf(logits, labels, loss_mask) * (-1)
+        if target_tags is not None:
+            loss_mask = target_tags.gt(-1)
+            loss = self.crf(logits, target_tags, loss_mask) * (-1)
             outputs = (loss,) + outputs
 
         # contain: (loss), scores
