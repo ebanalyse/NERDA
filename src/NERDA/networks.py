@@ -288,7 +288,7 @@ class TransformerBiLSTM(nn.Module):
             n_tags (int): Number of unique entity tags (incl. outside tag)
             dropout (float, optional): Dropout probability. Defaults to 0.1.
         """
-        super(TransformerBiLSTMCRF, self).__init__()
+        super(TransformerBiLSTM, self).__init__()
 
         # extract transformer name
         transformer_name = transformer.name_or_path
