@@ -10,7 +10,7 @@ The interface enables you to easily
 - use it to predict entities in new texts.
 """
 from NERDA.datasets import get_conll_data
-from NERDA.networks import NERDANetwork, TransformerBiLSTMCRF, TransformerCRF
+from NERDA.networks import NERDANetwork, TransformerBiLSTM, TransformerBiLSTMCRF, TransformerCRF
 from NERDA.predictions import predict, predict_text
 from NERDA.performance import compute_f1_scores, flatten
 from NERDA.training import train_model
@@ -182,6 +182,9 @@ class NERDA:
                 self.transformer_model, self.device, len(tag_complete), dropout=dropout)
         elif (archi == "crf"):
             self.network = TransformerCRF(
+                self.transformer_model, self.device, len(tag_complete), dropout=dropout)
+        elif (archi == "bilstm"):
+            self.network = TransformerBiLSTM(
                 self.transformer_model, self.device, len(tag_complete), dropout=dropout)
         self.network.to(self.device)
         self.validation_batch_size = validation_batch_size
