@@ -113,7 +113,7 @@ class TransformerCRF(nn.Module):
         self.transformer = transformer
         self.dropout = nn.Dropout(dropout)
 
-        self.classifier = nn.Linear(768, n_tags)
+        self.classifier = nn.Linear(transformer_config.hidden_size, n_tags)
         self.crf = CRF(n_tags, batch_first=True)
         self.device = device
 
@@ -202,14 +202,14 @@ class TransformerBiLSTMCRF(nn.Module):
 
         self.bilstm = nn.LSTM(
             input_size=768,
-            hidden_size=768 // 2,
+            hidden_size=transformer_config.hidden_size // 2,
             batch_first=True,
             num_layers=2,
             dropout=dropout,
             bidirectional=True
         )
 
-        self.classifier = nn.Linear(768, n_tags)
+        self.classifier = nn.Linear(transformer_config.hidden_size, n_tags)
         self.crf = CRF(n_tags, batch_first=True)
         self.device = device
 
@@ -300,14 +300,14 @@ class TransformerBiLSTM(nn.Module):
 
         self.bilstm = nn.LSTM(
             input_size=768,
-            hidden_size=768 // 2,
+            hidden_size=transformer_config.hidden_size // 2,
             batch_first=True,
             num_layers=2,
             dropout=dropout,
             bidirectional=True
         )
 
-        self.classifier = nn.Linear(768, n_tags)
+        self.classifier = nn.Linear(transformer_config.hidden_size, n_tags)
         self.device = device
 
     # NOTE: 'offsets 'are not used in model as-is, but they are expected as output
