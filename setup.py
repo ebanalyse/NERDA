@@ -18,7 +18,7 @@ setuptools.setup(
     install_requires=[
         'torch',
         'transformers',
-        'sklearn',
+        'scikit-learn',
         'nltk',
         'pandas',
         'progressbar',
